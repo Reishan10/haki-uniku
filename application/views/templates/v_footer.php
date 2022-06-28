@@ -1818,7 +1818,7 @@
                             'Data berhasil diubah!',
                             'success'
                         )
-                        // setInterval('location.reload()', 1000);
+                        setInterval('location.reload()', 1000);
                     }
 
                 }
