@@ -13,7 +13,7 @@ class Login extends CI_Controller
 
     public function index()
     {
-        $data['judul'] = 'Login';
+        $data['title'] = 'Login';
         $this->load->view('admin/v_login', $data);
     }
 
@@ -33,24 +33,31 @@ class Login extends CI_Controller
             $email = str_replace("'", "", htmlspecialchars($this->input->post('email', TRUE), ENT_QUOTES));
             $password = str_replace("'", "", htmlspecialchars($this->input->post('password', TRUE), ENT_QUOTES));
 
-            $user = $this->db->get_where('tbl_login', ['username' => $email])->row();
+            $user = $this->db->get_where('tbl_user', ['email_user' => $email])->row();
 
             if ($user) {
                 if (password_verify($password, $user->password)) {
                     $data = [
                         'logged' => TRUE,
-                        'username' => $user->username,
+                        'id_user' => $user->id_user,
+                        'email_user' => $user->email_user,
                         'role' => $user->role
                     ];
 
                     $this->session->set_userdata($data);
+
+                    if ($user->role == 'admin') {
+                        redirect('dashboard');
+                    } else {
+                        redirect('author/detail/' . $user->id_user);
+                    }
                     redirect('dashboard');
                 } else {
                     $this->session->set_flashdata("error", "Password yang anda masukan salah!");
                     redirect('login');
                 }
             } else {
-                $this->session->set_flashdata("error", "Username yang anda masukan tidak terdaftar!");
+                $this->session->set_flashdata("error", "Email yang anda masukan tidak terdaftar!");
                 redirect('login');
             }
         }

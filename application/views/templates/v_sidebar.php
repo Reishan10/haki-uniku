@@ -11,7 +11,7 @@
                         <a class="navbar-brand w-100 mr-0" href="#" style="line-height: 25px;">
                             <div class="d-table m-auto">
                                 <img id="main-logo" class="d-inline-block align-top mr-1" style="max-width: 25px;" src="<?= base_url() ?>assets/images/shards-dashboards-logo-warning.svg" alt="Shards Dashboard">
-                                <span class="d-none d-md-inline ml-1">Shards Dashboard</span>
+                                <span class="d-none d-md-inline ml-1">HAKI UNIKU</span>
                             </div>
                         </a>
                         <a class="toggle-sidebar d-sm-inline d-md-none d-lg-none">
@@ -31,34 +31,54 @@
                 </form>
                 <div class="nav-wrapper">
                     <ul class="nav nav--no-borders flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link <?= activate_menu('dashboard') ?>" href="<?= base_url('dashboard') ?>">
-                                <i class="fa-solid fa-pencil"></i>
-                                <span>Dashboard</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link <?= activate_menu('author') ?>" href="<?= base_url('author') ?>">
-                                <i class="fa-solid fa-lock"></i>
-                                <span>Unverifed Author</span>
-                            </a>
-                        </li>
+                        <?php if ($this->session->userdata('role') == 'admin') { ?>
+                            <li class="nav-item">
+                                <a class="nav-link <?= activate_menu('dashboard') ?>" href="<?= base_url('dashboard') ?>">
+                                    <i class="fa-solid fa-pencil"></i>
+                                    <span>Dashboard</span>
+                                </a>
+                            </li>
+                        <?php } ?>
                         <li class="nav-item">
                             <a class="nav-link <?= activate_menu('permohonan') ?>" href="<?= base_url('permohonan/detail') ?>">
                                 <i class="fa-solid fa-handshake"></i>
                                 <span>Permohonan</span>
                             </a>
                         </li>
+                        <?php if ($this->session->userdata('role') == 'admin') { ?>
+                            <li class="nav-item dropdown <?= activate_submenu('provinsi'), activate_submenu('negara'),  activate_submenu('kota'),  activate_submenu('JenisPermohonan'), activate_submenu('jenis'), activate_submenu('subjenis') ?> ?>">
+                                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                                    <i class="material-icons">&#xE2C7;</i>
+                                    <span>Data Master</span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-small <?= activate_submenu('provinsi'), activate_submenu('negara'),  activate_submenu('kota'),  activate_submenu('JenisPermohonan'), activate_submenu('jenis'), activate_submenu('subjenis') ?> ?>">
+                                    <a class="dropdown-item <?= activate_menu('JenisPermohonan') ?>" href="<?= base_url('jenis-permohonan') ?>">Jenis Permohonan</a>
+                                    <a class="dropdown-item <?= activate_menu('jenis') ?>" href="<?= base_url('jenis') ?>">Jenis Ciptaan</a>
+                                    <a class="dropdown-item <?= activate_menu('subjenis') ?>" href="<?= base_url('subjenis') ?>">Subjenis Ciptaan</a>
+                                    <a class="dropdown-item <?= activate_menu('negara') ?>" href="<?= base_url('negara') ?>">Negara</a>
+                                    <a class="dropdown-item <?= activate_menu('provinsi') ?>" href="<?= base_url('provinsi') ?>">Provinsi</a>
+                                    <a class="dropdown-item <?= activate_menu('kota') ?>" href="<?= base_url('kota') ?>">Kota</a>
+                                </div>
+                            </li>
+                        <?php } ?>
                         <li class="nav-item">
-                            <a class="nav-link <?= activate_menu('allauthor') ?>" href="<?= base_url('all-author') ?>">
-                                <i class="fa-solid fa-users"></i>
-                                <span>All Authors</span>
+                            <a class="nav-link <?= activate_menu('author') ?>" href="<?= base_url('author') ?>">
+                                <i class="fa-solid fa-lock"></i>
+                                <span>Author</span>
                             </a>
                         </li>
+                        <?php if ($this->session->userdata('role') == 'admin') { ?>
+                            <li class="nav-item">
+                                <a class="nav-link <?= activate_menu('administrator') ?>" href="<?= base_url('administrator') ?>">
+                                    <i class="fa-solid fa-users"></i>
+                                    <span>Administrator</span>
+                                </a>
+                            </li>
+                        <?php } ?>
                         <li class="nav-item">
-                            <a class="nav-link " href="blog-overview.html">
-                                <i class="fa-solid fa-users"></i>
-                                <span>My Affiliations</span>
+                            <a class="nav-link  <?= activate_menu('GantiPassword') ?>" href="<?= base_url('ganti-password') ?>">
+                                <i class="fa-solid fa-unlock"></i>
+                                <span>Ganti Password</span>
                             </a>
                         </li>
                     </ul>

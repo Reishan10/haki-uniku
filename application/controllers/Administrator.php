@@ -1,46 +1,48 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class AllAuthor extends CI_Controller
+class Administrator extends CI_Controller
 {
     public function __construct()
     {
         parent::__construct();
         if ($this->session->userdata('logged') == FALSE) {
             redirect('login');
+        } else if ($this->session->userdata('role') != 'admin') {
+            redirect('ssksk.sps');
         }
-        $this->load->model('m_allAuthor');
+        $this->load->model('m_administrator');
     }
 
     public function index()
     {
-        $data['user'] = $this->db->get_where('tbl_user', ['email_user' => $this->session->userdata('username')])->row();
+        $data['user'] = $this->db->get_where('tbl_user', ['email_user' => $this->session->userdata('email_user')])->row();
         $data['kota'] = $this->db->get('tbl_kota')->result();
         $data['title'] = "All Author";
         $this->load->view('templates/v_header', $data);
         $this->load->view('templates/v_sidebar');
         $this->load->view('templates/v_navbar', $data);
-        $this->load->view('admin/v_author_all', $data);
+        $this->load->view('admin/v_administrator', $data);
         $this->load->view('templates/v_footer');
     }
 
     public function ambilData()
     {
-        $data = $this->m_allAuthor->getData();
+        $data = $this->m_administrator->getData();
         echo json_encode($data);
     }
 
     public function ambilDataById()
     {
         $id = $this->input->post('id');
-        $data = $this->m_allAuthor->getDataById($id);
+        $data = $this->m_administrator->getDataById($id);
         echo json_encode($data);
     }
 
     public function detailData()
     {
         $id = $this->input->post('id');
-        $data = $this->m_allAuthor->getDataById($id);
+        $data = $this->m_administrator->getDataById($id);
         echo json_encode($data);
     }
 
@@ -76,28 +78,31 @@ class AllAuthor extends CI_Controller
 
             echo json_encode($data);
         } else {
-
             $nama = $this->input->post('nama');
             $email = $this->input->post('email');
+            $password = password_hash('adminhaki', PASSWORD_DEFAULT);
             $no_telepon = $this->input->post('no_telepon');
             $kewarganegaraan = $this->input->post('kewarganegaraan');
             $alamat = $this->input->post('alamat');
             $kota = $this->input->post('kota');
             $negara = $this->input->post('negara');
             $kode_pos = $this->input->post('kode_pos');
+            $role = 'admin';
 
             $data = [
                 'nama_user' => $nama,
                 'email_user' => $email,
+                'password' => $password,
                 'telepon_user' => $no_telepon,
                 'kewarganegaraan' => $kewarganegaraan,
                 'alamat_user' => $alamat,
                 'kota' => $kota,
                 'negara' => $negara,
                 'kode_pos' => $kode_pos,
+                'role' => $role,
                 'id_author' => '-',
             ];
-            $data = $this->m_allAuthor->insertData($data);
+            $data = $this->m_administrator->insertData($data);
 
             echo json_encode('success');
         }
@@ -158,7 +163,7 @@ class AllAuthor extends CI_Controller
             ];
 
             $where = ['id_user' => $id];
-            $data = $this->m_allAuthor->updateData($where, $data);
+            $data = $this->m_administrator->updateData($where, $data);
 
             echo json_encode('success');
         }
@@ -168,7 +173,7 @@ class AllAuthor extends CI_Controller
     {
         $id = $this->input->post('id');
         $where = ['id_user' => $id];
-        $data = $this->m_allAuthor->deleteData($where);
+        $data = $this->m_administrator->deleteData($where);
         echo json_encode($data);
     }
 }

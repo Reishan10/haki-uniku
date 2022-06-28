@@ -20,9 +20,9 @@
                             <div class="col-sm-10">
                                 <select name="" id="" class="form-control select2">
                                     <option value="">---</option>
-                                    <option value="">Hak Cipta</option>
-                                    <option value="">Paten</option>
-                                    <option value="">Merk</option>
+                                    <?php foreach ($jenis_permohonan as $row) { ?>
+                                        <option value="<?= $row->id_jenis_permohonan ?>"><?= $row->nama_jenis_permohonan ?></option>
+                                    <?php } ?>
                                 </select>
                             </div>
                         </div>
@@ -31,9 +31,9 @@
                             <div class="col-sm-10">
                                 <select name="" id="" class="form-control select2">
                                     <option value="">---</option>
-                                    <option value="">Karya Tulis</option>
-                                    <option value="">Paten</option>
-                                    <option value="">Merk</option>
+                                    <?php foreach ($jenis as $row) { ?>
+                                        <option value="<?= $row->id_jenis ?>"><?= $row->nama_jenis ?></option>
+                                    <?php } ?>
                                 </select>
                             </div>
                         </div>
@@ -42,9 +42,9 @@
                             <div class="col-sm-10">
                                 <select name="" id="" class="form-control select2">
                                     <option value="">---</option>
-                                    <option value="">Buku</option>
-                                    <option value="">Lagu</option>
-                                    <option value="">Pamflet</option>
+                                    <?php foreach ($subjenis as $row) { ?>
+                                        <option value="<?= $row->id_subjenis ?>"><?= $row->nama_subjenis ?></option>
+                                    <?php } ?>
                                 </select>
                             </div>
                         </div>

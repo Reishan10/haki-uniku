@@ -13,7 +13,10 @@ class Permohonan extends CI_Controller
 
     public function detail()
     {
-        $data['user'] = $this->db->get_where('tbl_user', ['email_user' => $this->session->userdata('username')])->row();
+        $data['user'] = $this->db->get_where('tbl_user', ['email_user' => $this->session->userdata('email_user')])->row();
+        $data['jenis_permohonan'] = $this->db->get('tbl_jenis_permohonan')->result();
+        $data['jenis'] = $this->db->get('tbl_jenis')->result();
+        $data['subjenis'] = $this->db->get('tbl_subjenis')->result();
         $data['title'] = "Detail";
         $this->load->view('templates/v_header', $data);
         $this->load->view('templates/v_sidebar');
@@ -24,7 +27,7 @@ class Permohonan extends CI_Controller
 
     public function pencipta()
     {
-        $data['user'] = $this->db->get_where('tbl_user', ['email_user' => $this->session->userdata('username')])->row();
+        $data['user'] = $this->db->get_where('tbl_user', ['email_user' => $this->session->userdata('email_user')])->row();
         $data['title'] = "Pencipta";
         $this->load->view('templates/v_header', $data);
         $this->load->view('templates/v_sidebar');
@@ -35,7 +38,7 @@ class Permohonan extends CI_Controller
 
     public function pemegang()
     {
-        $data['user'] = $this->db->get_where('tbl_user', ['email_user' => $this->session->userdata('username')])->row();
+        $data['user'] = $this->db->get_where('tbl_user', ['email_user' => $this->session->userdata('email_user')])->row();
         $data['title'] = "Pencipta";
         $this->load->view('templates/v_header', $data);
         $this->load->view('templates/v_sidebar');
@@ -46,7 +49,7 @@ class Permohonan extends CI_Controller
 
     public function lampiran()
     {
-        $data['user'] = $this->db->get_where('tbl_user', ['email_user' => $this->session->userdata('username')])->row();
+        $data['user'] = $this->db->get_where('tbl_user', ['email_user' => $this->session->userdata('email_user')])->row();
         $data['title'] = "Lampiran";
         $this->load->view('templates/v_header', $data);
         $this->load->view('templates/v_sidebar');

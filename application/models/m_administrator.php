@@ -1,17 +1,17 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class m_allAuthor extends CI_Model
+class m_administrator extends CI_Model
 {
     public function getData()
     {
-        return $this->db->get('tbl_user')->result();
+        return $this->db->query("SELECT * FROM tbl_user WHERE role = 'admin' ORDER BY nama_user ASC")->result();
     }
 
     public function getDataById($id)
     {
         // return $this->db->get_where('tbl_user', ['id_user' => $id])->result();
-        return $this->db->query("SELECT * FROM tbl_user LEFT JOIN tbl_kota ON tbl_user.kota = tbl_kota.id WHERE id_user = '$id'")->result();
+        return $this->db->query("SELECT * FROM tbl_user LEFT JOIN tbl_kota ON tbl_user.kota = tbl_kota.id_kota WHERE id_user = '$id'")->result();
     }
 
     public function insertData($data)

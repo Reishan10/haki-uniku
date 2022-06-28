@@ -2,8 +2,8 @@
     <!-- Page Header -->
     <div class="page-header row no-gutters py-4">
         <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
-            <span class="text-uppercase page-subtitle">author</span>
-            <h3 class="page-title">All Author</h3>
+            <span class="text-uppercase page-subtitle">Administrator</span>
+            <h3 class="page-title">Data Administrator</h3>
         </div>
     </div>
     <!-- End Page Header -->
@@ -12,27 +12,28 @@
         <div class="col">
             <div class="card card-small mb-4">
                 <div class="card-header border-bottom">
-                    <h6 class="m-0">Data Author</h6>
-                    <button type="button" style="float: right;" class="btn btn-primary" data-toggle="modal" data-target="#modalAuthor" onclick="submit('tambah')">
+                    <h6 class="m-0">Data Administrator</h6>
+                    <button type="button" style="float: right;" class="btn btn-warning" data-toggle="modal" data-target="#modalAdministrator" onclick="submit('tambah')">
                         Tambah Data
                     </button>
                 </div>
-                <div class="card-body">
-                    <table class="table mb-0" id="table">
-                        <thead class="bg-light">
-                            <tr>
-                                <th scope="col" class="border-0">#</th>
-                                <th scope="col" class="border-0">Nama</th>
-                                <th scope="col" class="border-0">Email</th>
-                                <th scope="col" class="border-0">No Telepon</th>
-                                <th scope="col" class="border-0">ID Author</th>
-                                <th scope="col" class="border-0">Role</th>
-                                <th scope="col" class="border-0">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tbl_data">
-                        </tbody>
-                    </table>
+                <div class="table-responsive">
+                    <div class="card-body">
+                        <table class="table mb-0" id="table">
+                            <thead class="bg-light">
+                                <tr>
+                                    <th scope="col" class="border-0">#</th>
+                                    <th scope="col" class="border-0">Nama</th>
+                                    <th scope="col" class="border-0">Email</th>
+                                    <th scope="col" class="border-0">No Telepon</th>
+                                    <th scope="col" class="border-0">ID Author</th>
+                                    <th scope="col" class="border-0">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbl_data">
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -41,12 +42,12 @@
 </div>
 
 <!-- Modal Tambah -->
-<div class="modal fade" id="modalAuthor" role="dialog" aria-labelledby="modalAuthorLabel" aria-hidden="true">
+<div class="modal fade" id="modalAdministrator" role="dialog" aria-labelledby="modalAdministratorLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modalAuthorLabel"></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <h5 class="modal-title" id="modalAdministratorLabel"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="submit('tutup')">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -119,9 +120,9 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                <button type="button" class="btn btn-primary" id="btn-tambah" onclick="tambahData()">Tambah</button>
-                <button type="button" class="btn btn-primary" id="btn-ubah" onclick="ubahData()">Ubah</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="submit('tutup')">Tutup</button>
+                <button type="button" class="btn btn-primary" id="btn-tambah" onclick="tambahDataAdministrator()">Tambah</button>
+                <button type="button" class="btn btn-primary" id="btn-ubah" onclick="ubahDataAdministrator()">Ubah</button>
             </div>
         </div>
     </div>
