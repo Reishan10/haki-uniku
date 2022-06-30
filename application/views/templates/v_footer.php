@@ -63,7 +63,7 @@
                         no++;
                         html = html + '<tr>' +
                             '<td style="width: 1%;">' + no + '</td>' +
-                            '<td>' + response[i].nama_user + '</td>' +
+                            '<td class="text-left">' + response[i].nama_user + '</td>' +
                             '<td>' + response[i].email_user + '</td>' +
                             '<td>' + response[i].telepon_user + '</td>' +
                             '<td>' + response[i].id_author + '</td>' +
@@ -386,7 +386,7 @@
                         no++;
                         html = html + '<tr>' +
                             '<td style="width: 1%;"><span><a href="http://localhost/haki-uniku/author/detail/' + response[i].id_user + '" class="text-dark">' + no + '</a></span></td>' +
-                            '<td><span><a href="http://localhost/haki-uniku/author/detail/' + response[i].id_user + '" class="text-dark">' + response[i].nama_user + '</a></span></td>' +
+                            '<td class="text-left"><span><a href="http://localhost/haki-uniku/author/detail/' + response[i].id_user + '" class="text-dark">' + response[i].nama_user + '</a></span></td>' +
                             '<td style="width: 1%;"><span><a href="http://localhost/haki-uniku/author/detail/' + response[i].id_user + '" class="text-dark">0</a></span></td>' +
                             '<td style="width: 15%;"><span><a href="http://localhost/haki-uniku/author/detail/' + response[i].id_user + '" class="text-dark">0</a></span></td>' +
                             '<td><span><a href="http://localhost/haki-uniku/author/detail/' + response[i].id_user + '" class="text-dark">' + response[i].id_author + '</a></span></td>' +
