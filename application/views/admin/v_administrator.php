@@ -73,12 +73,10 @@
                         <div class="form-group">
                             <label for="kewarganegaraan">Kewarganegaraan</label>
                             <select name="kewarganegaraan" id="kewarganegaraan" class="form-control select2">
-                                <option value="Indonesia">Indonesia</option>
-                                <option value="Malaysia">Malaysia</option>
-                                <option value="Singapura">Singapura</option>
-                                <option value="Filipina">Filipina</option>
-                                <option value="Thailand">Thailand</option>
-                                <option value="Vietnam">Vietnam</option>
+                                <option value="">-- Kewarganegaraan --</option>
+                                <?php foreach ($negara as $row) { ?>
+                                    <option value="<?= $row->id_negara ?>"><?= $row->nama_negara ?></option>
+                                <?php } ?>
                             </select>
                             <small class="text-danger kewarganegaraan-error"></small>
                         </div>
@@ -102,12 +100,10 @@
                         <div class="form-group">
                             <label for="negara">Negara</label>
                             <select name="negara" id="negara" class="form-control select2">
-                                <option value="Indonesia">Indonesia</option>
-                                <option value="Malaysia">Malaysia</option>
-                                <option value="Singapura">Singapura</option>
-                                <option value="Filipina">Filipina</option>
-                                <option value="Thailand">Thailand</option>
-                                <option value="Vietnam">Vietnam</option>
+                                <option value="">-- Negara --</option>
+                                <?php foreach ($negara as $row) { ?>
+                                    <option value="<?= $row->id_negara ?>"><?= $row->nama_negara ?></option>
+                                <?php } ?>
                             </select>
                             <small class="text-danger negara-error"></small>
                         </div>

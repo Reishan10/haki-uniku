@@ -1,7 +1,8 @@
 $(document).ready(function() {
     $('.loading').fadeOut(200);
 
-    $('#table').DataTable();
+    $('#table,#table2').DataTable();
+    $('.dataTablesJenis').DataTable();
 
     $(".selector").flatpickr();
 

@@ -74,7 +74,7 @@
                                 </div>
                             </div>
                             <div class="auth-form__meta d-flex mt-4">
-                                <a href="forgot-password.html" class="d-table mx-auto">Forgot your password?</a>
+                                <a href="#" class="d-table mx-auto">Lupa kata sandi Anda?</a>
                             </div>
                         </div>
                     </div>

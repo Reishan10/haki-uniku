@@ -9,7 +9,7 @@ class Administrator extends CI_Controller
         if ($this->session->userdata('logged') == FALSE) {
             redirect('login');
         } else if ($this->session->userdata('role') != 'admin') {
-            redirect('ssksk.sps');
+            redirect('403-forbidden');
         }
         $this->load->model('m_administrator');
     }
@@ -17,8 +17,9 @@ class Administrator extends CI_Controller
     public function index()
     {
         $data['user'] = $this->db->get_where('tbl_user', ['email_user' => $this->session->userdata('email_user')])->row();
-        $data['kota'] = $this->db->get('tbl_kota')->result();
-        $data['title'] = "All Author";
+        $data['kota'] = $this->db->query("SELECT * FROM tbl_kota ORDER BY nama_kota ASC")->result();
+        $data['negara'] = $this->db->query("SELECT * FROM tbl_negara ORDER BY nama_negara ASC")->result();
+        $data['title'] = "Administrator";
         $this->load->view('templates/v_header', $data);
         $this->load->view('templates/v_sidebar');
         $this->load->view('templates/v_navbar', $data);

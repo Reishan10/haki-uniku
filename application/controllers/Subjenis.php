@@ -8,6 +8,8 @@ class Subjenis extends CI_Controller
         parent::__construct();
         if ($this->session->userdata('logged') == FALSE) {
             redirect('login');
+        } else  if ($this->session->userdata('role') != 'admin') {
+            redirect('403-forbidden');
         }
 
         $this->load->model('m_subjenis');

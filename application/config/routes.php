@@ -50,7 +50,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 |		my-controller/my-method	-> my_controller/my_method
 */
 $route['default_controller'] = 'welcome';
+$route['author-detail/(:num)'] = 'author/detail/$1';
 $route['jenis-permohonan'] = 'JenisPermohonan';
 $route['ganti-password'] = 'GantiPassword';
-$route['404_override'] = '';
+$route['404_override'] = 'ErrorContent/notfound';
+$route['403-forbidden'] = 'ErrorContent/forbidden';
 $route['translate_uri_dashes'] = FALSE;

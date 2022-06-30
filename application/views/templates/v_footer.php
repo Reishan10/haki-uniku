@@ -22,23 +22,24 @@
 </div>
 </div>
 <script type="text/javascript" src="<?= base_url() ?>assets/js/loader.js"></script>
-<script src="<?= base_url() ?>assets/js/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <script src="<?= base_url() ?>assets/js/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="<?= base_url() ?>assets/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-<script src="<?= base_url() ?>assets/js/Chart.min.js"></script>
-<script src="<?= base_url() ?>assets/js/shards.min.js"></script>
-<script src="<?= base_url() ?>assets/js/jquery.sharrre.min.js"></script>
-<script src="<?= base_url() ?>assets/js/scripts/extras.1.3.1.min.js"></script>
-<script src="<?= base_url() ?>assets/js/scripts/shards-dashboards.1.3.1.min.js"></script>
-<script src="<?= base_url() ?>assets/js/scripts/app/app-analytics-overview.1.3.1.min.js"></script>
 <script src="<?= base_url() ?>assets/js/jquery.dataTables.min.js"></script>
 <script src="<?= base_url() ?>assets/js/dataTables.responsive.min.js"></script>
-<script src="<?= base_url() ?>assets/js/scripts/app/app-transaction-history.1.3.1.min.js"></script>
 <script src="<?= base_url() ?>assets/js/script.js"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
+<?php if ($this->router->fetch_class() == 'dashboard') : ?>
+    <script src="<?= base_url() ?>assets/js/Chart.min.js"></script>
+    <script src="<?= base_url() ?>assets/js/shards.min.js"></script>
+    <script src="<?= base_url() ?>assets/js/jquery.sharrre.min.js"></script>
+    <script src="<?= base_url() ?>assets/js/scripts/extras.1.3.1.min.js"></script>
+    <script src="<?= base_url() ?>assets/js/scripts/shards-dashboards.1.3.1.min.js"></script>
+    <script src="<?= base_url() ?>assets/js/scripts/app/app-analytics-overview.1.3.1.min.js"></script>
+    <script src="<?= base_url() ?>assets/js/scripts/app/app-transaction-history.1.3.1.min.js"></script>
+<?php endif ?>
 
 <?php if ($this->router->fetch_class() == 'administrator') : ?>
     <script>
@@ -101,7 +102,7 @@
                         '<tr>' +
                         '<td>Kewarganegaraan</td>' +
                         '<td>:</td>' +
-                        '<td>' + response[0].kewarganegaraan + '</td>' +
+                        '<td>' + response[0].nama_negara + '</td>' +
                         +'</tr>' +
                         '<tr>' +
                         '<td>Alamat</td>' +
@@ -116,7 +117,7 @@
                         '<tr>' +
                         '<td>Negara</td>' +
                         '<td>:</td>' +
-                        '<td>' + response[0].negara + '</td>' +
+                        '<td>' + response[0].nama_negara + '</td>' +
                         +'</tr>' +
                         '<tr>' +
                         '<td>Kode pos</td>' +
@@ -404,25 +405,11 @@
                 $('#btn-ubah').hide();
                 $('#formLabel').text("Tambah Data Author");
                 $('[name="nama"]').focus();
-            } else if (type == 'tutup') {
-                $('#formData').hide();
-                $('[name="nama"]').val("");
-                $('[name="email"]').val("");
-                $('[name="no_telepon"]').val("");
-                $('[name="kewarganegaraan"]').val("Indonesia").trigger('change');
-                $('[name="alamat"]').val("");
-                $('[name="kota"]').val("").trigger('change');
-                $('[name="negara"]').val("Indonesia").trigger('change');
-                $('[name="kode_pos"]').val("");
 
-                $('.nama-error').hide();
-                $('.email-error').hide();
-                $('.no_telepon-error').hide();
-                $('.kewarganegaraan-error').hide();
-                $('.alamat-error').hide();
-                $('.kota-error').hide();
-                $('.negara-error').hide();
-                $('.kode_pos-error').hide();
+                $('#submit').trigger('reset');
+                $('[name="kewarganegaraan"]').val("").trigger('change');
+                $('[name="kota"]').val("").trigger('change');
+                $('[name="negara"]').val("").trigger('change');
             } else {
                 $('#formData').show();
                 $('#btn-tambah').hide();
@@ -450,98 +437,123 @@
             }
         }
 
-        // $('#submit').submit(function(e) {
-        //     e.preventDefault();
-        //     var formData = new FormData($("#submit")[0]);
+        function tutup(e) {
+            e.preventDefault();
+            $('#submit').trigger('reset');
+            $('[name="kewarganegaraan"]').val("Indonesia").trigger('change');
+            $('[name="kota"]').val("").trigger('change');
+            $('[name="negara"]').val("Indonesia").trigger('change');
+            $('#formData').hide();
 
-        //     $.ajax({
-        //         url: 'author/tambahData',
-        //         type: "post",
-        //         data: formData,
-        //         processData: false,
-        //         contentType: false,
-        //         cache: false,
-        //         async: false,
-        //         success: function(data) {
-        //             alert(data);
-        //             $('.nama-error').html(data.nama);
-        //         }
-        //     });
-        // });
+            $('.nama-error').hide();
+            $('.email-error').hide();
+            $('.no_telepon-error').hide();
+            $('.kewarganegaraan-error').hide();
+            $('.alamat-error').hide();
+            $('.kota-error').hide();
+            $('.negara-error').hide();
+            $('.kode_pos-error').hide();
+        }
 
-        // Tambah Data
-        function tambahDataAuthor() {
-            let nama = htmlspecialchars($('[name="nama"]').val());
-            let email = htmlspecialchars($('[name="email"]').val());
-            let no_telepon = htmlspecialchars($('[name="no_telepon"]').val());
-            let kewarganegaraan = htmlspecialchars($('[name="kewarganegaraan"]').val());
-            let alamat = htmlspecialchars($('[name="alamat"]').val());
-            let kota = htmlspecialchars($('[name="kota"]').val());
-            let negara = htmlspecialchars($('[name="negara"]').val());
-            let kode_pos = htmlspecialchars($('[name="kode_pos"]').val());
-
+        $('#submit').submit(function(e) {
+            e.preventDefault();
             $.ajax({
                 url: '<?= base_url(); ?>author/tambahData',
-                type: 'POST',
-                dataType: 'json',
-                data: {
-                    nama: nama,
-                    email: email,
-                    no_telepon: no_telepon,
-                    kewarganegaraan: kewarganegaraan,
-                    alamat: alamat,
-                    kota: kota,
-                    negara: negara,
-                    kode_pos: kode_pos
-                },
+                type: "post",
+                data: new FormData(this),
+                processData: false,
+                contentType: false,
+                cache: false,
+                async: false,
                 success: function(data) {
-                    if (data !== 'success') {
-                        $('.nama-error').html(data.nama);
-                        $('.email-error').html(data.email);
-                        $('.no_telepon-error').html(data.no_telepon);
-                        $('.kewarganegaraan-error').html(data.kewarganegaraan);
-                        $('.alamat-error').html(data.alamat);
-                        $('.kota-error').html(data.kota);
-                        $('.negara-error').html(data.negara);
-                        $('.kode_pos-error').html(data.kode_pos);
-
-                        $('.nama-error').show();
-                        $('.email-error').show();
-                        $('.no_telepon-error').show();
-                        $('.kewarganegaraan-error').show();
-                        $('.alamat-error').show();
-                        $('.kota-error').show();
-                        $('.negara-error').show();
-                        $('.kode_pos-error').show();
-                    } else {
-                        $('.nama-error').hide();
-                        $('.email-error').hide();
-                        $('.no_telepon-error').hide();
-                        $('.kewarganegaraan-error').hide();
-                        $('.alamat-error').hide();
-                        $('.kota-error').hide();
-                        $('.negara-error').hide();
-                        $('.kode_pos-error').hide();
-
-                        $('[name="nama"]').val("");
-                        $('[name="email"]').val("");
-                        $('[name="no_telepon"]').val("");
-                        $('[name="kewarganegaraan"]').val("Indonesia").trigger('change');
-                        $('[name="alamat"]').val("");
-                        $('[name="kota"]').val("").trigger('change');
-                        $('[name="negara"]').val("Indonesia").trigger('change');
-                        $('[name="kode_pos"]').val("");
-                        $('#formData').hide();
-                        Swal.fire(
-                            'Good job!',
-                            'Data berhasil ditambahkan!',
-                            'success'
-                        )
-                        ambilData();
-                    }
+                    $('#submit').trigger('reset');
+                    $('[name="kewarganegaraan"]').val("").trigger('change');
+                    $('[name="kota"]').val("").trigger('change');
+                    $('[name="negara"]').val("").trigger('change');
+                    $('#formData').hide();
+                    Swal.fire(
+                        'Good job!',
+                        'Data berhasil ditambahkan!',
+                        'success'
+                    )
+                    ambilData();
                 }
-            })
-        }
+            });
+        });
+
+        // Tambah Data
+        // function tambahDataAuthor() {
+        //     let nama = htmlspecialchars($('[name="nama"]').val());
+        //     let email = htmlspecialchars($('[name="email"]').val());
+        //     let no_telepon = htmlspecialchars($('[name="no_telepon"]').val());
+        //     let kewarganegaraan = htmlspecialchars($('[name="kewarganegaraan"]').val());
+        //     let alamat = htmlspecialchars($('[name="alamat"]').val());
+        //     let kota = htmlspecialchars($('[name="kota"]').val());
+        //     let negara = htmlspecialchars($('[name="negara"]').val());
+        //     let kode_pos = htmlspecialchars($('[name="kode_pos"]').val());
+
+        //     $.ajax({
+        //         url: '<?= base_url(); ?>author/tambahData',
+        //         type: 'POST',
+        //         dataType: 'json',
+        //         data: {
+        //             nama: nama,
+        //             email: email,
+        //             no_telepon: no_telepon,
+        //             kewarganegaraan: kewarganegaraan,
+        //             alamat: alamat,
+        //             kota: kota,
+        //             negara: negara,
+        //             kode_pos: kode_pos
+        //         },
+        //         success: function(data) {
+        //             if (data !== 'success') {
+        //                 $('.nama-error').html(data.nama);
+        //                 $('.email-error').html(data.email);
+        //                 $('.no_telepon-error').html(data.no_telepon);
+        //                 $('.kewarganegaraan-error').html(data.kewarganegaraan);
+        //                 $('.alamat-error').html(data.alamat);
+        //                 $('.kota-error').html(data.kota);
+        //                 $('.negara-error').html(data.negara);
+        //                 $('.kode_pos-error').html(data.kode_pos);
+
+        //                 $('.nama-error').show();
+        //                 $('.email-error').show();
+        //                 $('.no_telepon-error').show();
+        //                 $('.kewarganegaraan-error').show();
+        //                 $('.alamat-error').show();
+        //                 $('.kota-error').show();
+        //                 $('.negara-error').show();
+        //                 $('.kode_pos-error').show();
+        //             } else {
+        //                 $('.nama-error').hide();
+        //                 $('.email-error').hide();
+        //                 $('.no_telepon-error').hide();
+        //                 $('.kewarganegaraan-error').hide();
+        //                 $('.alamat-error').hide();
+        //                 $('.kota-error').hide();
+        //                 $('.negara-error').hide();
+        //                 $('.kode_pos-error').hide();
+
+        //                 $('[name="nama"]').val("");
+        //                 $('[name="email"]').val("");
+        //                 $('[name="no_telepon"]').val("");
+        //                 $('[name="kewarganegaraan"]').val("Indonesia").trigger('change');
+        //                 $('[name="alamat"]').val("");
+        //                 $('[name="kota"]').val("").trigger('change');
+        //                 $('[name="negara"]').val("Indonesia").trigger('change');
+        //                 $('[name="kode_pos"]').val("");
+        //                 $('#formData').hide();
+        //                 Swal.fire(
+        //                     'Good job!',
+        //                     'Data berhasil ditambahkan!',
+        //                     'success'
+        //                 )
+        //                 ambilData();
+        //             }
+        //         }
+        //     })
+        // }
 
         //Ubah Data
         function ubahDataAuthor() {
@@ -687,7 +699,7 @@
                         '<tr>' +
                         '<td>Kewarganegaraan</td>' +
                         '<td>:</td>' +
-                        '<td>' + response[0].kewarganegaraan + '</td>' +
+                        '<td>' + response[0].nama_negara + '</td>' +
                         +'</tr>' +
                         '<tr>' +
                         '<td>Alamat</td>' +
@@ -702,7 +714,7 @@
                         '<tr>' +
                         '<td>Negara</td>' +
                         '<td>:</td>' +
-                        '<td>' + response[0].negara + '</td>' +
+                        '<td>' + response[0].nama_negara + '</td>' +
                         +'</tr>' +
                         '<tr>' +
                         '<td>Kode pos</td>' +
@@ -1269,7 +1281,7 @@
                         html = html + '<tr>' +
                             '<td style="width: 1%;">' + no + '</td>' +
                             '<td>' + response[i].nama_jenis + '</td>' +
-                            '<td style="width: 25%;">' + '<button class="btn btn-primary mr-2" data-toggle="modal" data-target="#modalJenis" onclick="submit(' + response[i].id_jenis + ')"><i class="fa-solid fa-pencil"></i></button><button class="btn btn-danger" onclick="hapusDataJenis(' + response[i].id_jenis + ')"><i class="fa-solid fa-trash"></i></button>' + '</td>' +
+                            '<td style="width: 25%;">' + '<button class="btn btn-warning mr-2" data-toggle="modal" data-target="#modalSubjenis" onclick="submit(' + response[i].id_jenis + ')"><i class="fa-solid fa-plus"></i></button><button class="btn btn-primary mr-2" data-toggle="modal" data-target="#modalJenis" onclick="submit(' + response[i].id_jenis + ')"><i class="fa-solid fa-pencil"></i></button><button class="btn btn-danger" onclick="hapusDataJenis(' + response[i].id_jenis + ')"><i class="fa-solid fa-trash"></i></button>' + '</td>' +
                             '</tr>';
                     }
                     $("#tbl_data").html(html);
@@ -1821,6 +1833,133 @@
                         setInterval('location.reload()', 1000);
                     }
 
+                }
+            })
+        }
+    </script>
+<?php endif ?>
+
+<?php if ($this->router->fetch_class() == 'permohonan') : ?>
+    <script>
+        function htmlspecialchars(str) {
+            return str.replace('&', '&amp;').replace('"', '&quot;').replace("'", '&#039;').replace('<', '&lt;').replace('>', '&gt;');
+        }
+
+        function tambahDataJenisPermohonan() {
+            let jenis_permohonan = htmlspecialchars($('[name="jenis_permohonan"]').val());
+            let jenis_ciptaan = htmlspecialchars($('[name="jenis_ciptaan"]').val());
+            let subjenis_ciptaan = htmlspecialchars($('[name="subjenis_ciptaan"]').val());
+            let judul = htmlspecialchars($('[name="judul"]').val());
+            let uraian = htmlspecialchars($('[name="uraian"]').val());
+            let tgl_pertama = htmlspecialchars($('[name="tgl_pertama"]').val());
+            let kuasa = htmlspecialchars($('[name="kuasa"]:checked').val());
+
+            $.ajax({
+                url: '<?= base_url(); ?>permohonan/tambahDataDetail',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    jenis_permohonan: jenis_permohonan,
+                    jenis_ciptaan: jenis_ciptaan,
+                    subjenis_ciptaan: subjenis_ciptaan,
+                    judul: judul,
+                    uraian: uraian,
+                    tgl_pertama: tgl_pertama,
+                    kuasa: kuasa,
+                },
+                success: function(data) {
+                    if (data !== 'success') {
+                        $('.jenis_permohonan-error').html(data.jenis_permohonan);
+                        $('.jenis_ciptaan-error').html(data.jenis_ciptaan);
+                        $('.subjenis_ciptaan-error').html(data.subjenis_ciptaan);
+                        $('.judul-error').html(data.judul);
+                        $('.uraian-error').html(data.uraian);
+                        $('.tgl_pertama-error').html(data.tgl_pertama);
+                        $('.kuasa-error').html(data.kuasa);
+
+                        $('.jenis_permohonan-error').show();
+                        $('.jenis_ciptaan-error').show();
+                        $('.subjenis_ciptaan-error').show();
+                        $('.judul-error').show();
+                        $('.uraian-error').show();
+                        $('.tgl_pertama-error').show();
+                        $('.kuasa-error').show();
+                    } else {
+                        $('.jenis_permohonan-error').hide();
+                        $('.jenis_ciptaan-error').hide();
+                        $('.subjenis_ciptaan-error').hide();
+                        $('.judul-error').hide();
+                        $('.uraian-error').hide();
+                        $('.tgl_pertama-error').hide();
+                        $('.kuasa-error').hide();
+
+                        window.location.href = "<?= base_url('permohonan/pencipta') ?>";
+                    }
+                }
+            })
+        }
+
+        function submit(type) {
+            if (type == 'tambah') {
+                $('#btn-tambah').show();
+                $('#btn-ubah').hide();
+                $('#penciptaModalLabel').text("Tambah Data Pencipta");
+            } else if (type == 'tutup') {
+                $('.jenis_permohonan-error').hide();
+                $('[name="jenis_permohonan"]').val("");
+                $('#modalJenisPermohonan').modal('hide');
+            } else {
+                $('#btn-tambah').hide();
+                $('#btn-ubah').show();
+                $('#penciptaModalLabel').text("Ubah Data Pencipta");
+
+                $.ajax({
+                    type: 'POST',
+                    data: 'id=' + type,
+                    url: '<?= base_url(); ?>JenisPermohonan/ambilDataById',
+                    dataType: 'json',
+                    success: function(response) {
+                        $('[name="id"]').val(response[0].id_jenis_permohonan);
+                        $('[name="jenis_permohonan"]').val(response[0].nama_jenis_permohonan);
+                    }
+                })
+            }
+        }
+
+        function tambahDataPencipta() {
+            let nama = htmlspecialchars($('[name="nama"]').val());
+            let email = htmlspecialchars($('[name="email"]').val());
+            let no_telepon = htmlspecialchars($('[name="no_telepon"]').val());
+            let kewarganegaraan = htmlspecialchars($('[name="kewarganegaraan"]').val());
+            let alamat = htmlspecialchars($('[name="alamat"]').val());
+            let provinsi = htmlspecialchars($('[name="provinsi"]').val());
+            let kota = htmlspecialchars($('[name="kota"]').val());
+            let negara = htmlspecialchars($('[name="negara"]').val());
+            let kode_pos = htmlspecialchars($('[name="kode_pos"]').val());
+
+            $.ajax({
+                url: '<?= base_url(); ?>JenisPermohonan/tambahData',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    nama: nama,
+                },
+                success: function(data) {
+                    if (data !== 'success') {
+                        $('.nama-error').html(data.nama);
+                        $('.nama-error').show();
+                    } else {
+                        $('.nama-error').hide();
+
+                        $('[name="nama"]').val("");
+                        $('#modalJenisPermohonan').modal('hide');
+                        Swal.fire(
+                            'Good job!',
+                            'Data berhasil ditambahkan!',
+                            'success'
+                        )
+                        ambilData();
+                    }
                 }
             })
         }

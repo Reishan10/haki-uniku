@@ -27,25 +27,19 @@
                         </div>
                         <div class="row mb-3">
                             <div class="col w-50">
-                                <span class="mb-1">Kewarganegaraan</span>
-                                <span><?= $user->kewarganegaraan ?></span>
-                            </div>
-                            <div class="col w-50">
                                 <span class="mb-1">Alamat</span>
                                 <span><?= $user->alamat_user ?></span>
                             </div>
-                        </div>
-                        <div class="row mb-3">
                             <div class="col w-50">
                                 <span class="mb-1">Kota</span>
                                 <span><?= $user->nama_kota ?></span>
                             </div>
-                            <div class="col w-50">
-                                <span class="mb-1">Negara</span>
-                                <span><?= $user->negara ?></span>
-                            </div>
                         </div>
                         <div class="row mb-3">
+                            <div class="col w-50">
+                                <span class="mb-1">Negara</span>
+                                <span><?= $user->nama_negara ?></span>
+                            </div>
                             <div class="col w-50">
                                 <span class="mb-1">Kode POS</span>
                                 <span><?= $user->kode_pos ?></span>
@@ -80,18 +74,6 @@
                         <small class="text-danger no_telepon-error"></small>
                     </div>
                     <div class="form-group">
-                        <label for="kewarganegaraan">Kewarganegaraan</label>
-                        <select name="kewarganegaraan" id="kewarganegaraan" class="form-control select2">
-                            <option value="Indonesia">Indonesia</option>
-                            <option value="Malaysia">Malaysia</option>
-                            <option value="Singapura">Singapura</option>
-                            <option value="Filipina">Filipina</option>
-                            <option value="Thailand">Thailand</option>
-                            <option value="Vietnam">Vietnam</option>
-                        </select>
-                        <small class="text-danger kewarganegaraan-error"></small>
-                    </div>
-                    <div class="form-group">
                         <label for="alamat">Alamat</label>
                         <textarea name="alamat" id="alamat" name="alamat" class="form-control" rows="1" placeholder="Alamat"></textarea>
                         <small class="text-danger alamat-error"></small>
@@ -109,12 +91,10 @@
                     <div class="form-group">
                         <label for="negara">Negara</label>
                         <select name="negara" id="negara" class="form-control select2">
-                            <option value="Indonesia">Indonesia</option>
-                            <option value="Malaysia">Malaysia</option>
-                            <option value="Singapura">Singapura</option>
-                            <option value="Filipina">Filipina</option>
-                            <option value="Thailand">Thailand</option>
-                            <option value="Vietnam">Vietnam</option>
+                            <option value="">-- Negara --</option>
+                            <?php foreach ($negara as $row) { ?>
+                                <option value="<?= $row->id_negara ?>"><?= $row->nama_negara ?></option>
+                            <?php } ?>
                         </select>
                         <small class="text-danger negara-error"></small>
                     </div>

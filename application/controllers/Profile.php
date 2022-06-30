@@ -15,8 +15,9 @@ class Profile extends CI_Controller
     public function index()
     {
         $id = $this->session->userdata('id_user');
-        $data['user'] = $this->db->query("SELECT * FROM tbl_user LEFT JOIN tbl_kota ON tbl_user.kota = tbl_kota.id_kota WHERE id_user = '$id'")->row();
-        $data['kota'] = $this->db->get('tbl_kota')->result();
+        $data['user'] = $this->db->query("SELECT * FROM tbl_user LEFT JOIN tbl_kota ON tbl_user.kota = tbl_kota.id_kota LEFT JOIN tbl_negara ON tbl_user.negara = tbl_negara.id_negara WHERE id_user = '$id'")->row();
+        $data['kota'] = $this->db->query("SELECT * FROM tbl_kota ORDER BY nama_kota ASC")->result();
+        $data['negara'] = $this->db->query("SELECT * FROM tbl_negara ORDER BY nama_negara ASC")->result();
         $data['title'] = "Profile";
         $this->load->view('templates/v_header', $data);
         $this->load->view('templates/v_sidebar');
