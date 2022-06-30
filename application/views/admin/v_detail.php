@@ -29,7 +29,7 @@
                         <div class="form-group row">
                             <label for="staticEmail" class="col-sm-2 col-form-label">Jenis Ciptaan <span class="text-danger">*</span></label>
                             <div class="col-sm-10">
-                                <select name="" id="" class="form-control select2">
+                                <select name="" id="jenis_ciptaan" class="form-control select2">
                                     <option value="">---</option>
                                     <?php foreach ($jenis as $row) { ?>
                                         <option value="<?= $row->id_jenis ?>"><?= $row->nama_jenis ?></option>
@@ -40,11 +40,9 @@
                         <div class="form-group row">
                             <label for="staticEmail" class="col-sm-2 col-form-label">Sub-Jenis Ciptaan <span class="text-danger">*</span></label>
                             <div class="col-sm-10">
-                                <select name="" id="" class="form-control select2">
+                                <select name="" id="subjenis_ciptaan" class="form-control select2">
                                     <option value="">---</option>
-                                    <?php foreach ($subjenis as $row) { ?>
-                                        <option value="<?= $row->id_subjenis ?>"><?= $row->nama_subjenis ?></option>
-                                    <?php } ?>
+                                    
                                 </select>
                             </div>
                         </div>
