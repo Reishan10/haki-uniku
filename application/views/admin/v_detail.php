@@ -75,31 +75,6 @@
                 <!-- / Add New Post Form -->
             </div>
             <div class="col-lg-12 col-md-12">
-                <!-- Add New Post Form -->
-                <div class="card card-small mb-3">
-                    <div class="card-body">
-                        <span class="text-uppercase page-subtitle p-2">Data Kuasa</span>
-                        <hr>
-                        <form>
-                            <div class="form-group row mt-3">
-                                <label for="kuasa" class="col-sm-2 col-form-label">Melalui Kuasa</label>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" id="kuasa" name="kuasa" value="1" <?= $this->session->userdata('kuasa') == 1 ? 'checked' : '' ?>>
-                                    <label class="form-check-label" for="kuasa">
-                                        Ya
-                                    </label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" id="kuasa" name="kuasa" value="2" <?= $this->session->userdata('kuasa') == 2 ? 'checked' : '' ?>>
-                                    <label class="form-check-label" for="kuasa">
-                                        Tidak
-                                    </label>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <!-- / Add New Post Form -->
                 <div>
                     <!-- <a href="<?= base_url('permohonan/pencipta') ?>" class="btn btn-warning mb-3 ml-2" style="float: right;">Berikutnya</a> -->
                     <!-- <a href="#" class="btn btn-warning mb-3 ml-2" style="float: right;" onclick="tambahDataJenisPermohonan()">Berikutnya</a> -->
@@ -112,3 +87,32 @@
 
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
+<script>
+    $('#jenis_ciptaan').change(function(){
+        $.ajax({
+            url     : '<?=base_url()?>permohonan/ambilDataSubjenis', 
+            type    : 'POST',
+            data    : 'jenis_id='+$(this).val(), 
+            success : function(response)
+            {
+                response = JSON.parse(response);
+                let html = '';
+                if (response.length > 0){
+                    // swal.fire("Yeayyyy!", response.msg, "success");
+                    for (i = 0; i < response.length; i++){
+                        html += `<option value="${response[i].id_subjenis}">${response[i].nama_subjenis}</option>`;
+                    }
+                    $('#subjenis_ciptaan').html(html);
+                }else{
+                    html = '<option value="">---</option>';
+                    $('#subjenis_ciptaan').html(html);
+                    swal.fire("Ooppsss!", response.msg, "error");
+                }
+            },
+            error   : function(err)
+            {
+                swal.fire("Ooppsss!", "Kamu tidak tersambung ke server kami.", "error");
+            }
+        });
+    })
+</script>

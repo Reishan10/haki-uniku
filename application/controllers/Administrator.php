@@ -177,4 +177,5 @@ class Administrator extends CI_Controller
         $data = $this->m_administrator->deleteData($where);
         echo json_encode($data);
     }
+    
 }

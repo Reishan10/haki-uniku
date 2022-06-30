@@ -16,7 +16,7 @@
             <a class="nav-link" href="#">Blog</a>
         </li>
     </ul>
-    <span class="copyright ml-auto my-auto mr-2">Copyright © 2019 DesignRevision</span>
+    <span class="copyright ml-auto my-auto mr-2">Copyright © 2022 - <?=date('Y')?> PusHaki Universitas Kuningan</span>
 </footer>
 </main>
 </div>
