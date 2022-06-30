@@ -62,7 +62,7 @@
                             </li>
                         <?php } ?>
                         <li class="nav-item">
-                            <a class="nav-link <?= activate_menu('dosen') ?>" href="<?= base_url('author') ?>">
+                            <a class="nav-link <?= activate_menu('author') ?>" href="<?= base_url('author') ?>">
                                 <i class="fa-solid fa-user"></i>
                                 <span>Dosen</span>
                             </a>

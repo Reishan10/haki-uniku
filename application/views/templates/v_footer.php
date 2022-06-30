@@ -383,14 +383,55 @@
                     let html = "";
                     for (i = 0; i < response.length; i++) {
                         no++;
-                        html = html + '<tr>' +
-                            '<td style="width: 1%;"><span><a href="http://localhost/haki-uniku/author/detail/' + response[i].id_user + '" class="text-dark">' + no + '</a></span></td>' +
-                            '<td class="text-left"><span><a href="http://localhost/haki-uniku/author/detail/' + response[i].id_user + '" class="text-dark">' + response[i].nama_user + '</a></span></td>' +
-                            '<td style="width: 1%;"><span><a href="http://localhost/haki-uniku/author/detail/' + response[i].id_user + '" class="text-dark">0</a></span></td>' +
-                            '<td style="width: 15%;"><span><a href="http://localhost/haki-uniku/author/detail/' + response[i].id_user + '" class="text-dark">0</a></span></td>' +
-                            '<td><span><a href="http://localhost/haki-uniku/author/detail/' + response[i].id_user + '" class="text-dark">' + response[i].id_author + '</a></span></td>' +
-                            '<td style="width: 25%;">' + '<button class="btn btn-info mr-2" data-toggle="modal" data-target="#modalDetail" onclick="detailAuthor(' + response[i].id_user + ')"><i class="fa-solid fa-eye"></i></button><button class="btn btn-primary mr-2" onclick="submit(' + response[i].id_user + ')" name="id"><i class="fa-solid fa-pencil"></i></button><button class="btn btn-danger" onclick="hapusData(' + response[i].id_user + ')"><i class="fa-solid fa-trash"></i></button>' + '</td>' +
-                            '</tr>';
+                        html += `<tr>
+                                    <td style="width: 1%;">
+                                        <span>
+                                            <a href="http://localhost/haki-uniku/author/detail/${response[i].id_user}" class="text-dark">
+                                                ${no}
+                                            </a>
+                                        </span>
+                                    </td>
+                                    <td class="text-left">
+                                        <span>
+                                            <a href="http://localhost/haki-uniku/author/detail/${response[i].id_user}" class="text-dark">
+                                                ${response[i].nama_user}
+                                            </a>
+                                        </span>
+                                        <br/>
+                                        <span>
+                                            <a href="http://localhost/haki-uniku/author/detail/${response[i].id_user}" class="text-dark">
+                                                NIDN.${response[i].id_author}
+                                            </a>
+                                        </span>
+                                    </td>
+                                    <td style="width: 1%;">
+                                        <span>
+                                            <a href="http://localhost/haki-uniku/author/detail/${response[i].id_user}" class="text-dark">
+                                                0
+                                            </a>
+                                        </span>
+                                    </td>
+                                    <td style="width: 15%;">
+                                        <span>
+                                            <a href="http://localhost/haki-uniku/author/detail/${response[i].id_user}" class="text-dark">
+                                                0
+                                            </a>
+                                        </span>
+                                    </td>
+                                    <td style="width: 25%;">
+                                        <button class="btn btn-info mr-2" data-toggle="modal" data-target="#modalDetail" onclick="detailAuthor(${response[i].id_user})">
+                                            <i class="fa-solid fa-eye"></i>
+                                        </button>
+                                        
+                                        <button class="btn btn-primary mr-2" onclick="submit(${response[i].id_user})" name="id">
+                                            <i class="fa-solid fa-pencil"></i>
+                                        </button>
+                                        
+                                        <button class="btn btn-danger" onclick="hapusData(${response[i].id_user})">
+                                            <i class="fa-solid fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>`;
                     }
                     $("#tbl_data").html(html);
                 }
@@ -403,7 +444,7 @@
                 $('#btn-tambah').show();
                 $('#btn-ubah').hide();
                 $('#formLabel').text("Tambah Data Author");
-                $('[name="nama"]').focus();
+                $('[name="nidn"]').focus();
 
                 $('#submit').trigger('reset');
                 $('[name="kewarganegaraan"]').val("").trigger('change');
