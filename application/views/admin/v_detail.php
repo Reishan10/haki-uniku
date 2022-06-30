@@ -44,9 +44,6 @@
                             <div class="col-sm-10">
                                 <select name="subjenis_ciptaan" id="subjenis_ciptaan" class="form-control select2">
                                     <option value="">---</option>
-                                    <?php foreach ($subjenis as $row) { ?>
-                                        <option value="<?= $row->id_subjenis ?>" <?= $row->id_subjenis == $this->session->userdata('subjenis_ciptaan') ? 'selected' : '' ?>><?= $row->nama_subjenis ?></option>
-                                    <?php } ?>
                                 </select>
                                 <?= form_error('subjenis_ciptaan', '<small class="text-danger">', '</small>'); ?>
                             </div>
@@ -112,3 +109,6 @@
         </div>
     </form>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
