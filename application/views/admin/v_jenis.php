@@ -10,7 +10,7 @@
     <!-- Default Light Table -->
     <div class="row">
         <div class="col">
-            <div class="card card-small">
+            <div class="card card-small mb-4">
                 <div class="card-header border-bottom">
                     <h6 class="m-0">Data Jenis</h6>
                     <button type="button" style="float: right;" class="btn btn-warning" data-toggle="modal" data-target="#modalJenis" onclick="submit('tambah')">
@@ -19,7 +19,7 @@
                 </div>
                 <div class="table-responsive">
                     <div class="card-body">
-                        <table class="table mb-0 table-responsive dataTablesJenis">
+                        <table class="table mb-0 table-responsive" id="table">
                             <thead class="bg-light">
                                 <tr>
                                     <th scope="col" class="border-0" style="width: 1%;">#</th>
@@ -37,14 +37,14 @@
     </div>
 </div>
 
-<div class="main-content-container container-fluid px-4">
+<div class="main-content-container container-fluid px-4" id="formDataSubjenis" style="display: none;">
     <!-- Default Light Table -->
     <div class="row">
         <div class="col">
             <div class="card card-small mb-4">
                 <div class="card-header border-bottom">
                     <h6 class="m-0">Data Subjenis</h6>
-                    <button type="button" style="float: right;" class="btn btn-warning" data-toggle="modal" data-target="#modalSubjenis" onclick="submit('tambah')">
+                    <button type="button" style="float: right;" class="btn btn-warning" data-toggle="modal" data-target="#modalSubjenis" onclick="submitSubjenis('tambah',id)">
                         Tambah Data
                     </button>
                 </div>
@@ -54,12 +54,12 @@
                             <thead class="bg-light">
                                 <tr>
                                     <th scope="col" class="border-0" style="width: 1%;">#</th>
-                                    <th scope="col" class="border-0">Jenis Ciptaan</th>
                                     <th scope="col" class="border-0">Subjenis Ciptaan</th>
+                                    <th scope="col" class="border-0">Jenis Ciptaan</th>
                                     <th scope="col" class="border-0">Aksi</th>
                                 </tr>
                             </thead>
-                            <tbody id="tbl_data">
+                            <tbody id="tbl_subjenis">
                             </tbody>
                         </table>
                     </div>
@@ -89,8 +89,8 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="submit('tutup')">Tutup</button>
-                <button type="button" class="btn btn-primary" id="btn-tambah" onclick="tambahDataSubjenis()">Tambah</button>
-                <button type="button" class="btn btn-primary" id="btn-ubah" onclick="ubahDataSubjenis()">Ubah</button>
+                <button type="button" class="btn btn-primary" id="btn-tambah" onclick="tambahDataJenis()">Tambah</button>
+                <button type="button" class="btn btn-primary" id="btn-ubah" onclick="ubahDataJenis()">Ubah</button>
             </div>
         </div>
     </div>
@@ -102,7 +102,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="modalSubjenisLabel"></h5>
-                <button type="button" class="close" data-dismiss="modal" onclick="submit('tutup')" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" onclick="tutup()" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -112,17 +112,18 @@
                     <input type="text" class="form-control" id="jenis" name="jenis" placeholder="Jenis" disabled>
                     <small class="text-danger jenis-error"></small>
                     <input type="hidden" name="id" value="">
+                    <input type="hidden" name="id_jenis" value="">
                 </div>
                 <div class="form-group">
                     <label for="subjenis">Subjenis Ciptaan</label>
-                    <input type="text" class="form-control" id="subjenis" name="subjenis" placeholder="Jenis">
+                    <input type="text" class="form-control" id="subjenis" name="subjenis" placeholder="Subjenis">
                     <small class="text-danger subjenis-error"></small>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="submit('tutup')">Tutup</button>
-                <button type="button" class="btn btn-primary" id="btn-tambah" onclick="tambahDataSubjenis()">Tambah</button>
-                <button type="button" class="btn btn-primary" id="btn-ubah" onclick="ubahDataSubjenis()">Ubah</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="tutup()">Tutup</button>
+                <button type="button" class="btn btn-primary" id="btn-tambahSubjenis" onclick="tambahDataSubjenis()">Tambah</button>
+                <button type="button" class="btn btn-primary" id="btn-ubahSubjenis" onclick="ubahDataSubjenis()">Ubah</button>
             </div>
         </div>
     </div>

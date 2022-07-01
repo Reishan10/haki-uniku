@@ -10,7 +10,9 @@ class m_subjenis extends CI_Model
 
     public function getDataById($id)
     {
-        return $this->db->get_where('tbl_subjenis', ['id_subjenis' => $id])->result();
+        // return $this->db->query("SELECT * FROM tbl_subjenis LEFT JOIN tbl_jenis ON tbl_subjenis.id_jenis = tbl_jenis.id_jenis WHERE tbl_subjenis.id_jenis = '$id' ORDER BY nama_subjenis ASC")->result();
+        // return $this->db->get_where('tbl_subjenis', ['id_subjenis' => $id])->result();
+        return $this->db->query("SELECT * FROM tbl_subjenis JOIN tbl_jenis ON tbl_subjenis.id_jenis = tbl_jenis.id_jenis WHERE id_subjenis = '$id'")->result();
     }
 
     public function insertData($data)

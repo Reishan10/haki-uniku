@@ -1276,12 +1276,13 @@
                     let i;
                     let no = 0;
                     let html = "";
+                    let type = "tambah";
                     for (i = 0; i < response.length; i++) {
                         no++;
                         html = html + '<tr>' +
                             '<td style="width: 1%;">' + no + '</td>' +
                             '<td>' + response[i].nama_jenis + '</td>' +
-                            '<td style="width: 25%;">' + '<button class="btn btn-warning mr-2" data-toggle="modal" data-target="#modalSubjenis" onclick="submit(' + response[i].id_jenis + ')"><i class="fa-solid fa-plus"></i></button><button class="btn btn-primary mr-2" data-toggle="modal" data-target="#modalJenis" onclick="submit(' + response[i].id_jenis + ')"><i class="fa-solid fa-pencil"></i></button><button class="btn btn-danger" onclick="hapusDataJenis(' + response[i].id_jenis + ')"><i class="fa-solid fa-trash"></i></button>' + '</td>' +
+                            '<td style="width: 25%;">' + '<button class="btn btn-warning mr-2" onclick="submitSubjenis(\'' + type + '\',' + response[i].id_jenis + ');"><i class="fa-solid fa-plus"></i></button><button class="btn btn-primary mr-2" data-toggle="modal" data-target="#modalJenis" onclick="submit(' + response[i].id_jenis + ')"><i class="fa-solid fa-pencil"></i></button><button class="btn btn-danger" onclick="hapusDataJenis(' + response[i].id_jenis + ')"><i class="fa-solid fa-trash"></i></button>' + '</td>' +
                             '</tr>';
                     }
                     $("#tbl_data").html(html);
@@ -1409,6 +1410,190 @@
                     })
                 }
             })
+        }
+
+        function ambilDataSubjenis(id) {
+            $.ajax({
+                type: 'POST',
+                data: 'id=' + id,
+                url: '<?= base_url(); ?>jenis/ambilSubjenis',
+                dataType: 'json',
+                success: function(response) {
+                    let i;
+                    let no = 0;
+                    let html = "";
+                    let type = "ubah";
+
+                    for (i = 0; i < response.length; i++) {
+                        no++;
+                        html = html + '<tr>' +
+                            '<td style="width: 1%;">' + no + '</td>' +
+                            '<td>' + response[i].nama_subjenis + '</td>' +
+                            '<td>' + response[i].nama_jenis + '</td>' +
+                            '<td style="width: 25%;">' + '<button class="btn btn-primary mr-2" data-toggle="modal" data-target="#modalSubjenis" onclick="submitSubjenis(\'' + type + '\',' + response[i].id_subjenis + ');"><i class="fa-solid fa-pencil"></i></button><button class="btn btn-danger" onclick="hapusDataSubjenis(' + response[i].id_subjenis + ')"><i class="fa-solid fa-trash"></i></button>' + '</td>' +
+                            '</tr>';
+                    }
+                    $("#tbl_subjenis").html(html);
+                }
+            })
+        }
+
+        function submitSubjenis(type, id) {
+            if (type == 'tambah') {
+                $('#formDataSubjenis').show();
+                $('#btn-tambahSubjenis').show();
+                $('#btn-ubahSubjenis').hide();
+                $('#modalSubjenisLabel').text("Tambah Data Subjenis");
+
+                $.ajax({
+                    type: 'POST',
+                    data: 'id=' + id,
+                    url: '<?= base_url(); ?>jenis/ambilDataById',
+                    dataType: 'json',
+                    success: function(response) {
+                        $('[name="id"]').val(response[0].id_jenis);
+                        $('[name="jenis"]').val(response[0].nama_jenis);
+                    }
+                })
+                ambilDataSubjenis(id);
+            } else if (type == 'ubah') {
+                $('#formDataSubjenis').show();
+                $('#btn-tambahSubjenis').hide();
+                $('#btn-ubahSubjenis').show();
+                $('#modalSubjenisLabel').text("Ubah Data Subjenis");
+                $.ajax({
+                    type: 'POST',
+                    data: 'id=' + id,
+                    url: '<?= base_url(); ?>jenis/ambilSubjenisById',
+                    dataType: 'json',
+                    success: function(response) {
+                        $('[name="id"]').val(response[0].id_subjenis);
+                        $('[name="id_jenis"]').val(response[0].id_jenis);
+                        $('[name="subjenis"]').val(response[0].nama_subjenis);
+                        $('[name="jenis"]').val(response[0].nama_jenis);
+                    }
+                })
+            }
+        }
+
+
+        function tambahDataSubjenis() {
+            let id = htmlspecialchars($('[name="id"]').val());
+            let jenis = htmlspecialchars($('[name="jenis"]').val());
+            let subjenis = htmlspecialchars($('[name="subjenis"]').val());
+
+            $.ajax({
+                url: '<?= base_url(); ?>jenis/tambahSubjenis',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    id: id,
+                    subjenis: subjenis,
+                    jenis: jenis,
+                },
+                success: function(data) {
+                    if (data !== 'success') {
+                        $('.subjenis-error').html(data.subjenis);
+                        $('.jenis-error').html(data.jenis);
+                        $('.subjenis-error').show();
+                        $('.jenis-error').show();
+                    } else {
+                        $('.subjenis-error').hide();
+                        $('.jenis-error').hide();
+                        $('[name="subjenis"]').val("");
+                        $('[name="jenis"]').val("");
+
+                        $('#modalSubjenis').modal('hide');
+                        $('#formDataSubjenis').hide();
+                        Swal.fire(
+                            'Good job!',
+                            'Data berhasil ditambahkan!',
+                            'success'
+                        )
+                        ambilData();
+                    }
+                }
+            })
+        }
+
+        function ubahDataSubjenis() {
+            let id = htmlspecialchars($('[name="id"]').val());
+            let subjenis = htmlspecialchars($('[name="subjenis"]').val());
+
+            $.ajax({
+                url: '<?= base_url(); ?>jenis/ubahDataSubjenis',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    id: id,
+                    subjenis: subjenis,
+                },
+                success: function(data) {
+                    if (data !== 'success') {
+                        $('.subjenis-error').html(data.subjenis);
+                        $('.jenis-error').html(data.jenis);
+                        $('.subjenis-error').show();
+                        $('.jenis-error').show();
+                    } else {
+                        $('.subjenis-error').hide();
+                        $('.jenis-error').hide();
+                        $('[name="subjenis"]').val("");
+                        $('[name="jenis"]').val("");
+
+                        $('#modalSubjenis').modal('hide');
+                        $('#formDataSubjenis').hide();
+                        Swal.fire(
+                            'Good job!',
+                            'Data berhasil ditambahkan!',
+                            'success'
+                        )
+                        ambilData();
+                    }
+                }
+            })
+        }
+
+        function hapusDataSubjenis(id) {
+            Swal.fire({
+                title: 'Apakah anda yakin?',
+                text: "Anda tidak akan dapat mengembalikan ini!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'Ya, Hapus!',
+                cancelButtonColor: '#d33'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '<?= base_url(); ?>jenis/hapusSubjenis',
+                        type: 'POST',
+                        dataType: 'json',
+                        data: 'id=' + id,
+                        success: function(response) {
+                            $('.subjenis-error').hide();
+                            $('.jenis-error').hide();
+                            $('[name="subjenis"]').val("");
+                            $('[name="jenis"]').val("");
+
+                            $('#modalSubjenis').modal('hide');
+                            $('#formDataSubjenis').hide();
+                            Swal.fire(
+                                'Good job!',
+                                'Data berhasil dihapus!',
+                                'success'
+                            )
+                            ambilData();
+                        }
+                    })
+                }
+            })
+        }
+
+        function tutup() {
+            $('[name="jenis"]').val()
+            $('[name="subjenis"]').val()
+            $('.jenis-error').hide();
+            $('.subjenis-error').hide();
         }
     </script>
 <?php endif ?>

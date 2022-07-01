@@ -33,7 +33,6 @@ class Subjenis extends CI_Controller
         echo json_encode($data);
     }
 
-
     public function ambilDataById()
     {
         $id = $this->input->post('id');
