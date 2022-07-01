@@ -18,9 +18,10 @@ class Author extends CI_Controller
             redirect('403-forbidden');
         }
         $data['user'] = $this->db->get_where('tbl_user', ['email_user' => $this->session->userdata('email_user')])->row();
+        $data['fakultas'] = $this->db->query("SELECT * FROM tbl_fakultas ORDER BY fakultas_nama ASC")->result();
         $data['kota'] = $this->db->query("SELECT * FROM tbl_kota ORDER BY nama_kota ASC")->result();
         $data['negara'] = $this->db->query("SELECT * FROM tbl_negara ORDER BY nama_negara ASC")->result();
-        $data['title'] = "Author";
+        $data['title'] = "Dosen";
         $this->load->view('templates/v_header', $data);
         $this->load->view('templates/v_sidebar');
         $this->load->view('templates/v_navbar', $data);
@@ -32,7 +33,7 @@ class Author extends CI_Controller
     {
         $data['user'] = $this->db->get_where('tbl_user', ['email_user' => $this->session->userdata('email_user')])->row();
         $data['user_id'] = $this->m_author->getDataById($id);
-        $data['title'] = "Author";
+        $data['title'] = "Dosen";
         $this->load->view('templates/v_header', $data);
         $this->load->view('templates/v_sidebar');
         $this->load->view('templates/v_navbar', $data);
@@ -46,6 +47,13 @@ class Author extends CI_Controller
             redirect('403-forbidden');
         }
         $data = $this->m_author->getData();
+        echo json_encode($data);
+    }
+
+    public function ambilDataProdi()
+    {
+        $fakultas_nama = trim($this->input->post('fakultas_nama'));
+        $data = $this->db->get_where('tbl_fakultas', ['fakultas_nama' => $fakultas_nama])->result();
         echo json_encode($data);
     }
 

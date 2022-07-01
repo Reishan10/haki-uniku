@@ -15,6 +15,11 @@ class m_subjenis extends CI_Model
         return $this->db->query("SELECT * FROM tbl_subjenis JOIN tbl_jenis ON tbl_subjenis.id_jenis = tbl_jenis.id_jenis WHERE id_subjenis = '$id'")->result();
     }
 
+    public function getDataByJenisId($id)
+    {
+        return $this->db->get_where('tbl_subjenis', ['id_jenis' => $id])->result();
+    }
+
     public function insertData($data)
     {
         $this->db->insert('tbl_subjenis', $data);

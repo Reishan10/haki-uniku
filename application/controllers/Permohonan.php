@@ -112,4 +112,14 @@ class Permohonan extends CI_Controller
         $this->load->view('admin/v_lampiran');
         $this->load->view('templates/v_footer');
     }
+
+    
+    public function ambilDataSubjenis()
+    {
+        $this->load->model('m_subjenis');
+        $jenis_id = $this->input->post('jenis_id');
+        $data = $this->m_subjenis->getDataByJenisId($jenis_id);
+        echo json_encode($data);
+    }
+
 }
