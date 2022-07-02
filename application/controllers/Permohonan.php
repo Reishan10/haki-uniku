@@ -12,7 +12,7 @@ class Permohonan extends CI_Controller
         $this->load->model('m_permohonan');
     }
 
-    public function detail()
+    public function index()
     {
         $data['user'] = $this->db->get_where('tbl_user', ['email_user' => $this->session->userdata('email_user')])->row();
         $data['jenis_permohonan'] = $this->m_permohonan->getJenisPermohonan();
@@ -22,7 +22,7 @@ class Permohonan extends CI_Controller
         $this->load->view('templates/v_header', $data);
         $this->load->view('templates/v_sidebar');
         $this->load->view('templates/v_navbar', $data);
-        $this->load->view('admin/v_detail', $data);
+        $this->load->view('admin/v_permohonan', $data);
         $this->load->view('templates/v_footer');
     }
 
@@ -77,43 +77,6 @@ class Permohonan extends CI_Controller
         }
     }
 
-    public function pencipta()
-    {
-        $data['user'] = $this->db->get_where('tbl_user', ['email_user' => $this->session->userdata('email_user')])->row();
-        $data['provinsi'] = $this->m_permohonan->getProvinsi();
-        $data['negara'] = $this->m_permohonan->getNegara();
-        $data['kota'] = $this->m_permohonan->getKota();
-        $data['title'] = "Pencipta";
-        $this->load->view('templates/v_header', $data);
-        $this->load->view('templates/v_sidebar');
-        $this->load->view('templates/v_navbar', $data);
-        $this->load->view('admin/v_pencipta');
-        $this->load->view('templates/v_footer');
-    }
-
-    public function pemegang()
-    {
-        $data['user'] = $this->db->get_where('tbl_user', ['email_user' => $this->session->userdata('email_user')])->row();
-        $data['title'] = "Pencipta";
-        $this->load->view('templates/v_header', $data);
-        $this->load->view('templates/v_sidebar');
-        $this->load->view('templates/v_navbar', $data);
-        $this->load->view('admin/v_pemegang');
-        $this->load->view('templates/v_footer');
-    }
-
-    public function lampiran()
-    {
-        $data['user'] = $this->db->get_where('tbl_user', ['email_user' => $this->session->userdata('email_user')])->row();
-        $data['title'] = "Lampiran";
-        $this->load->view('templates/v_header', $data);
-        $this->load->view('templates/v_sidebar');
-        $this->load->view('templates/v_navbar', $data);
-        $this->load->view('admin/v_lampiran');
-        $this->load->view('templates/v_footer');
-    }
-
-    
     public function ambilDataSubjenis()
     {
         $this->load->model('m_subjenis');
@@ -121,5 +84,4 @@ class Permohonan extends CI_Controller
         $data = $this->m_subjenis->getDataByJenisId($jenis_id);
         echo json_encode($data);
     }
-
 }

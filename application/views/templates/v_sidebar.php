@@ -40,21 +40,21 @@
                             </li>
                         <?php } ?>
                         <li class="nav-item">
-                            <a class="nav-link <?= activate_menu('permohonan') ?>" href="<?= base_url('permohonan/detail') ?>">
+                            <a class="nav-link <?= activate_menu('permohonan') ?>" href="<?= base_url('permohonan') ?>">
                                 <i class="fa-solid fa-handshake"></i>
                                 <span>Permohonan</span>
                             </a>
                         </li>
                         <?php if ($this->session->userdata('role') == 'admin') { ?>
-                            <li class="nav-item dropdown <?= activate_submenu('provinsi'), activate_submenu('negara'),  activate_submenu('kota'),  activate_submenu('JenisPermohonan'), activate_submenu('jenis'), activate_submenu('subjenis') ?> ?>">
+                            <li class="nav-item dropdown <?= activate_submenu('provinsi'), activate_submenu('negara'),  activate_submenu('kota'),  activate_submenu('JenisPermohonan'), activate_submenu('jenis'), activate_submenu('fakultas') ?> ?>">
                                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                                     <i class="material-icons">&#xE2C7;</i>
                                     <span>Data Master</span>
                                 </a>
-                                <div class="dropdown-menu dropdown-menu-small <?= activate_submenu('provinsi'), activate_submenu('negara'),  activate_submenu('kota'),  activate_submenu('JenisPermohonan'), activate_submenu('jenis'), activate_submenu('subjenis') ?> ?>">
+                                <div class="dropdown-menu dropdown-menu-small <?= activate_submenu('provinsi'), activate_submenu('negara'),  activate_submenu('kota'),  activate_submenu('JenisPermohonan'), activate_submenu('jenis'), activate_submenu('fakultas') ?> ?>">
                                     <a class="dropdown-item <?= activate_menu('JenisPermohonan') ?>" href="<?= base_url('jenis-permohonan') ?>">Jenis Permohonan</a>
                                     <a class="dropdown-item <?= activate_menu('jenis') ?>" href="<?= base_url('jenis') ?>">Jenis Ciptaan</a>
-                                    <a class="dropdown-item <?= activate_menu('subjenis') ?>" href="<?= base_url('subjenis') ?>">Subjenis Ciptaan</a>
+                                    <a class="dropdown-item <?= activate_menu('fakultas') ?>" href="<?= base_url('fakultas') ?>">Fakultas</a>
                                     <a class="dropdown-item <?= activate_menu('negara') ?>" href="<?= base_url('negara') ?>">Negara</a>
                                     <a class="dropdown-item <?= activate_menu('provinsi') ?>" href="<?= base_url('provinsi') ?>">Provinsi</a>
                                     <a class="dropdown-item <?= activate_menu('kota') ?>" href="<?= base_url('kota') ?>">Kota</a>
