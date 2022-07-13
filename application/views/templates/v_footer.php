@@ -16,7 +16,7 @@
             <a class="nav-link" href="#">Blog</a>
         </li>
     </ul>
-    <span class="copyright ml-auto my-auto mr-2">Copyright © 2022 - <?=date('Y')?> PusHaki Universitas Kuningan</span>
+    <span class="copyright ml-auto my-auto mr-2">Copyright © 2022 - <?= date('Y') ?> PusHaki Universitas Kuningan</span>
 </footer>
 </main>
 </div>
@@ -37,7 +37,6 @@
     <script src="<?= base_url() ?>assets/js/scripts/extras.1.3.1.min.js"></script>
     <script src="<?= base_url() ?>assets/js/scripts/shards-dashboards.1.3.1.min.js"></script>
     <script src="<?= base_url() ?>assets/js/scripts/app/app-analytics-overview.1.3.1.min.js"></script>
-    <script src="<?= base_url() ?>assets/js/scripts/app/app-transaction-history.1.3.1.min.js"></script>
 <?php endif ?>
 
 <?php if ($this->router->fetch_class() == 'administrator') : ?>
@@ -384,10 +383,10 @@
                     for (i = 0; i < response.length; i++) {
                         no++;
                         html += `<tr>
-                                    <td style="width: 1%;">
+                                    <td style="width: 10%;">
                                         <span>
                                             <a href="http://localhost/haki-uniku/author/detail/${response[i].id_user}" class="text-dark">
-                                                ${no}
+                                                <img src="<?= base_url('assets/images/user-profile/') ?>${response[i].foto_user}" alt="${response[i].nama_user}" style="width: 100%;">
                                             </a>
                                         </span>
                                     </td>
@@ -472,6 +471,8 @@
                         $('[name="kota"]').val(response[0].kota).trigger('change');
                         $('[name="negara"]').val(response[0].negara).trigger('change');
                         $('[name="kode_pos"]').val(response[0].kode_pos);
+                        $('[name="fakultas"]').val(response[0].fakultas).trigger('change');
+                        $('[name="prodi"]').val(response[0].prodi).trigger('change');
                     }
                 })
             }
@@ -1307,8 +1308,8 @@
 
         function ambilData() {
             $.ajax({
-                type: 'ajax',
                 url: '<?= base_url(); ?>jenis/ambilData',
+                type: 'ajax',
                 type: 'POST',
                 async: false,
                 dataType: 'json',
@@ -1316,12 +1317,13 @@
                     let i;
                     let no = 0;
                     let html = "";
+                    let type = "tambah";
                     for (i = 0; i < response.length; i++) {
                         no++;
                         html = html + '<tr>' +
                             '<td style="width: 1%;">' + no + '</td>' +
                             '<td>' + response[i].nama_jenis + '</td>' +
-                            '<td style="width: 25%;">' + '<button class="btn btn-warning mr-2" data-toggle="modal" data-target="#modalSubjenis" onclick="submit(' + response[i].id_jenis + ')"><i class="fa-solid fa-plus"></i></button><button class="btn btn-primary mr-2" data-toggle="modal" data-target="#modalJenis" onclick="submit(' + response[i].id_jenis + ')"><i class="fa-solid fa-pencil"></i></button><button class="btn btn-danger" onclick="hapusDataJenis(' + response[i].id_jenis + ')"><i class="fa-solid fa-trash"></i></button>' + '</td>' +
+                            '<td style="width: 25%;">' + '<button class="btn btn-warning mr-2" onclick="submitSubjenis(\'' + type + '\',' + response[i].id_jenis + ');"><i class="fa-solid fa-plus"></i></button><button class="btn btn-primary mr-2" data-toggle="modal" data-target="#modalJenis" onclick="submit(' + response[i].id_jenis + ')"><i class="fa-solid fa-pencil"></i></button><button class="btn btn-danger" onclick="hapusDataJenis(' + response[i].id_jenis + ')"><i class="fa-solid fa-trash"></i></button>' + '</td>' +
                             '</tr>';
                     }
                     $("#tbl_data").html(html);
@@ -1450,21 +1452,12 @@
                 }
             })
         }
-    </script>
-<?php endif ?>
 
-<?php if ($this->router->fetch_class() == 'subjenis') : ?>
-    <script>
-        ambilData();
-
-        function htmlspecialchars(str) {
-            return str.replace('&', '&amp;').replace('"', '&quot;').replace("'", '&#039;').replace('<', '&lt;').replace('>', '&gt;');
-        }
-
-        function ambilData() {
+        function ambilDataSubjenis(id) {
             $.ajax({
+                url: '<?= base_url(); ?>jenis/ambilSubjenis',
+                data: 'id=' + id,
                 type: 'ajax',
-                url: '<?= base_url(); ?>subjenis/ambilData',
                 type: 'POST',
                 async: false,
                 dataType: 'json',
@@ -1472,60 +1465,71 @@
                     let i;
                     let no = 0;
                     let html = "";
+                    let type = "ubah";
+
                     for (i = 0; i < response.length; i++) {
                         no++;
                         html = html + '<tr>' +
                             '<td style="width: 1%;">' + no + '</td>' +
                             '<td>' + response[i].nama_subjenis + '</td>' +
                             '<td>' + response[i].nama_jenis + '</td>' +
-                            '<td style="width: 25%;">' + '<button class="btn btn-primary mr-2" data-toggle="modal" data-target="#modalSubjenis" onclick="submit(' + response[i].id_subjenis + ')"><i class="fa-solid fa-pencil"></i></button><button class="btn btn-danger" onclick="hapusDataSubjenis(' + response[i].id_subjenis + ')"><i class="fa-solid fa-trash"></i></button>' + '</td>' +
+                            '<td style="width: 25%;">' + '<button class="btn btn-primary mr-2" data-toggle="modal" data-target="#modalSubjenis" onclick="submitSubjenis(\'' + type + '\',' + response[i].id_subjenis + ');"><i class="fa-solid fa-pencil"></i></button><button class="btn btn-danger" onclick="hapusDataSubjenis(' + response[i].id_subjenis + ')"><i class="fa-solid fa-trash"></i></button>' + '</td>' +
                             '</tr>';
                     }
-                    $("#tbl_data").html(html);
+                    $("#tbl_subjenis").html(html);
                 }
-            });
+            })
         }
 
-        function submit(type) {
+        function submitSubjenis(type, id) {
             if (type == 'tambah') {
-                $('#btn-tambah').show();
-                $('#btn-ubah').hide();
+                $('#formDataSubjenis').show();
+                $('#btn-tambahSubjenis').show();
+                $('#btn-ubahSubjenis').hide();
                 $('#modalSubjenisLabel').text("Tambah Data Subjenis");
-            } else if (type == 'tutup') {
-                $('.subjenis-error').hide();
-                $('.jenis-error').hide();
-                $('[name="subjenis"]').val("");
-                $('[name="jenis"]').val("").trigger('change');
-
-                $('#modalSubjenis').modal('hide');
-            } else {
-                $('#btn-tambah').hide();
-                $('#btn-ubah').show();
-                $('#modalSubjenisLabel').text("Ubah Data Subjenis");
 
                 $.ajax({
                     type: 'POST',
-                    data: 'id=' + type,
-                    url: '<?= base_url(); ?>subjenis/ambilDataById',
+                    data: 'id=' + id,
+                    url: '<?= base_url(); ?>jenis/ambilDataById',
+                    dataType: 'json',
+                    success: function(response) {
+                        $('[name="id"]').val(response[0].id_jenis);
+                        $('[name="jenis"]').val(response[0].nama_jenis);
+                    }
+                })
+                ambilDataSubjenis(id);
+            } else if (type == 'ubah') {
+                $('#formDataSubjenis').show();
+                $('#btn-tambahSubjenis').hide();
+                $('#btn-ubahSubjenis').show();
+                $('#modalSubjenisLabel').text("Ubah Data Subjenis");
+                $.ajax({
+                    type: 'POST',
+                    data: 'id=' + id,
+                    url: '<?= base_url(); ?>jenis/ambilSubjenisById',
                     dataType: 'json',
                     success: function(response) {
                         $('[name="id"]').val(response[0].id_subjenis);
+                        $('[name="id_jenis"]').val(response[0].id_jenis);
                         $('[name="subjenis"]').val(response[0].nama_subjenis);
-                        $('[name="jenis"]').val(response[0].id_jenis).trigger('change');
+                        $('[name="jenis"]').val(response[0].nama_jenis);
                     }
                 })
             }
         }
 
         function tambahDataSubjenis() {
-            let subjenis = htmlspecialchars($('[name="subjenis"]').val());
+            let id = htmlspecialchars($('[name="id"]').val());
             let jenis = htmlspecialchars($('[name="jenis"]').val());
+            let subjenis = htmlspecialchars($('[name="subjenis"]').val());
 
             $.ajax({
-                url: '<?= base_url(); ?>subjenis/tambahData',
+                url: '<?= base_url(); ?>jenis/tambahSubjenis',
                 type: 'POST',
                 dataType: 'json',
                 data: {
+                    id: id,
                     subjenis: subjenis,
                     jenis: jenis,
                 },
@@ -1539,9 +1543,10 @@
                         $('.subjenis-error').hide();
                         $('.jenis-error').hide();
                         $('[name="subjenis"]').val("");
-                        $('[name="jenis"]').val("").trigger('change');
+                        $('[name="jenis"]').val("");
 
                         $('#modalSubjenis').modal('hide');
+                        $('#formDataSubjenis').hide();
                         Swal.fire(
                             'Good job!',
                             'Data berhasil ditambahkan!',
@@ -1556,16 +1561,14 @@
         function ubahDataSubjenis() {
             let id = htmlspecialchars($('[name="id"]').val());
             let subjenis = htmlspecialchars($('[name="subjenis"]').val());
-            let jenis = htmlspecialchars($('[name="jenis"]').val());
 
             $.ajax({
-                url: '<?= base_url(); ?>subjenis/ubahData',
+                url: '<?= base_url(); ?>jenis/ubahDataSubjenis',
                 type: 'POST',
                 dataType: 'json',
                 data: {
                     id: id,
                     subjenis: subjenis,
-                    jenis: jenis
                 },
                 success: function(data) {
                     if (data !== 'success') {
@@ -1577,8 +1580,10 @@
                         $('.subjenis-error').hide();
                         $('.jenis-error').hide();
                         $('[name="subjenis"]').val("");
-                        $('[name="jenis"]').val("").trigger('change');
+                        $('[name="jenis"]').val("");
+
                         $('#modalSubjenis').modal('hide');
+                        $('#formDataSubjenis').hide();
                         Swal.fire(
                             'Good job!',
                             'Data berhasil diubah!',
@@ -1602,7 +1607,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: '<?= base_url(); ?>subjenis/hapusData',
+                        url: '<?= base_url(); ?>jenis/hapusSubjenis',
                         type: 'POST',
                         dataType: 'json',
                         data: 'id=' + id,
@@ -1610,8 +1615,10 @@
                             $('.subjenis-error').hide();
                             $('.jenis-error').hide();
                             $('[name="subjenis"]').val("");
-                            $('[name="jenis"]').val("").trigger('change');
+                            $('[name="jenis"]').val("");
+
                             $('#modalSubjenis').modal('hide');
+                            $('#formDataSubjenis').hide();
                             Swal.fire(
                                 'Good job!',
                                 'Data berhasil dihapus!',
@@ -1622,6 +1629,13 @@
                     })
                 }
             })
+        }
+
+        function tutup() {
+            $('[name="jenis"]').val()
+            $('[name="subjenis"]').val()
+            $('.jenis-error').hide();
+            $('.subjenis-error').hide();
         }
     </script>
 <?php endif ?>
@@ -2006,6 +2020,343 @@
     </script>
 <?php endif ?>
 
+<?php if ($this->router->fetch_class() == 'fakultas') : ?>
+    <script>
+        ambilData();
+
+        function htmlspecialchars(str) {
+            return str.replace('&', '&amp;').replace('"', '&quot;').replace("'", '&#039;').replace('<', '&lt;').replace('>', '&gt;');
+        }
+
+        function ambilData() {
+            $.ajax({
+                url: '<?= base_url(); ?>fakultas/ambilDataFakultas',
+                type: 'ajax',
+                type: 'POST',
+                async: false,
+                dataType: 'json',
+                success: function(response) {
+                    let i;
+                    let no = 0;
+                    let html = "";
+                    let type = "tambah";
+                    for (i = 0; i < response.length; i++) {
+                        no++;
+                        html = html + '<tr>' +
+                            '<td style="width: 1%;">' + no + '</td>' +
+                            '<td class="text-capitalize">' + response[i].fakultas_nama + '</td>' +
+                            '<td style="width: 25%;">' + '<button class="btn btn-warning mr-2" onclick="submitProdi(\'' + type + '\',' + response[i].fakultas_id + ',\'' + response[i].fakultas_nama + '\');"><i class="fa-solid fa-plus"></i></button><button class="btn btn-primary mr-2" data-toggle="modal" data-target="#modalFakultas" onclick="submit(' + response[i].fakultas_id + ')"><i class="fa-solid fa-pencil"></i></button><button class="btn btn-danger" onclick="hapusDataFakultas(' + response[i].fakultas_id + ')"><i class="fa-solid fa-trash"></i></button>' + '</td>' +
+                            '</tr>';
+                    }
+                    $("#tbl_data").html(html);
+                }
+            });
+        }
+
+        function submit(type) {
+            if (type == 'tambah') {
+                $('#btn-tambah').show();
+                $('#btn-ubah').hide();
+                $('#modalFakultasLabel').text("Tambah Data Fakultas");
+            } else if (type == 'tutup') {
+                $('.fakultas-error').hide();
+                $('[name="fakultas"]').val("");
+                $('#modalfakultas').modal('hide');
+            } else {
+                $('#btn-tambah').hide();
+                $('#btn-ubah').show();
+                $('#modalFakultasLabel').text("Ubah Data Fakultas");
+
+                $.ajax({
+                    type: 'POST',
+                    data: 'id=' + type,
+                    url: '<?= base_url(); ?>fakultas/ambilFakultasById',
+                    dataType: 'json',
+                    success: function(response) {
+                        $('[name="id"]').val(response[0].fakultas_id);
+                        $('[name="fakultas"]').val(response[0].fakultas_nama);
+                    }
+                })
+            }
+        }
+
+        function tambahDataFakultas() {
+            let fakultas = htmlspecialchars($('[name="fakultas"]').val());
+
+            $.ajax({
+                url: '<?= base_url(); ?>fakultas/tambahFakultas',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    fakultas: fakultas,
+                },
+                success: function(data) {
+                    if (data !== 'success') {
+                        $('.fakultas-error').html(data.fakultas);
+                        $('.fakultas-error').show();
+                    } else {
+                        $('.fakultas-error').hide();
+
+                        $('[name="fakultas"]').val("");
+                        $('#modalFakultas').modal('hide');
+                        Swal.fire(
+                            'Good job!',
+                            'Data berhasil ditambahkan!',
+                            'success'
+                        )
+                        ambilData();
+                    }
+                }
+            })
+        }
+
+        function ubahDataFakultas() {
+            let id = htmlspecialchars($('[name="id"]').val());
+            let fakultas = htmlspecialchars($('[name="fakultas"]').val());
+
+            $.ajax({
+                url: '<?= base_url(); ?>fakultas/ubahFakultas',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    id: id,
+                    fakultas: fakultas,
+                },
+                success: function(data) {
+                    if (data !== 'success') {
+                        $('.fakultas-error').html(data.fakultas);
+                        $('.fakultas-error').show();
+                    } else {
+                        $('.fakultas-error').hide();
+
+                        $('[name="fakultas"]').val("");
+                        $('#modalFakultas').modal('hide');
+                        Swal.fire(
+                            'Good job!',
+                            'Data berhasil diubah!',
+                            'success'
+                        )
+                        ambilData();
+                    }
+                }
+            })
+        }
+
+        function hapusDataFakultas(id) {
+            Swal.fire({
+                title: 'Apakah anda yakin?',
+                text: "Anda tidak akan dapat mengembalikan ini!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'Ya, Hapus!',
+                cancelButtonColor: '#d33'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '<?= base_url(); ?>fakultas/hapusFakultas',
+                        type: 'POST',
+                        dataType: 'json',
+                        data: 'id=' + id,
+                        success: function(response) {
+                            $('.fakultas-error').hide();
+
+                            $('[name="fakultas"]').val("");
+                            $('#modalFakultas').modal('hide');
+                            Swal.fire(
+                                'Good job!',
+                                'Data berhasil dihapus!',
+                                'success'
+                            )
+                            ambilData();
+                        }
+                    })
+                }
+            })
+        }
+
+        function ambilDataProdi(fakultas) {
+            $.ajax({
+                url: '<?= base_url(); ?>fakultas/ambilProdi',
+                data: {
+                    fakultas: fakultas,
+                },
+                type: 'ajax',
+                type: 'POST',
+                async: false,
+                dataType: 'json',
+                success: function(response) {
+                    let i;
+                    let no = 0;
+                    let html = "";
+                    let type = "ubah";
+
+                    for (i = 0; i < response.length; i++) {
+                        no++;
+                        html = html + '<tr>' +
+                            '<td style="width: 1%;">' + no + '</td>' +
+                            '<td class="text-capitalize">' + response[i].prodi_nama + '</td>' +
+                            '<td class="text-capitalize">' + response[i].fakultas_nama + '</td>' +
+                            '<td style="width: 25%;">' + '<button class="btn btn-primary mr-2" data-toggle="modal" data-target="#modalProdi" onclick="submitProdi(\'' + type + '\',' + response[i].prodi_id + ');"><i class="fa-solid fa-pencil"></i></button><button class="btn btn-danger" onclick="hapusDataProdi(' + response[i].prodi_id + ')"><i class="fa-solid fa-trash"></i></button>' + '</td>' +
+                            '</tr>';
+                    }
+                    $("#tbl_prodi").html(html);
+                }
+            })
+        }
+
+        function submitProdi(type, id, fakultas) {
+            if (type == 'tambah') {
+                $('#formDataProdi').show();
+                $('#btn-tambahProdi').show();
+                $('#btn-ubahProdi').hide();
+                $('#modalProdiLabel').text("Tambah Data Program Studi");
+
+                $.ajax({
+                    type: 'POST',
+                    data: 'id=' + id,
+                    url: '<?= base_url(); ?>fakultas/ambilFakultasById',
+                    dataType: 'json',
+                    success: function(response) {
+                        $('[name="id"]').val(response[0].fakultas_id);
+                        $('[name="fakultas"]').val(response[0].fakultas_nama);
+                    }
+                })
+
+                ambilDataProdi(fakultas);
+            } else if (type == 'ubah') {
+                $('#formDataProdi').show();
+                $('#btn-tambahProdi').hide();
+                $('#btn-ubahProdi').show();
+                $('#modalProdiLabel').text("Ubah Data Prodi");
+                $.ajax({
+                    type: 'POST',
+                    data: 'id=' + id,
+                    url: '<?= base_url(); ?>fakultas/ambilProdiById',
+                    dataType: 'json',
+                    success: function(response) {
+                        $('[name="id"]').val(response[0].prodi_id);
+                        $('[name="prodi"]').val(response[0].prodi_nama);
+                        $('[name="fakultas"]').val(response[0].fakultas_nama);
+                    }
+                })
+            } else if (type == 'tutup') {
+                $('[name="fakultas"]').val()
+                $('[name="prodi"]').val()
+                $('.prodi-error').hide();
+                $('.fakultas-error').hide();
+            }
+        }
+
+        function tambahDataProdi() {
+            let id = htmlspecialchars($('[name="id"]').val());
+            let fakultas = htmlspecialchars($('[name="fakultas"]').val());
+            let prodi = htmlspecialchars($('[name="prodi"]').val());
+
+            $.ajax({
+                url: '<?= base_url(); ?>fakultas/tambahProdi',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    id: id,
+                    prodi: prodi,
+                    fakultas: fakultas,
+                },
+                success: function(data) {
+                    if (data !== 'success') {
+                        $('.prodi-error').html(data.prodi);
+                        $('.fakultas-error').html(data.fakultas);
+                        $('.prodi-error').show();
+                        $('.fakultas-error').show();
+                    } else {
+                        $('.prodi-error').hide();
+                        $('.fakultas-error').hide();
+                        $('[name="prodi"]').val("");
+                        $('[name="fakultas"]').val("");
+
+                        $('#modalProdi').modal('hide');
+                        $('#formDataProdi').hide();
+                        Swal.fire(
+                            'Good job!',
+                            'Data berhasil ditambahkan!',
+                            'success'
+                        )
+                        ambilData();
+                    }
+                }
+            })
+        }
+
+        function ubahDataProdi() {
+            let id = htmlspecialchars($('[name="id"]').val());
+            let prodi = htmlspecialchars($('[name="prodi"]').val());
+
+            $.ajax({
+                url: '<?= base_url(); ?>fakultas/ubahDataProdi',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    id: id,
+                    prodi: prodi,
+                },
+                success: function(data) {
+                    if (data !== 'success') {
+                        $('.prodi-error').html(data.prodi);
+                        $('.prodi-error').show();
+                    } else {
+                        $('.prodi-error').hide();
+                        $('[name="prodi"]').val("");
+
+                        $('#modalProdi').modal('hide');
+                        $('#formDataProdi').hide();
+                        Swal.fire(
+                            'Good job!',
+                            'Data berhasil diubah!',
+                            'success'
+                        )
+                        ambilData();
+                    }
+                }
+            })
+        }
+
+        function hapusDataProdi(id) {
+            Swal.fire({
+                title: 'Apakah anda yakin?',
+                text: "Anda tidak akan dapat mengembalikan ini!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'Ya, Hapus!',
+                cancelButtonColor: '#d33'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '<?= base_url(); ?>fakultas/hapusProdi',
+                        type: 'POST',
+                        dataType: 'json',
+                        data: 'id=' + id,
+                        success: function(response) {
+                            $('.prodi-error').hide();
+                            $('.fakultas-error').hide();
+                            $('[name="prodi"]').val("");
+                            $('[name="fakultas"]').val("");
+
+                            $('#modalProdi').modal('hide');
+                            $('#formDataProdi').hide();
+                            Swal.fire(
+                                'Good job!',
+                                'Data berhasil dihapus!',
+                                'success'
+                            )
+                            ambilData();
+                        }
+                    })
+                }
+            })
+        }
+    </script>
+<?php endif ?>
 <script>
     <?php if ($this->session->flashdata('success')) { ?>
         let pesan = <?= json_encode($this->session->flashdata('success')) ?>;

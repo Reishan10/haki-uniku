@@ -87,9 +87,6 @@
                                     <textarea name="alamat" id="alamat" name="alamat" class="form-control" rows="1" placeholder="Alamat"></textarea>
                                     <small class="text-danger alamat-error"></small>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                
                                 <div class="form-group">
                                     <label for="kota">Kota</label>
                                     <select name="kota" id="kota" class="form-control select2">
@@ -100,6 +97,8 @@
                                     </select>
                                     <small class="text-danger kota-error"></small>
                                 </div>
+                            </div>
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="negara">Negara</label>
                                     <select name="negara" id="negara" class="form-control select2">
@@ -115,7 +114,7 @@
                                     <input type="number" class="form-control" id="kode_pos" name="kode_pos" placeholder="Kode Pos">
                                     <small class="text-danger kode_pos-error"></small>
                                 </div>
-                                
+
                                 <div class="form-group">
                                     <label for="kewarganegaraan">Kewarganegaraan</label>
                                     <select name="kewarganegaraan" id="kewarganegaraan" class="form-control select2">
@@ -136,7 +135,7 @@
                                     </select>
                                     <small class="text-danger fakultas-error"></small>
                                 </div>
-                                
+
                                 <div class="form-group">
                                     <label for="prodi">Program Studi</label>
                                     <select name="prodi" id="prodi" class="form-control select2">
@@ -144,7 +143,7 @@
                                     </select>
                                     <small class="text-danger prodi-error"></small>
                                 </div>
-                                
+
                                 <div class="form-group">
                                     <label for="scan_ktp">Scan KTP</label>
                                     <input type="file" class="form-control" id="scan_ktp" name="scan_ktp">
@@ -195,29 +194,27 @@
         selectionCssClass: "myFont"
     });
 
-    $('#fakultas').change(function(){
+    $('#fakultas').change(function() {
         $.ajax({
-            url     : '<?=base_url()?>author/ambilDataProdi', 
-            type    : 'POST',
-            data    : 'fakultas_nama='+$(this).val(), 
-            success : function(response)
-            {
+            url: '<?= base_url() ?>author/ambilDataProdi',
+            type: 'POST',
+            data: 'fakultas_nama=' + $(this).val(),
+            success: function(response) {
                 response = JSON.parse(response);
                 let html = '';
-                if (response.length > 0){
+                if (response.length > 0) {
                     // swal.fire("Yeayyyy!", response.msg, "success");
                     for (i = 0; i < response.length; i++){
                         html += `<option value="${response[i].prodi_id}">${ucwords(response[i].prodi_nama)}</option>`;
                     }
                     $('#prodi').html(html);
-                }else{
+                } else {
                     html = '<option value="">---</option>';
                     $('#prodi').html(html);
                     // swal.fire("Ooppsss!", response.msg, "error");
                 }
             },
-            error   : function(err)
-            {
+            error: function(err) {
                 swal.fire("Ooppsss!", "Kamu tidak tersambung ke server kami.", "error");
             }
         });

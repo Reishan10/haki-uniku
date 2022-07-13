@@ -21,6 +21,7 @@ class Author extends CI_Controller
         $data['fakultas'] = $this->db->query("SELECT * FROM tbl_fakultas ORDER BY fakultas_nama ASC")->result();
         $data['kota'] = $this->db->query("SELECT * FROM tbl_kota ORDER BY nama_kota ASC")->result();
         $data['negara'] = $this->db->query("SELECT * FROM tbl_negara ORDER BY nama_negara ASC")->result();
+        $data['prodi'] = $this->db->query("SELECT * FROM tbl_prodi ORDER BY prodi_nama ASC")->result();
         $data['title'] = "Dosen";
         $this->load->view('templates/v_header', $data);
         $this->load->view('templates/v_sidebar');

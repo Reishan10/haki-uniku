@@ -68,14 +68,14 @@
                                             <input type="password" class="form-control" id="password" name="password" placeholder="Password">
                                             <?= form_error('password', '<small class="text-danger">', '</small>'); ?>
                                         </div>
-                                        <button type="submit" class="btn btn-pill btn-accent d-table mx-auto">Access Account</button>
+                                        <button type="submit" class="btn btn-pill btn-accent d-table mx-auto">Login</button>
                                         <i class="fas fa"></i>
                                     </form>
                                 </div>
                             </div>
-                            <div class="auth-form__meta d-flex mt-4">
+                            <!-- <div class="auth-form__meta d-flex mt-4">
                                 <a href="#" class="d-table mx-auto">Lupa kata sandi Anda?</a>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
