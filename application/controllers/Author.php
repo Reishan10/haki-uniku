@@ -53,7 +53,7 @@ class Author extends CI_Controller
     public function ambilDataProdi()
     {
         $fakultas_nama = trim($this->input->post('fakultas_nama'));
-        $data = $this->db->get_where('tbl_fakultas', ['fakultas_nama' => $fakultas_nama])->result();
+        $data = $this->db->get_where('tbl_prodi', ['fakultas_nama' => $fakultas_nama])->result();
         echo json_encode($data);
     }
 

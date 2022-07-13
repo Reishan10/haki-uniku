@@ -13,7 +13,7 @@
                         <img src="<?= base_url() ?>assets/images/user-profile/<?= $user->foto_user ?>" alt="User Avatar">
                     </div>
                     <h4 class="text-center m-0 mt-2 mb-2"><?= $user->nama_user ?></h4>
-                    <h4 class="text-center m-0 mt-2 mb-2"><?= $user->id_author ?></h4>
+                    <h4 class="text-center m-0 mt-2 mb-2"><?= $user->nidn ?></h4>
                     <div class="user-details__user-data border-top border-bottom p-4">
                         <div class="row mb-3">
                             <div class="col w-50">

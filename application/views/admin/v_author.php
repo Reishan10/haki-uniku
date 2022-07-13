@@ -141,9 +141,6 @@
                                     <label for="prodi">Program Studi</label>
                                     <select name="prodi" id="prodi" class="form-control select2">
                                         <option value="">-- Program Studi --</option>
-                                        <?php foreach ($prodi as $row) { ?>
-                                            <option value="<?= $row->prodi_nama ?>"><?= ucwords($row->prodi_nama) ?></option>
-                                        <?php } ?>
                                     </select>
                                     <small class="text-danger prodi-error"></small>
                                 </div>
@@ -210,13 +207,13 @@
                 if (response.length > 0){
                     // swal.fire("Yeayyyy!", response.msg, "success");
                     for (i = 0; i < response.length; i++){
-                        html += `<option value="${response[i].prodi_id}">${response[i].prodi_nama}</option>`;
+                        html += `<option value="${response[i].prodi_id}">${ucwords(response[i].prodi_nama)}</option>`;
                     }
                     $('#prodi').html(html);
                 }else{
                     html = '<option value="">---</option>';
                     $('#prodi').html(html);
-                    swal.fire("Ooppsss!", response.msg, "error");
+                    // swal.fire("Ooppsss!", response.msg, "error");
                 }
             },
             error   : function(err)
@@ -225,4 +222,10 @@
             }
         });
     });
+
+    function ucwords (str) {
+    return (str + '').replace(/^([a-z])|\s+([a-z])/g, function ($1) {
+        return $1.toUpperCase();
+    });
+}
 </script>
