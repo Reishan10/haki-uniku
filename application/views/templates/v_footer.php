@@ -399,7 +399,7 @@
                                         <br/>
                                         <span>
                                             <a href="http://localhost/haki-uniku/author/detail/${response[i].id_user}" class="text-dark">
-                                                NIDN.${response[i].id_author}
+                                                NIDN.${response[i].nidn}
                                             </a>
                                         </span>
                                     </td>

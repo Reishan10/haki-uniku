@@ -15,6 +15,9 @@ class Permohonan extends CI_Controller
     public function index()
     {
         $data['user'] = $this->db->get_where('tbl_user', ['email_user' => $this->session->userdata('email_user')])->row();
+        $data['negara'] = $this->db->get_where('tbl_negara')->result();
+        $data['provinsi'] = $this->db->get_where('tbl_provinsi')->result();
+        $data['kota'] = $this->db->get_where('tbl_kota')->result();
         $data['jenis_permohonan'] = $this->m_permohonan->getJenisPermohonan();
         $data['jenis'] = $this->m_permohonan->getJenisCiptaan();
         $data['subjenis'] = $this->m_permohonan->getSubjenisCiptaan();
@@ -83,5 +86,12 @@ class Permohonan extends CI_Controller
         $jenis_id = $this->input->post('jenis_id');
         $data = $this->m_subjenis->getDataByJenisId($jenis_id);
         echo json_encode($data);
+    }
+
+    public function getUser()
+    {
+        $nidn = $this->input->post('nidn');
+        $result = $this->db->where('tbl_user.kota = tbl_kota.id_kota')->where('tbl_user.negara = tbl_negara.nama_negara')->get_where('tbl_user, tbl_kota, tbl_negara', ['nidn' => $nidn])->row();
+        echo json_encode($result);
     }
 }

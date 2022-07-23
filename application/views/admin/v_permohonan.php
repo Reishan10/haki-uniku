@@ -186,6 +186,18 @@
                     <h6>Data Pencipta</h6>
                     <hr>
                     <div class="form-group row mt-3">
+                        <label for="nidn" class="col-sm-4 col-form-label">NIDN/NIM <span class="text-danger">*</span></label>
+                        <div class="col-sm-8">
+                            <input type="text" name="nidn" id="nidn" class="form-control" placeholder="NIDN" list="nidn_list" onchange="selectData()">
+                            <datalist id="nidn_list">
+								<?php $dataJenis = $this->db->get('tbl_user'); ?>
+								<?php foreach ($dataJenis->result() as $key) { ?>
+									<option value="<?=$key->nidn?>"><?=$key->nidn?> - <?=$key->nama_user?></option>
+								<?php } ?>
+							</datalist>
+                        </div>
+                    </div>
+                    <div class="form-group row mt-3">
                         <label for="nama" class="col-sm-4 col-form-label">Nama <span class="text-danger">*</span></label>
                         <div class="col-sm-8">
                             <input type="text" name="nama" id="nama" class="form-control" placeholder="Nama">
@@ -531,4 +543,21 @@
             }
         });
     })
+
+    function selectData(){
+        nidn = $('#nidn').val();
+        $.post('<?=base_url()?>permohonan/getUser', 'nidn='+nidn, function(data){
+            data = JSON.parse(data);
+            if (data != null){
+                $('#nama').val(data.nama_user);
+                $('#email').val(data.email_user);
+                $('#no_telepon').val(data.telepon_user);
+                $('#kewarganegaraan').select2("val", data.id_negara);
+                $('#alamat').val(data.alamat_user);
+                $('#provinsi').select2("val", data.id_provinsi);
+                $('#kota').select2("val", data.id_kota);
+                $('#negara').select2("val", data.negara);
+            }
+        });
+    }
 </script>
