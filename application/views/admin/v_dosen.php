@@ -213,38 +213,44 @@
 		});
 	})
 
+	$('#fakultas_nama').change(function() {
+		$.ajax({
+			url: '<?= base_url() ?>dosen/ambilDataProdi',
+			type: 'POST',
+			data: 'fakultas_nama=' + $(this).val(),
+			success: function(response) {
+				response = JSON.parse(response);
+				let html = '';
+				if (response.length > 0) {
+					// swal.fire("Yeayyyy!", response.msg, "success");
+					html = '<option value="-">-- Program Studi --</option>';
+					for (i = 0; i < response.length; i++) {
+						html += `<option value="${response[i].prodi_nama}">${response[i].prodi_nama}</option>`;
+					}
+					$('#prodi').html(html);
+				} else {
+					html = '<option value="">-- Program Studi --</option>';
+					$('#prodi').html(html);
+					// swal.fire("Ooppsss!", response.msg, "error");
+				}
+			},
+			error: function(err) {
+				swal.fire("Ooppsss!", "Kamu tidak tersambung ke server kami.", "error");
+			}
+		});
+	});
+
+	function ucwords(str) {
+		return (str + '').replace(/^([a-z])|\s+([a-z])/g, function($1) {
+			return $1.toUpperCase();
+		});
+	}
+
 	function reload_table() {
 		$('#table').DataTable().ajax.reload(); //reload datatable ajax 
 	}
 
 	function tambah_dosen() {
-		$('#fakultas_nama').change(function() {
-			$.ajax({
-				url: '<?= base_url() ?>dosen/ambilDataProdi',
-				type: 'POST',
-				data: 'fakultas_nama=' + $(this).val(),
-				success: function(response) {
-					response = JSON.parse(response);
-					let html = '';
-					if (response.length > 0) {
-						// swal.fire("Yeayyyy!", response.msg, "success");
-						html = '<option value="-">-- Program Studi --</option>';
-						for (i = 0; i < response.length; i++) {
-							html += `<option value="${response[i].prodi_nama}">${response[i].prodi_nama}</option>`;
-						}
-						$('#prodi').html(html);
-					} else {
-						html = '<option value="">-- Program Studi --</option>';
-						$('#prodi').html(html);
-						// swal.fire("Ooppsss!", response.msg, "error");
-					}
-				},
-				error: function(err) {
-					swal.fire("Ooppsss!", "Kamu tidak tersambung ke server kami.", "error");
-				}
-			});
-		});
-
 		save_method = 'add';
 		$('#formData').show();
 		$('#formLabel').text("Tambah Data Dosen");
