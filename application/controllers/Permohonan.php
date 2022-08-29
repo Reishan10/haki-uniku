@@ -9,12 +9,13 @@ class Permohonan extends CI_Controller
 		if ($this->session->userdata('logged') == FALSE) {
 			redirect('login');
 		} else {
-			if (@$this->session->userdata('data')->scan_ktp == "") {
-
+			$dataUser = $this->db->get_where('tbl_user', ['id_user' => $this->session->userdata('id_user')])->row();
+			if (@$dataUser->scan_ktp == "") {
 				redirect('profile');
 			}
 		}
 		$this->load->model('m_permohonan');
+		$this->load->library('API');
 	}
 
 	public function index()
@@ -92,29 +93,6 @@ class Permohonan extends CI_Controller
 		$jenis_id = $this->input->post('jenis_id');
 		$data = $this->m_subjenis->getDataByJenisId($jenis_id);
 		echo json_encode($data);
-	}
-
-
-	public function getUser()
-	{
-		$nidn = $this->input->post('nidn');
-		$result = $this->db->select('tbl_kota.*, tbl_negara.*, tbl_user.*, tbl_user.kode_pos as kode_pos')->where('tbl_user.kota = tbl_kota.id_kota')->where('tbl_user.negara = tbl_negara.nama_negara')->get_where('tbl_user, tbl_kota, tbl_negara', ['nidn' => $nidn]);
-
-		if ($result->num_rows() > 0) {
-			$arr = array(
-				'succ'      => 1,
-				'data'      => $result->row(),
-				'message'   => 'Data berhasil diambil.'
-			);
-		} else {
-			$arr = array(
-				'succ'      => 0,
-				'data'      => null,
-				'message'   => 'Data gagal diambil.'
-			);
-		}
-
-		echo json_encode($arr);
 	}
 
 	public function saveUser()
@@ -231,5 +209,55 @@ class Permohonan extends CI_Controller
 		}
 
 		echo json_encode($arr);
+	}
+
+	public function getUser()
+	{
+		$data = $this->input->post();
+		$nidn = $this->input->post('nidn');
+
+		if ($data['jenis_pemohon'] == "dosen"){
+			$result = $this->db->select('tbl_kota.*, tbl_negara.*, tbl_user.*, tbl_user.kode_pos as kode_pos')->where('tbl_user.kota = tbl_kota.id_kota')->where('tbl_user.negara = tbl_negara.nama_negara')->get_where('tbl_user, tbl_kota, tbl_negara', ['nidn' => $nidn])->row();
+		}else{
+			$result = $this->api->CallAPI('POST', base_api('/api/v1/_getAdministratif') , ['nim' => $nidn]);
+			
+			$result = json_decode($result);
+		}
+
+		$arr = array(
+			'succ'      => 1,
+			'data'      => $result,
+			'message'   => 'Data berhasil diambil.'
+		);
+		echo json_encode($arr);
+	}
+
+	public function getPencipta()
+	{
+		$data = $this->input->get();
+		$data['user'] = $this->db->get_where('tbl_user', ['email_user' => $this->session->userdata('email_user')])->row();
+
+		if ($data['jenis_pemohon'] == "dosen"){
+			$dataJenis = $this->db->where('nidn != "-"')->where('nidn != "'.$data['user']->nidn.'"')->get('tbl_user')->result();
+
+			echo json_encode($dataJenis);
+		}else{
+			$fetch = $this->api->CallAPI('POST', base_api('/api/v1/_getMembers?act=selectAll&filter=agency_name'), ['nim' => '20190810043', 'AgencyName' => 'universitas kuningan']);
+
+			$fetch = json_decode($fetch);
+
+			if ($fetch->status != null){
+
+				$dataJenis[] = null;
+				$no = 0;
+				foreach ($fetch->data as $key) {
+					$dataJenis[$no]['nim']	= $key->nim;
+					$dataJenis[$no]['nama']	= $key->nama;	
+					$no++;
+				}
+
+				echo json_encode($dataJenis);
+			}
+		}
 	}
 }

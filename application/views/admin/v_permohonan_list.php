@@ -98,12 +98,24 @@
                                                         foreach ($dataPencipta as $value) {
                                                             if ($value->jenis_pemohon == "dosen"){
                                                                 $dataUser = $this->db->get_where('tbl_user', ['nidn' => $value->unique_id])->row();
+
+                                                                $nama   = @$dataUser->nama_user;
+                                                                $alamat = @$dataUser->alamat_user;
+                                                                $telepon= @$dataUser->telepon_user;
+                                                            }else{
+                                                                $result = $this->api->CallAPI('POST', base_api('/api/v1/_getAdministratif') , ['nim' => $value->unique_id]);
+
+                                                                $result = json_decode($result);
+
+                                                                $nama   = @$result->nama;
+                                                                $alamat = @$result->alamat;
+                                                                $telepon= "0".@$result->hp;
                                                             }
                                                     ?>  
                                                     <tr>
-                                                        <td><p style="text-align: left"><?=@$dataUser->nama_user?></p></td>
-                                                        <td><p style="text-align: left"><?=@$dataUser->alamat_user?></p></td>
-                                                        <td><p style="text-align: left"><?=@$dataUser->telepon_user?></p></td>
+                                                        <td><p style="text-align: left"><?=@$nama?></p></td>
+                                                        <td><p style="text-align: left"><?=@$alamat?></p></td>
+                                                        <td><p style="text-align: left"><?=@$telepon?></p></td>
                                                     </tr>
                                                     <?php } ?>
                                                 </table>
@@ -146,7 +158,9 @@
                                                                 <?php } ?>
                                                             </p>
                                                         </td>
-                                                        <td>Tidak ada</td>
+                                                        <td>
+                                                            <a href="<?=base_url()?>daftarpermohonan/ktppemohon/<?=$key->permohonan_id?>" target="_BLANK">Unduh KTP</a>
+                                                        </td>
                                                         <td>
                                                             <p style="text-align: left">
                                                                 <?php if (@$dataLampiran->contoh_ciptaan == ""){ ?>

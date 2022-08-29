@@ -9,7 +9,8 @@ class Daftarpermohonan extends CI_Controller
 		if ($this->session->userdata('logged') == FALSE) {
 			redirect('login');
 		} else {
-			if (@$this->session->userdata('data')->scan_ktp == "") {
+			$dataUser = $this->db->get_where('tbl_user', ['id_user' => $this->session->userdata('id_user')])->row();
+			if (@$dataUser->scan_ktp == "") {
 
 				redirect('profile');
 			}
@@ -17,6 +18,7 @@ class Daftarpermohonan extends CI_Controller
 		$this->load->model('m_permohonan');
 		$this->load->model('m_dosen');
 		$this->load->library('upload');
+		$this->load->library('API');
 	}
 
 	public function index()
@@ -116,5 +118,26 @@ class Daftarpermohonan extends CI_Controller
 		$result = $this->m_permohonan->delete($id);
 
 		redirect('daftarpermohonan');
+	}
+
+	public function ktppemohon($id = '')
+	{
+		$mpdf = new \Mpdf\Mpdf();
+		$dataPemohon = @$this->m_permohonan->selectPemohon('', $id)->result();
+		foreach($dataPemohon as $key){
+			$dataScanKTP = $this->db->get_where('tbl_user', ['nidn' => $key->unique_id])->row();
+			
+			if (!$dataScanKTP->scan_ktp){
+				$dataKTP[]	= "<i style='color: red'>KTP ".$dataScanKTP->nama_user." belum ada!</i>";
+			}else{
+				$dataKTP[] = $dataScanKTP->scan_ktp;	
+			}
+		}
+
+		$data['dataKTP']	= $dataKTP;
+		$html = $this->load->view('admin/ktp_pemohon', $data, true);
+		$mpdf->WriteHTML($html);
+		$mpdf->Output(); // opens in browser
+		//$mpdf->Output('arjun.pdf','D'); // it downloads the file into the user system, with give name
 	}
 }
