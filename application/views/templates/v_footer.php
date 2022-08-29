@@ -1,22 +1,22 @@
 <footer class="main-footer d-flex p-2 px-3 bg-white border-top">
-    <ul class="nav">
-        <li class="nav-item">
-            <a class="nav-link" href="#">Home</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">Services</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">About</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">Products</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">Blog</a>
-        </li>
-    </ul>
-    <span class="copyright ml-auto my-auto mr-2">Copyright © 2022 - <?= date('Y') ?> PusHaki Universitas Kuningan</span>
+	<ul class="nav">
+		<li class="nav-item">
+			<a class="nav-link" href="#">Home</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" href="#">Services</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" href="#">About</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" href="#">Products</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" href="#">Blog</a>
+		</li>
+	</ul>
+	<span class="copyright ml-auto my-auto mr-2">Copyright © 2022 - <?= date('Y') ?> PusHaki Universitas Kuningan</span>
 </footer>
 </main>
 </div>
@@ -28,6 +28,7 @@
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
+<<<<<<< HEAD
 <?php if ($this->router->fetch_class() == 'dashboard') : ?>
     <script src="<?= base_url() ?>assets/js/Chart.min.js"></script>
     <script src="<?= base_url() ?>assets/js/shards.min.js"></script>
@@ -2355,22 +2356,24 @@
         }
     </script>
 <?php endif ?>
+=======
+>>>>>>> 8c6de5340afa122c5d46593f43bf9d54bba08876
 <script>
-    <?php if ($this->session->flashdata('success')) { ?>
-        let pesan = <?= json_encode($this->session->flashdata('success')) ?>;
-        Swal.fire({
-            icon: 'success',
-            title: 'Good Job!',
-            text: pesan
-        });
-    <?php } else if ($this->session->flashdata('error')) { ?>
-        let pesan = <?= json_encode($this->session->flashdata('error')) ?>;
-        Swal.fire({
-            icon: 'error',
-            title: 'Opss...!',
-            text: pesan
-        });
-    <?php } ?>
+	<?php if ($this->session->flashdata('success')) { ?>
+		let pesan = <?= json_encode($this->session->flashdata('success')) ?>;
+		Swal.fire({
+			icon: 'success',
+			title: 'Good Job!',
+			text: pesan
+		});
+	<?php } else if ($this->session->flashdata('error')) { ?>
+		let pesan = <?= json_encode($this->session->flashdata('error')) ?>;
+		Swal.fire({
+			icon: 'error',
+			title: 'Opss...!',
+			text: pesan
+		});
+	<?php } ?>
 </script>
 </body>
 
