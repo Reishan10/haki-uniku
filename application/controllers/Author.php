@@ -48,6 +48,13 @@ class Author extends CI_Controller
             redirect('403-forbidden');
         }
         $data = $this->m_author->getData();
+        $result = null;
+        $i = 0;
+        foreach ($data as $key) {
+            $data[$i]->jumlahPermohonan = $this->db->where('tbl_permohonan.permohonan_id = tbl_permohonan_pemohon.permohonan_id')->get_where('tbl_permohonan, tbl_permohonan_pemohon', ['permohonan_status' => '0', 'unique_id' => $key->nidn])->num_rows();
+            $data[$i]->jumlahHaki = $this->db->where('tbl_permohonan.permohonan_id = tbl_permohonan_pemohon.permohonan_id')->get_where('tbl_permohonan, tbl_permohonan_pemohon', ['permohonan_status' => '1', 'unique_id' => $key->nidn])->num_rows();
+            $i++;
+        }
         echo json_encode($data);
     }
 

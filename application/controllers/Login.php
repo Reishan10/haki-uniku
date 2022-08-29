@@ -7,7 +7,11 @@ class Login extends CI_Controller
     {
         parent::__construct();
         if ($this->session->userdata('logged') == TRUE) {
-            redirect('dashboard');
+            if ($this->session->userdata('role') == 'admin') {
+                redirect('dashboard');
+            }else{
+                redirect('403-forbidden');
+            }
         }
     }
 
@@ -40,8 +44,9 @@ class Login extends CI_Controller
                     $data = [
                         'logged' => TRUE,
                         'id_user' => $user->id_user,
+                        'nidn'    => $user->nidn,
                         'email_user' => $user->email_user,
-                        'role' => $user->role
+                        'role' => $user->role,
                     ];
 
                     $this->session->set_userdata($data);

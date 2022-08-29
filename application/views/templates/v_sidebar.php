@@ -42,7 +42,13 @@
                         <li class="nav-item">
                             <a class="nav-link <?= activate_menu('permohonan') ?>" href="<?= base_url('permohonan') ?>">
                                 <i class="fa-solid fa-handshake"></i>
-                                <span>Permohonan</span>
+                                <span>Permohonan Baru</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link <?= activate_menu('daftarpermohonan') ?>" href="<?= base_url('daftarpermohonan') ?>">
+                                <i class="fa-solid fa-clock"></i>
+                                <span>Daftar Permohonan</span>
                             </a>
                         </li>
                         <?php if ($this->session->userdata('role') == 'admin') { ?>

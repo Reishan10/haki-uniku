@@ -24,7 +24,7 @@
                                 <tr>
                                     <th scope="col" class="border-0">#</th>
                                     <th scope="col" class="border-0">Nama</th>
-                                    <th scope="col" class="border-0">Jumlah</th>
+                                    <th scope="col" class="border-0">Jumlah Permohonan</th>
                                     <th scope="col" class="border-0">Total HAKI</th>
                                     <th scope="col" class="border-0">Aksi</th>
                                 </tr>

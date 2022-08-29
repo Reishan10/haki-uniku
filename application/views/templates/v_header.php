@@ -25,4 +25,6 @@
     <script src="<?= base_url() ?>assets/js/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script async defer src="<?= base_url() ?>assets/js/buttons.js"></script>
 
+    <script src="<?= base_url() ?>assets/js/jquery.dataTables.min.js"></script>
+    <script src="<?= base_url() ?>assets/js/dataTables.responsive.min.js"></script>
 </head>

@@ -24,8 +24,6 @@
 <script type="text/javascript" src="<?= base_url() ?>assets/js/loader.js"></script>
 <script src="<?= base_url() ?>assets/js/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="<?= base_url() ?>assets/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-<script src="<?= base_url() ?>assets/js/jquery.dataTables.min.js"></script>
-<script src="<?= base_url() ?>assets/js/dataTables.responsive.min.js"></script>
 <script src="<?= base_url() ?>assets/js/script.js"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -406,14 +404,14 @@
                                     <td style="width: 1%;">
                                         <span>
                                             <a href="http://localhost/haki-uniku/author/detail/${response[i].id_user}" class="text-dark">
-                                                0
+                                                ${response[i].jumlahPermohonan}
                                             </a>
                                         </span>
                                     </td>
                                     <td style="width: 15%;">
                                         <span>
                                             <a href="http://localhost/haki-uniku/author/detail/${response[i].id_user}" class="text-dark">
-                                                0
+                                            ${response[i].jumlahHaki}
                                             </a>
                                         </span>
                                     </td>

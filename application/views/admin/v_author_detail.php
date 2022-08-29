@@ -12,8 +12,9 @@
                             </div>
                             <?php foreach ($user_id as $row) { ?>
                                 <h4 class="text-center text-white m-0 mt-2 text-uppercase"><?= $row->nama_user ?></h4>
+                                <p class="text-center text-white m-0"><?=@strtoupper($row->prodi)?> - <?=@strtoupper($this->db->get_where('tbl_prodi', ['prodi_nama' => $row->prodi])->row()->fakultas_nama)?></p>
                                 <p class="text-center text-white m-0">UNIVERSITAS KUNINGAN</p>
-                                <p class="text-center text-white m-0 mb-2">Author ID: <?= $row->nidn ?></p>
+                                <p class="text-center text-white m-0 mb-2">NIDN: <?= @$row->nidn ?></p>
                             <?php } ?>
                         </div>
                         <div class="card-body p-0">

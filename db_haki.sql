@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.3
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 28, 2022 at 04:23 AM
--- Server version: 10.4.14-MariaDB
--- PHP Version: 7.4.11
+-- Waktu pembuatan: 29 Agu 2022 pada 14.18
+-- Versi server: 10.4.22-MariaDB
+-- Versi PHP: 7.4.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,29 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_jenis`
+-- Struktur dari tabel `tbl_fakultas`
+--
+
+CREATE TABLE `tbl_fakultas` (
+  `fakultas_id` int(11) NOT NULL,
+  `fakultas_nama` varchar(200) CHARACTER SET utf8mb4 DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data untuk tabel `tbl_fakultas`
+--
+
+INSERT INTO `tbl_fakultas` (`fakultas_id`, `fakultas_nama`) VALUES
+(2, 'fakultas ekonomi'),
+(4, 'fakultas hukum'),
+(1, 'fakultas ilmu komputer'),
+(3, 'fakultas keguruan dan ilmu pendidikan'),
+(5, 'fakultas kehutanan');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `tbl_jenis`
 --
 
 CREATE TABLE `tbl_jenis` (
@@ -33,16 +55,17 @@ CREATE TABLE `tbl_jenis` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `tbl_jenis`
+-- Dumping data untuk tabel `tbl_jenis`
 --
 
 INSERT INTO `tbl_jenis` (`id_jenis`, `nama_jenis`) VALUES
-(1, 'Karya Tulis');
+(1, 'Karya Tulis'),
+(8, 'Digital');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_jenis_permohonan`
+-- Struktur dari tabel `tbl_jenis_permohonan`
 --
 
 CREATE TABLE `tbl_jenis_permohonan` (
@@ -51,7 +74,7 @@ CREATE TABLE `tbl_jenis_permohonan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `tbl_jenis_permohonan`
+-- Dumping data untuk tabel `tbl_jenis_permohonan`
 --
 
 INSERT INTO `tbl_jenis_permohonan` (`id_jenis_permohonan`, `nama_jenis_permohonan`) VALUES
@@ -62,7 +85,7 @@ INSERT INTO `tbl_jenis_permohonan` (`id_jenis_permohonan`, `nama_jenis_permohona
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_kota`
+-- Struktur dari tabel `tbl_kota`
 --
 
 CREATE TABLE `tbl_kota` (
@@ -74,7 +97,7 @@ CREATE TABLE `tbl_kota` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `tbl_kota`
+-- Dumping data untuk tabel `tbl_kota`
 --
 
 INSERT INTO `tbl_kota` (`id_kota`, `nama_kota`, `type`, `kode_pos`, `id_provinsi`) VALUES
@@ -583,7 +606,7 @@ INSERT INTO `tbl_kota` (`id_kota`, `nama_kota`, `type`, `kode_pos`, `id_provinsi
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_login`
+-- Struktur dari tabel `tbl_login`
 --
 
 CREATE TABLE `tbl_login` (
@@ -594,7 +617,7 @@ CREATE TABLE `tbl_login` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `tbl_login`
+-- Dumping data untuk tabel `tbl_login`
 --
 
 INSERT INTO `tbl_login` (`id_login`, `username`, `password`, `role`) VALUES
@@ -603,7 +626,7 @@ INSERT INTO `tbl_login` (`id_login`, `username`, `password`, `role`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_negara`
+-- Struktur dari tabel `tbl_negara`
 --
 
 CREATE TABLE `tbl_negara` (
@@ -612,7 +635,7 @@ CREATE TABLE `tbl_negara` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `tbl_negara`
+-- Dumping data untuk tabel `tbl_negara`
 --
 
 INSERT INTO `tbl_negara` (`id_negara`, `nama_negara`) VALUES
@@ -628,7 +651,128 @@ INSERT INTO `tbl_negara` (`id_negara`, `nama_negara`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_provinsi`
+-- Struktur dari tabel `tbl_permohonan`
+--
+
+CREATE TABLE `tbl_permohonan` (
+  `permohonan_id` int(11) NOT NULL,
+  `file_haki` varchar(255) DEFAULT NULL,
+  `permohonan_jenis` int(11) NOT NULL,
+  `permohonan_subjenis` int(11) NOT NULL,
+  `permohonan_judul` varchar(255) DEFAULT NULL,
+  `permohonan_uraian` text DEFAULT NULL,
+  `permohonan_tanggal` datetime NOT NULL,
+  `permohonan_status` int(11) NOT NULL DEFAULT 0,
+  `user_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `tbl_permohonan`
+--
+
+INSERT INTO `tbl_permohonan` (`permohonan_id`, `file_haki`, `permohonan_jenis`, `permohonan_subjenis`, `permohonan_judul`, `permohonan_uraian`, `permohonan_tanggal`, `permohonan_status`, `user_id`) VALUES
+(21, 'a221d865a2313421b50715efa01d7090.pdf', 2, 6, 'The Chronicles of Narnia', 'Sebuah buku tentang peradaban jaman dahulu dengan perwujudan hewan.', '2022-07-28 10:38:46', 1, 241),
+(22, 'bb6a613d7550e99f862793acacde19ab.pdf', 1, 6, 'judul hki', 'deskripsi', '2022-07-28 12:43:14', 1, 241),
+(24, 'c43c4fd5b67faac0f9ff5599cc5f2562.pdf', 1, 5, 'Kupas Tuntas Analisis Data dengan IBM SPSS 25', 'Analisis statistik dalam penelitian ilmiah sangat dibutuhkan untuk menemukan informasi yang seolah tersembunyi dalam angka-angka. analisis data dengan menggunakan IBM SPSS 25 dapat digunakan untuk mengolah data statistik pada berbagai bidang keilmuan. buku ini berisi analisis deskriptif, analisisis inferensia, probabilitas, dan ramalan atau forcasting. Dilengkapi dengan contoh studi kasus dan cara penyelesaiannya. contoh-contoh dalam buku ini disajikan dengan sederhana dan lugas agar mudah untuk dipahami dan diaplikasikan. buku ini sangat cocok untuk digunakan bahan pembelajaran di perguruan tinggi dan aplikasi kegiatan yang ada di lingkungan sekitar.', '2022-07-28 13:58:34', 1, 241);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `tbl_permohonan_lampiran`
+--
+
+CREATE TABLE `tbl_permohonan_lampiran` (
+  `lampiran_id` int(11) NOT NULL,
+  `permohonan_id` int(11) NOT NULL,
+  `contoh_ciptaan` varchar(255) DEFAULT NULL,
+  `contoh_ciptaan_url` varchar(255) DEFAULT NULL,
+  `template_surat_pernyataan` varchar(255) DEFAULT NULL,
+  `surat_pernyataan` varchar(255) DEFAULT NULL,
+  `surat_pengalihan_hak_cipta` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `tbl_permohonan_lampiran`
+--
+
+INSERT INTO `tbl_permohonan_lampiran` (`lampiran_id`, `permohonan_id`, `contoh_ciptaan`, `contoh_ciptaan_url`, `template_surat_pernyataan`, `surat_pernyataan`, `surat_pengalihan_hak_cipta`) VALUES
+(13, 21, 'de8fe00feffeb88b1a95d280606cf419.zip', 'https://www.solidproject.id/', '334f2abe43289aaa0376a3d9fe7a29f1.pdf', '68a559a3c526ed677875fe9dd39b0b0a.pdf', NULL),
+(14, 22, NULL, '', NULL, NULL, NULL),
+(16, 24, '2962310d1b5702bc9f64bae6561962f5.pdf', 'https://facebook.com', 'a124499605809947f106dde556000e84.pdf', NULL, 'aaca12d0a3d23b038a2216cde1d49bc6.pdf');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `tbl_permohonan_pemegang`
+--
+
+CREATE TABLE `tbl_permohonan_pemegang` (
+  `pemegang_id` int(11) NOT NULL,
+  `nama` varchar(125) DEFAULT NULL,
+  `kewarganegaraan` varchar(100) DEFAULT NULL,
+  `alamat` text DEFAULT NULL,
+  `kode_pos` varchar(12) DEFAULT NULL,
+  `kota` varchar(24) DEFAULT NULL,
+  `provinsi` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `tbl_permohonan_pemegang`
+--
+
+INSERT INTO `tbl_permohonan_pemegang` (`pemegang_id`, `nama`, `kewarganegaraan`, `alamat`, `kode_pos`, `kota`, `provinsi`) VALUES
+(1, 'PUSHAKI Universitas Kuningan', 'Indonesia', 'Jl. Cut Nyak Dhien No.36 A, Cijoho, Kecamatan Kuningan Kabupaten Kuningan', '45511', 'Kuningan', 'Jawa Barat');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `tbl_permohonan_pemohon`
+--
+
+CREATE TABLE `tbl_permohonan_pemohon` (
+  `pemohon_id` int(11) NOT NULL,
+  `permohonan_id` int(11) NOT NULL,
+  `jenis_pemohon` enum('dosen','mahasiswa') NOT NULL DEFAULT 'mahasiswa',
+  `unique_id` varchar(25) DEFAULT NULL,
+  `approval_status` int(11) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `tbl_permohonan_pemohon`
+--
+
+INSERT INTO `tbl_permohonan_pemohon` (`pemohon_id`, `permohonan_id`, `jenis_pemohon`, `unique_id`, `approval_status`) VALUES
+(16, 21, 'dosen', '192888', 1),
+(17, 22, 'dosen', '192888', 1),
+(18, 22, 'dosen', '192888', 1),
+(19, 22, 'mahasiswa', '192888', 1),
+(22, 24, 'dosen', '-', 0),
+(23, 24, 'dosen', '192888', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `tbl_prodi`
+--
+
+CREATE TABLE `tbl_prodi` (
+  `prodi_id` int(11) NOT NULL,
+  `prodi_nama` varchar(255) NOT NULL,
+  `fakultas_nama` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `tbl_prodi`
+--
+
+INSERT INTO `tbl_prodi` (`prodi_id`, `prodi_nama`, `fakultas_nama`) VALUES
+(1, 'teknik informatika', 'fakultas ilmu komputer'),
+(2, 'sistem informasi', 'fakultas ilmu komputer');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `tbl_provinsi`
 --
 
 CREATE TABLE `tbl_provinsi` (
@@ -637,7 +781,7 @@ CREATE TABLE `tbl_provinsi` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `tbl_provinsi`
+-- Dumping data untuk tabel `tbl_provinsi`
 --
 
 INSERT INTO `tbl_provinsi` (`id_provinsi`, `nama_provinsi`) VALUES
@@ -679,7 +823,7 @@ INSERT INTO `tbl_provinsi` (`id_provinsi`, `nama_provinsi`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_subjenis`
+-- Struktur dari tabel `tbl_subjenis`
 --
 
 CREATE TABLE `tbl_subjenis` (
@@ -689,7 +833,7 @@ CREATE TABLE `tbl_subjenis` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `tbl_subjenis`
+-- Dumping data untuk tabel `tbl_subjenis`
 --
 
 INSERT INTO `tbl_subjenis` (`id_subjenis`, `nama_subjenis`, `id_jenis`) VALUES
@@ -699,7 +843,7 @@ INSERT INTO `tbl_subjenis` (`id_subjenis`, `nama_subjenis`, `id_jenis`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_user`
+-- Struktur dari tabel `tbl_user`
 --
 
 CREATE TABLE `tbl_user` (
@@ -714,23 +858,25 @@ CREATE TABLE `tbl_user` (
   `negara` varchar(70) NOT NULL DEFAULT 'Indonesia',
   `kode_pos` varchar(12) NOT NULL,
   `role` enum('admin','user') NOT NULL,
-  `id_author` varchar(16) DEFAULT '-',
+  `nidn` varchar(18) DEFAULT '-',
   `foto_user` varchar(25) NOT NULL DEFAULT 'user.png',
-  `scan_ktp` varchar(70) DEFAULT NULL
+  `scan_ktp` varchar(70) DEFAULT NULL,
+  `prodi` varchar(200) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `tbl_user`
+-- Dumping data untuk tabel `tbl_user`
 --
 
-INSERT INTO `tbl_user` (`id_user`, `nama_user`, `email_user`, `password`, `telepon_user`, `kewarganegaraan`, `alamat_user`, `kota`, `negara`, `kode_pos`, `role`, `id_author`, `foto_user`, `scan_ktp`) VALUES
-(229, 'Administrator', 'admin@admin.com', '$2y$10$.NfAGMDexg/75tBfT0wFn.NZQeqIFgu8O8nnmpuB.DehplAx9QWE.', '085214789632', 'Indonesia', 'Jln. Merdeka Utara', 211, 'Indonesia', '45511', 'admin', '-', 'user.png', NULL),
-(231, 'Dosen', 'dosen@dosen.com', '$2y$10$2VFeup8b9MmZpD8KxzwTHumHjqyyPm.dTuBiMo.Np2DWOu/gnAG42', '085214789632', 'Indonesia', 'Jln Sudirman', 211, 'Indonesia', '45511', 'user', '-', 'user.png', NULL);
+INSERT INTO `tbl_user` (`id_user`, `nama_user`, `email_user`, `password`, `telepon_user`, `kewarganegaraan`, `alamat_user`, `kota`, `negara`, `kode_pos`, `role`, `nidn`, `foto_user`, `scan_ktp`, `prodi`) VALUES
+(229, 'Administrator', 'admin@admin.com', '$2y$10$.NfAGMDexg/75tBfT0wFn.NZQeqIFgu8O8nnmpuB.DehplAx9QWE.', '085214789632', 'Indonesia', 'Jln. Merdeka Utara', 211, 'Indonesia', '45511', 'admin', '-', 'user.png', NULL, NULL),
+(231, 'Dosen Usanha', 'dosen@dosen.com', '$2y$10$2VFeup8b9MmZpD8KxzwTHumHjqyyPm.dTuBiMo.Np2DWOu/gnAG42', '085214789632', 'Indonesia', 'Jln Sudirman', 211, 'Indonesia', '45511', 'user', '-', 'user.png', NULL, 'sistem informasi'),
+(241, 'Mohammad Irwansyah Somantri', 'mirwansyah1933@gmail.com', '$2y$10$veRi6XhkZ4OmWGlTgFBn/ez2gr.XBmRpcUYyLmAwo1qsSVR7F5qSS', '083825287989', 'Indonesia', 'Jl. RA Kartini, RT 04, RW 01, Blok Pon No. 45', 1, 'Indonesia', '45188', 'user', '192888', 'user.png', NULL, 'teknik informatika');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_user_files`
+-- Struktur dari tabel `tbl_user_files`
 --
 
 CREATE TABLE `tbl_user_files` (
@@ -744,153 +890,263 @@ CREATE TABLE `tbl_user_files` (
 --
 
 --
--- Indexes for table `tbl_jenis`
+-- Indeks untuk tabel `tbl_fakultas`
+--
+ALTER TABLE `tbl_fakultas`
+  ADD PRIMARY KEY (`fakultas_id`),
+  ADD UNIQUE KEY `faculty_name` (`fakultas_nama`);
+
+--
+-- Indeks untuk tabel `tbl_jenis`
 --
 ALTER TABLE `tbl_jenis`
   ADD PRIMARY KEY (`id_jenis`);
 
 --
--- Indexes for table `tbl_jenis_permohonan`
+-- Indeks untuk tabel `tbl_jenis_permohonan`
 --
 ALTER TABLE `tbl_jenis_permohonan`
   ADD PRIMARY KEY (`id_jenis_permohonan`);
 
 --
--- Indexes for table `tbl_kota`
+-- Indeks untuk tabel `tbl_kota`
 --
 ALTER TABLE `tbl_kota`
   ADD PRIMARY KEY (`id_kota`),
   ADD KEY `ProvinceID` (`id_provinsi`);
 
 --
--- Indexes for table `tbl_login`
+-- Indeks untuk tabel `tbl_login`
 --
 ALTER TABLE `tbl_login`
   ADD PRIMARY KEY (`id_login`),
   ADD KEY `username` (`username`);
 
 --
--- Indexes for table `tbl_negara`
+-- Indeks untuk tabel `tbl_negara`
 --
 ALTER TABLE `tbl_negara`
   ADD PRIMARY KEY (`id_negara`);
 
 --
--- Indexes for table `tbl_provinsi`
+-- Indeks untuk tabel `tbl_permohonan`
+--
+ALTER TABLE `tbl_permohonan`
+  ADD PRIMARY KEY (`permohonan_id`),
+  ADD KEY `permohonan_subjenis` (`permohonan_subjenis`),
+  ADD KEY `permohonan_jenis` (`permohonan_jenis`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- Indeks untuk tabel `tbl_permohonan_lampiran`
+--
+ALTER TABLE `tbl_permohonan_lampiran`
+  ADD PRIMARY KEY (`lampiran_id`),
+  ADD KEY `permohonan_id` (`permohonan_id`);
+
+--
+-- Indeks untuk tabel `tbl_permohonan_pemegang`
+--
+ALTER TABLE `tbl_permohonan_pemegang`
+  ADD PRIMARY KEY (`pemegang_id`);
+
+--
+-- Indeks untuk tabel `tbl_permohonan_pemohon`
+--
+ALTER TABLE `tbl_permohonan_pemohon`
+  ADD PRIMARY KEY (`pemohon_id`),
+  ADD KEY `permohonan_id` (`permohonan_id`),
+  ADD KEY `unique_id` (`unique_id`);
+
+--
+-- Indeks untuk tabel `tbl_prodi`
+--
+ALTER TABLE `tbl_prodi`
+  ADD PRIMARY KEY (`prodi_id`),
+  ADD UNIQUE KEY `prodi_nama` (`prodi_nama`),
+  ADD KEY `fakultas_nama` (`fakultas_nama`);
+
+--
+-- Indeks untuk tabel `tbl_provinsi`
 --
 ALTER TABLE `tbl_provinsi`
   ADD PRIMARY KEY (`id_provinsi`);
 
 --
--- Indexes for table `tbl_subjenis`
+-- Indeks untuk tabel `tbl_subjenis`
 --
 ALTER TABLE `tbl_subjenis`
   ADD PRIMARY KEY (`id_subjenis`),
   ADD KEY `id_jenis` (`id_jenis`);
 
 --
--- Indexes for table `tbl_user`
+-- Indeks untuk tabel `tbl_user`
 --
 ALTER TABLE `tbl_user`
   ADD PRIMARY KEY (`id_user`),
   ADD UNIQUE KEY `email_user` (`email_user`),
-  ADD KEY `kota` (`kota`);
+  ADD KEY `kota` (`kota`),
+  ADD KEY `nidn` (`nidn`),
+  ADD KEY `prodi` (`prodi`);
 
 --
--- Indexes for table `tbl_user_files`
+-- Indeks untuk tabel `tbl_user_files`
 --
 ALTER TABLE `tbl_user_files`
   ADD PRIMARY KEY (`id_user_files`),
   ADD KEY `id_user` (`id_user`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `tbl_jenis`
+-- AUTO_INCREMENT untuk tabel `tbl_fakultas`
+--
+ALTER TABLE `tbl_fakultas`
+  MODIFY `fakultas_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT untuk tabel `tbl_jenis`
 --
 ALTER TABLE `tbl_jenis`
-  MODIFY `id_jenis` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_jenis` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT for table `tbl_jenis_permohonan`
+-- AUTO_INCREMENT untuk tabel `tbl_jenis_permohonan`
 --
 ALTER TABLE `tbl_jenis_permohonan`
-  MODIFY `id_jenis_permohonan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_jenis_permohonan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `tbl_kota`
+-- AUTO_INCREMENT untuk tabel `tbl_kota`
 --
 ALTER TABLE `tbl_kota`
-  MODIFY `id_kota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=505;
+  MODIFY `id_kota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=506;
 
 --
--- AUTO_INCREMENT for table `tbl_login`
+-- AUTO_INCREMENT untuk tabel `tbl_login`
 --
 ALTER TABLE `tbl_login`
   MODIFY `id_login` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `tbl_negara`
+-- AUTO_INCREMENT untuk tabel `tbl_negara`
 --
 ALTER TABLE `tbl_negara`
-  MODIFY `id_negara` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id_negara` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
--- AUTO_INCREMENT for table `tbl_provinsi`
+-- AUTO_INCREMENT untuk tabel `tbl_permohonan`
+--
+ALTER TABLE `tbl_permohonan`
+  MODIFY `permohonan_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+
+--
+-- AUTO_INCREMENT untuk tabel `tbl_permohonan_lampiran`
+--
+ALTER TABLE `tbl_permohonan_lampiran`
+  MODIFY `lampiran_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
+-- AUTO_INCREMENT untuk tabel `tbl_permohonan_pemegang`
+--
+ALTER TABLE `tbl_permohonan_pemegang`
+  MODIFY `pemegang_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT untuk tabel `tbl_permohonan_pemohon`
+--
+ALTER TABLE `tbl_permohonan_pemohon`
+  MODIFY `pemohon_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+
+--
+-- AUTO_INCREMENT untuk tabel `tbl_prodi`
+--
+ALTER TABLE `tbl_prodi`
+  MODIFY `prodi_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT untuk tabel `tbl_provinsi`
 --
 ALTER TABLE `tbl_provinsi`
-  MODIFY `id_provinsi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id_provinsi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
--- AUTO_INCREMENT for table `tbl_subjenis`
+-- AUTO_INCREMENT untuk tabel `tbl_subjenis`
 --
 ALTER TABLE `tbl_subjenis`
-  MODIFY `id_subjenis` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_subjenis` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT for table `tbl_user`
+-- AUTO_INCREMENT untuk tabel `tbl_user`
 --
 ALTER TABLE `tbl_user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=241;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=242;
 
 --
--- AUTO_INCREMENT for table `tbl_user_files`
+-- AUTO_INCREMENT untuk tabel `tbl_user_files`
 --
 ALTER TABLE `tbl_user_files`
   MODIFY `id_user_files` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- Constraints for dumped tables
+-- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
 --
 
 --
--- Constraints for table `tbl_kota`
+-- Ketidakleluasaan untuk tabel `tbl_kota`
 --
 ALTER TABLE `tbl_kota`
   ADD CONSTRAINT `tbl_kota_ibfk_1` FOREIGN KEY (`id_provinsi`) REFERENCES `tbl_provinsi` (`id_provinsi`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `tbl_login`
+-- Ketidakleluasaan untuk tabel `tbl_login`
 --
 ALTER TABLE `tbl_login`
   ADD CONSTRAINT `tbl_login_ibfk_1` FOREIGN KEY (`username`) REFERENCES `tbl_user` (`email_user`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `tbl_subjenis`
+-- Ketidakleluasaan untuk tabel `tbl_permohonan`
+--
+ALTER TABLE `tbl_permohonan`
+  ADD CONSTRAINT `tbl_permohonan_ibfk_1` FOREIGN KEY (`permohonan_jenis`) REFERENCES `tbl_jenis_permohonan` (`id_jenis_permohonan`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `tbl_permohonan_ibfk_2` FOREIGN KEY (`permohonan_subjenis`) REFERENCES `tbl_subjenis` (`id_subjenis`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `tbl_permohonan_ibfk_3` FOREIGN KEY (`user_id`) REFERENCES `tbl_user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Ketidakleluasaan untuk tabel `tbl_permohonan_lampiran`
+--
+ALTER TABLE `tbl_permohonan_lampiran`
+  ADD CONSTRAINT `tbl_permohonan_lampiran_ibfk_1` FOREIGN KEY (`permohonan_id`) REFERENCES `tbl_permohonan` (`permohonan_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Ketidakleluasaan untuk tabel `tbl_permohonan_pemohon`
+--
+ALTER TABLE `tbl_permohonan_pemohon`
+  ADD CONSTRAINT `tbl_permohonan_pemohon_ibfk_1` FOREIGN KEY (`permohonan_id`) REFERENCES `tbl_permohonan` (`permohonan_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Ketidakleluasaan untuk tabel `tbl_prodi`
+--
+ALTER TABLE `tbl_prodi`
+  ADD CONSTRAINT `tbl_prodi_ibfk_1` FOREIGN KEY (`fakultas_nama`) REFERENCES `tbl_fakultas` (`fakultas_nama`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Ketidakleluasaan untuk tabel `tbl_subjenis`
 --
 ALTER TABLE `tbl_subjenis`
   ADD CONSTRAINT `tbl_subjenis_ibfk_1` FOREIGN KEY (`id_jenis`) REFERENCES `tbl_jenis` (`id_jenis`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `tbl_user`
+-- Ketidakleluasaan untuk tabel `tbl_user`
 --
 ALTER TABLE `tbl_user`
-  ADD CONSTRAINT `tbl_user_ibfk_2` FOREIGN KEY (`kota`) REFERENCES `tbl_kota` (`id_kota`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `tbl_user_ibfk_2` FOREIGN KEY (`kota`) REFERENCES `tbl_kota` (`id_kota`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `tbl_user_ibfk_3` FOREIGN KEY (`prodi`) REFERENCES `tbl_prodi` (`prodi_nama`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `tbl_user_files`
+-- Ketidakleluasaan untuk tabel `tbl_user_files`
 --
 ALTER TABLE `tbl_user_files`
   ADD CONSTRAINT `tbl_user_files_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `tbl_user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
