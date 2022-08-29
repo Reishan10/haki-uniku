@@ -3,6 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Login extends CI_Controller
 {
+<<<<<<< HEAD
 	public function __construct()
 	{
 		parent::__construct();
@@ -10,6 +11,19 @@ class Login extends CI_Controller
 			redirect('dashboard');
 		}
 	}
+=======
+    public function __construct()
+    {
+        parent::__construct();
+        if ($this->session->userdata('logged') == TRUE) {
+            if ($this->session->userdata('role') == 'admin') {
+                redirect('dashboard');
+            }else{
+                redirect('403-forbidden');
+            }
+        }
+    }
+>>>>>>> 4ffef4d806a9694293c3c2bcfedefdb6d94339ab
 
 	public function index()
 	{
@@ -35,14 +49,15 @@ class Login extends CI_Controller
 
 			$user = $this->db->get_where('tbl_user', ['email_user' => $email])->row();
 
-			if ($user) {
-				if (password_verify($password, $user->password)) {
-					$data = [
-						'logged' => TRUE,
-						'id_user' => $user->id_user,
-						'email_user' => $user->email_user,
-						'role' => $user->role
-					];
+            if ($user) {
+                if (password_verify($password, $user->password)) {
+                    $data = [
+                        'logged' => TRUE,
+                        'id_user' => $user->id_user,
+                        'nidn'    => $user->nidn,
+                        'email_user' => $user->email_user,
+                        'role' => $user->role,
+                    ];
 
 					$this->session->set_userdata($data);
 
