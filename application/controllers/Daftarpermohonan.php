@@ -140,4 +140,40 @@ class Daftarpermohonan extends CI_Controller
 		$mpdf->Output(); // opens in browser
 		//$mpdf->Output('arjun.pdf','D'); // it downloads the file into the user system, with give name
 	}
+
+	public function uploadscanktp($id = '')
+	{
+		$data['user'] = $this->db->select('tbl_kota.*, tbl_provinsi.*, tbl_user.*, tbl_user.kode_pos as kode_pos')->where('tbl_user.kota = tbl_kota.id_kota')->where('tbl_kota.id_provinsi = tbl_provinsi.id_provinsi')->get_where('tbl_user, tbl_kota, tbl_provinsi', ['email_user' => $this->session->userdata('email_user')])->row();
+
+        $data['value'] = $this->db->get_where('tbl_user', ['id_user' => $id])->row();
+		$data['id']		= $id;
+		$data['title'] = "Daftar";
+		$this->load->view('templates/v_header', $data);
+		$this->load->view('templates/v_sidebar');
+		$this->load->view('templates/v_navbar', $data);
+		$this->load->view('admin/v_scanktp', $data);
+		$this->load->view('templates/v_footer');
+	}
+	
+	public function CropImageUpload($id = '')
+	{
+		$data = $_POST["image"];
+
+		$image_array_1 = explode(";", $data);
+
+		$image_array_2 = explode(",", $image_array_1[1]);
+
+		$data = base64_decode($image_array_2[1]);
+
+		$imageName = 'KTP-' . time() . '.png';
+
+		file_put_contents('assets/images/scan-ktp/' . $imageName, $data);
+
+		$image_file = addslashes(file_get_contents($imageName));
+
+		$datas['scan_ktp'] = $imageName;
+
+		$this->db->update('tbl_user', ['scan_ktp' => $datas['scan_ktp']], ['id_user' => $id]);
+	}
+
 }

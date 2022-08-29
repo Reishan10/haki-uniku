@@ -91,31 +91,33 @@
                                                         <td><p style="text-align: left">Nama</p></td>
                                                         <td><p style="text-align: left">Alamat</p></td>
                                                         <td><p style="text-align: left">No. Handphone</p></td>
+                                                        <td><p style="text-align: left">KTP</p></td>
                                                     </tr>
                                                     
                                                     <?php
                                                         $dataPencipta = $this->m_permohonan->selectPemohon('', $key->permohonan_id)->result();
                                                         foreach ($dataPencipta as $value) {
-                                                            if ($value->jenis_pemohon == "dosen"){
                                                                 $dataUser = $this->db->get_where('tbl_user', ['nidn' => $value->unique_id])->row();
 
+                                                                $id_user= @$dataUser->id_user;
                                                                 $nama   = @$dataUser->nama_user;
                                                                 $alamat = @$dataUser->alamat_user;
-                                                                $telepon= @$dataUser->telepon_user;
-                                                            }else{
-                                                                $result = $this->api->CallAPI('POST', base_api('/api/v1/_getAdministratif') , ['nim' => $value->unique_id]);
-
-                                                                $result = json_decode($result);
-
-                                                                $nama   = @$result->nama;
-                                                                $alamat = @$result->alamat;
-                                                                $telepon= "0".@$result->hp;
-                                                            }
+                                                                $telepon= "0".@$dataUser->telepon_user;
+                                                                $ktp    = @$dataUser->scan_ktp;
                                                     ?>  
                                                     <tr>
                                                         <td><p style="text-align: left"><?=@$nama?></p></td>
                                                         <td><p style="text-align: left"><?=@$alamat?></p></td>
                                                         <td><p style="text-align: left"><?=@$telepon?></p></td>
+                                                        <td>
+                                                            <p style="text-align: left">
+                                                                <?php if ($ktp != ""){ ?>
+                                                                    <i class="text-success fa fa-check"></i>
+                                                                <?php }else{ ?>
+                                                                    <a href="<?=base_url()?>daftarpermohonan/uploadscanktp/<?=$id_user?>" target="_BLANK"><i class="text-danger fa fa-cloud-upload"></i></a>
+                                                                <?php } ?>
+                                                            </p>
+                                                        </td>
                                                     </tr>
                                                     <?php } ?>
                                                 </table>
@@ -209,7 +211,7 @@
                                         
                                         <a href="" class="btn btn-<?=($key->permohonan_status == "0")?'info':'danger'?>" data-toggle="modal" data-target="#modalUploadHaki<?=$key->permohonan_id?>" onclick="submit('tambah')">
                                             <i class="fa fa-cloud"></i>
-                                            Upload Berkas Persyaratan
+                                            Unggah Berkas Persyaratan
                                         </a>
                                     
                                     <?php } ?>
@@ -305,3 +307,4 @@
 </div>
 <?php }
 } ?>
+
