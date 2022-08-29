@@ -43,6 +43,7 @@ class Login extends CI_Controller
 						'nidn'    => $user->nidn,
 						'email_user' => $user->email_user,
 						'role' => $user->role,
+						'data'	=> $user
 					];
 
 					$this->session->set_userdata($data);

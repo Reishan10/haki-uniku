@@ -10,12 +10,13 @@ class Dosen extends CI_Controller
 			redirect('login');
 		}
 		$this->load->model('m_dosen');
+		$this->load->library('upload');
 	}
 
 	public function index()
 	{
 		if ($this->session->userdata('role') != 'admin') {
-			redirect('403-forbidden');
+			redirect('dosen/detail/' . $this->session->userdata('id_user'));
 		}
 		$data['user'] = $this->db->get_where('tbl_user', ['email_user' => $this->session->userdata('email_user')])->row();
 		$data['fakultas'] = $this->db->query("SELECT * FROM tbl_fakultas ORDER BY fakultas_nama ASC")->result();
@@ -39,6 +40,27 @@ class Dosen extends CI_Controller
 		$this->load->view('templates/v_navbar', $data);
 		$this->load->view('admin/v_dosen_detail', $data);
 		$this->load->view('templates/v_footer');
+	}
+
+	public function CropImageUpload()
+	{
+		$data = $_POST["image"];
+
+		$image_array_1 = explode(";", $data);
+
+		$image_array_2 = explode(",", $image_array_1[1]);
+
+		$data = base64_decode($image_array_2[1]);
+
+		$imageName = 'KTP-' . time() . '.png';
+
+		file_put_contents('assets/images/scan-ktp/' . $imageName, $data);
+
+		$image_file = addslashes(file_get_contents($imageName));
+
+		$datas['scan_ktp'] = $imageName;
+
+		$this->db->update('tbl_user', ['scan_ktp' => $datas['scan_ktp']], ['id_user' => $this->session->userdata('id_user')]);
 	}
 
 	public function ambilDataProdi()

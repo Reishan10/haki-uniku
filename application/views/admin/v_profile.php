@@ -108,6 +108,23 @@
 						<input type="file" class="form-control" id="image" name="image" placeholder="Kode Pos">
 						<small class="text-danger image-error"></small>
 					</div>
+
+					<div class="form-group" id="photo-preview">
+						<label for="scan_ktp" class="control-label">KTP</label>
+						<div>
+							<?php if ($user->scan_ktp == "") { ?>
+								<small>(Foto tidak tersedia)</small>
+							<?php } else { ?>
+								<img src="<?= base_url() ?>assets/images/scan-ktp/<?= $user->scan_ktp ?>" width="20%" />
+							<?php } ?>
+						</div>
+						<small class="text-danger help-block"></small>
+					</div>
+					<div class="form-group">
+						<label for="scan_ktp">Scan KTP</label>
+						<input type="file" name="before_crop_image" id="before_crop_image" accept="image/*" />
+						<small class="text-danger help-block"></small>
+					</div>
 					<button type="button" class="btn btn-warning" id="btn-ubah" style="float: right;" onclick="ubahDataProfile()">Ubah</button>
 				</div>
 			</div>
@@ -115,6 +132,29 @@
 	</div>
 </div>
 
+<div id="imageModel" class="modal fade bd-example-modal-lg" role="dialog">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">×</button>
+				<h4 class="modal-title">Crop &amp; Resize Image</h4>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-md-12 text-center">
+						<div id="image_demo"></div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button class="btn btn-success crop_image">Save</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
 	$('.selectProfile').select2({
 		dropdownCssClass: "myFont",
@@ -213,4 +253,48 @@
 			}
 		})
 	}
+	$(document).ready(function() {
+		$image_crop = $('#image_demo').croppie({
+			enableExif: true,
+			viewport: {
+				width: 380,
+				height: 200,
+				type: 'square' //circle
+			},
+			boundary: {
+				width: 300,
+				height: 300
+			}
+		});
+		$('#before_crop_image').on('change', function() {
+			var reader = new FileReader();
+			reader.onload = function(event) {
+				$image_crop.croppie('bind', {
+					url: event.target.result
+				}).then(function() {
+					console.log('jQuery bind complete');
+				});
+			}
+			reader.readAsDataURL(this.files[0]);
+			$('#imageModel').modal('show');
+		});
+		$('.crop_image').click(function(event) {
+			$image_crop.croppie('result', {
+				type: 'canvas',
+				size: 'viewport'
+			}).then(function(response) {
+				$.ajax({
+					url: "<?php echo base_url(); ?>dosen/CropImageUpload",
+					type: 'POST',
+					data: {
+						"image": response
+					},
+					success: function(data) {
+						$('#imageModel').modal('hide');
+						alert('Crop image has been uploaded');
+					}
+				})
+			});
+		});
+	});
 </script>
