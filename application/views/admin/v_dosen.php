@@ -1,3 +1,17 @@
+<style>
+	/* input#crop {
+		padding: 5px 25px 5px 25px;
+		background: lightseagreen;
+		border: #485c61 1px solid;
+		color: #FFF;
+		visibility: hidden;
+	} */
+
+	#cropped_img {
+		margin-top: 40px;
+	}
+</style>
+
 <div class="main-content-container container-fluid px-4">
 	<!-- Page Header -->
 	<div class="page-header row no-gutters py-4">
@@ -146,6 +160,11 @@
 									<input type="file" class="form-control" id="scan_ktp" name="scan_ktp">
 									<small class="text-danger help-block"></small>
 								</div>
+								<div class="form-group">
+									<label for="scan_ktp">Scan KTP</label>
+									<input type="file" name="before_crop_image" id="before_crop_image" accept="image/*" />
+									<small class="text-danger help-block"></small>
+								</div>
 								<div class="mt-5">
 									<button type="submit" class="btn btn-warning" id="btnSave" style="float: right;" onclick="save()">Simpan</button>
 									<button type="button" class="btn btn-secondary mr-2" onclick="tutup()" style="float: right;">Tutup</button>
@@ -180,8 +199,81 @@
 	</div>
 </div>
 
+<div id="imageModel" class="modal fade bd-example-modal-lg" role="dialog">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">×</button>
+				<h4 class="modal-title">Crop &amp; Resize Upload Image in PHP with Ajax</h4>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-md-8 text-center">
+						<div id="image_demo" style="width:350px; margin-top:30px"></div>
+					</div>
+					<div class="col-md-4" style="padding-top:30px;">
+						<br />
+						<br />
+						<br />
+						<button class="btn btn-success crop_image">Save</button>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
+	$(document).ready(function() {
+		$image_crop = $('#image_demo').croppie({
+			enableExif: true,
+			viewport: {
+				width: 200,
+				height: 200,
+				type: 'square' //circle
+			},
+			boundary: {
+				width: 300,
+				height: 300
+			}
+		});
+		$('#before_crop_image').on('change', function() {
+			var reader = new FileReader();
+			reader.onload = function(event) {
+				$image_crop.croppie('bind', {
+					url: event.target.result
+				}).then(function() {
+					console.log('jQuery bind complete');
+				});
+			}
+			reader.readAsDataURL(this.files[0]);
+			$('#imageModel').modal('show');
+		});
+		$('.crop_image').click(function(event) {
+			$image_crop.croppie('result', {
+				type: 'canvas',
+				size: 'viewport'
+			}).then(function(response) {
+				$.ajax({
+					url: "<?php echo base_url(); ?>public/index.php/CropImageUpload/store",
+					type: 'POST',
+					data: {
+						"image": response
+					},
+					success: function(data) {
+						$('#imageModel').modal('hide');
+						alert('Crop image has been uploaded');
+					}
+				})
+			});
+		});
+	});
+
+
 	let save_method; //for save method string
 	// let table;
 	let base_url = '<?= base_url(); ?>';
