@@ -51,6 +51,7 @@
 				</button>
 			</div>
 			<div class="modal-body">
+					<form id="formAdd">
 				<div class="row">
 					<div class="col-md-6">
 						<div class="form-group">
@@ -113,7 +114,7 @@
 						</div>
 						<div class="form-group">
 							<label for="fakultas_nama">Fakultas</label>
-							<select name="fakultas_nama" id="fakultas_nama" class="form-control select2" required>
+							<select name="fakultas_nama" id="fakultas_nama" class="form-control select2">
 								<option value="">-- Fakultas --</option>
 								<?php foreach ($fakultas as $row) { ?>
 									<option value="<?= $row->fakultas_nama ?>"><?= ucwords($row->fakultas_nama) ?></option>
@@ -123,7 +124,7 @@
 						</div>
 						<div class="form-group">
 							<label for="prodi">Program Studi</label>
-							<select name="prodi" id="prodi" class="form-control select2" required>
+							<select name="prodi" id="prodi" class="form-control select2">
 								<option value="">-- Program Studi --</option>
 								<!-- <?php foreach ($prodi as $row) { ?>
 											<option value="<?= $row->prodi_nama ?>"><?= ucwords($row->prodi_nama) ?></option>
@@ -136,9 +137,10 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="submit('tutup')">Tutup</button>
-				<button type="button" class="btn btn-warning" id="btn-tambah" onclick="tambahDataAdministrator()">Tambah</button>
-				<button type="button" class="btn btn-warning" id="btn-ubah" onclick="ubahDataAdministrator()">Ubah</button>
+				<button type="button" class="btn btn-warning" id="btn-tambah" onclick="tambahDataAdministrators()">Tambah</button>
+				<button type="button" class="btn btn-warning" id="btn-ubah" onclick="ubahDataAdministrators()">Ubah</button>
 			</div>
+				</form>
 		</div>
 	</div>
 </div>
@@ -165,7 +167,7 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
-	ambilData();
+	ambilDatas();
 
 	function htmlspecialchars(str) {
 		return str.replace('&', '&amp;').replace('"', '&quot;').replace("'", '&#039;').replace('<', '&lt;').replace('>', '&gt;');
@@ -205,7 +207,7 @@
 	}
 
 	//Tampil Data
-	function ambilData() {
+	function ambilDatas() {
 		$.ajax({
 			url: '<?= base_url(); ?>administrator/ambilData',
 			type: 'POST',
@@ -341,7 +343,7 @@
 	}
 
 	//Tambah Data
-	function tambahDataAdministrator() {
+	function tambahDataAdministrators() {
 		let nama = htmlspecialchars($('[name="nama"]').val());
 		let email = htmlspecialchars($('[name="email"]').val());
 		let no_telepon = htmlspecialchars($('[name="no_telepon"]').val());
@@ -352,23 +354,11 @@
 		let kode_pos = htmlspecialchars($('[name="kode_pos"]').val());
 		let fakultas_nama = htmlspecialchars($('[name="fakultas_nama"]').val());
 		let prodi = htmlspecialchars($('[name="prodi"]').val());
-
 		$.ajax({
 			url: '<?= base_url(); ?>administrator/tambahData',
 			type: 'POST',
 			dataType: 'json',
-			data: {
-				nama: nama,
-				email: email,
-				no_telepon: no_telepon,
-				kewarganegaraan: kewarganegaraan,
-				alamat: alamat,
-				kota: kota,
-				negara: negara,
-				kode_pos: kode_pos,
-				fakultas_nama: fakultas_nama,
-				prodi: prodi
-			},
+			data: $('#formAdd').serialize(),
 			success: function(data) {
 				if (data !== 'success') {
 					$('.nama-error').html(data.nama);
@@ -419,14 +409,14 @@
 						'Data berhasil ditambahkan!',
 						'success'
 					)
-					ambilData();
+					ambilDatas();
 				}
 			}
 		})
 	}
 
 	//Ubah Data
-	function ubahDataAdministrator() {
+	function ubahDataAdministrators() {
 		let id = htmlspecialchars($('[name="id"]').val());
 		let nama = htmlspecialchars($('[name="nama"]').val());
 		let email = htmlspecialchars($('[name="email"]').val());
@@ -505,7 +495,7 @@
 						'Data berhasil diubah!',
 						'success'
 					)
-					ambilData();
+					ambilDatas();
 				}
 
 			}
@@ -535,7 +525,7 @@
 							'Data berhasil dihapus.',
 							'success'
 						)
-						ambilData();
+						ambilDatas();
 					}
 				})
 			}

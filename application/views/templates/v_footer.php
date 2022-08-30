@@ -45,7 +45,6 @@
 							'<td class="text-left">' + response[i].nama_user + '</td>' +
 							'<td>' + response[i].email_user + '</td>' +
 							'<td>' + response[i].telepon_user + '</td>' +
-							'<td>' + response[i].id_author + '</td>' +
 							'<td style="width: 25%;">' + '<button class="btn btn-info mr-2" data-toggle="modal" data-target="#modalDetail" onclick="detailAdministrator(' + response[i].id_user + ')"><i class="fa-solid fa-eye"></i></button><button class="btn btn-primary mr-2" data-toggle="modal" data-target="#modalAdministrator" onclick="submit(' + response[i].id_user + ')" name="id"><i class="fa-solid fa-pencil"></i></button><button class="btn btn-danger" onclick="hapusDataAdministrator(' + response[i].id_user + ')"><i class="fa-solid fa-trash"></i></button>' + '</td>' +
 							'</tr>';
 					}

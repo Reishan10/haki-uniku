@@ -117,14 +117,8 @@ class Dosen extends CI_Controller
 			'kode_pos' => str_replace("'", "", htmlspecialchars($this->input->post('kode_pos', TRUE), ENT_QUOTES)),
 			'role' => 'user',
 			'nidn' => str_replace("'", "", htmlspecialchars($this->input->post('nidn', TRUE), ENT_QUOTES)),
-			'fakultas' => str_replace("'", "", htmlspecialchars($this->input->post('fakultas_nama', TRUE), ENT_QUOTES)),
 			'prodi' => str_replace("'", "", htmlspecialchars($this->input->post('prodi', TRUE), ENT_QUOTES)),
 		);
-
-		if (!empty($_FILES['scan_ktp']['name'])) {
-			$upload = $this->_do_upload();
-			$data['scan_ktp'] = $upload;
-		}
 
 		$this->m_dosen->save($data);
 
@@ -150,27 +144,9 @@ class Dosen extends CI_Controller
 			'negara' => str_replace("'", "", htmlspecialchars($this->input->post('negara', TRUE), ENT_QUOTES)),
 			'kode_pos' => str_replace("'", "", htmlspecialchars($this->input->post('kode_pos', TRUE), ENT_QUOTES)),
 			'nidn' => str_replace("'", "", htmlspecialchars($this->input->post('nidn', TRUE), ENT_QUOTES)),
-			'fakultas' => str_replace("'", "", htmlspecialchars($this->input->post('fakultas_nama', TRUE), ENT_QUOTES)),
 			'prodi' => str_replace("'", "", htmlspecialchars($this->input->post('prodi', TRUE), ENT_QUOTES)),
 		);
-		// $id = $this->input->post('id');
-		if ($this->input->post('remove_photo')) // if remove photo checked
-		{
-			if (file_exists('assets/images/scan-ktp/' . $this->input->post('remove_photo')) && $this->input->post('remove_photo'))
-				unlink('assets/images/scan-ktp/' . $this->input->post('remove_photo'));
-			$data['scan_ktp'] = '';
-		}
-
-		if (!empty($_FILES['scan_ktp']['name'])) {
-			$upload = $this->_do_upload();
-
-			//delete file
-			$dosen = $this->db->get_where('tbl_user', ['id_user' => $this->input->post('id')])->row();
-			if (file_exists('assets/images/scan-ktp/' . $dosen->scan_ktp) && $dosen->scan_ktp)
-				unlink('assets/images/scan-ktp/' . $dosen->scan_ktp);
-			$data['scan_ktp'] = $upload;
-		}
-
+		
 		$this->m_dosen->updateData(array('id_user' => $this->input->post('id')), $data);
 		echo json_encode(array("status" => TRUE));
 	}

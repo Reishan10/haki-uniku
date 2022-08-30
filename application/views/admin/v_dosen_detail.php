@@ -2,7 +2,7 @@
 	<div class="main-content-container container-fluid px-4">
 		<div class="row">
 			<div class="col-lg-12 mx-auto mt-4">
-				<h5 class="text-uppercase mb-4">author profile</h5>
+				<h5 class="text-uppercase mb-4">profil dosen</h5>
 				<!-- Edit User Details Card -->
 				<div class="card card-small edit-user-details mb-4">
 					<div class="card-header p-0">

@@ -59,14 +59,14 @@ class Administrator extends CI_Controller
 	{
 		$this->form_validation->set_rules('nama', 'nama', 'trim|required');
 		$this->form_validation->set_rules('email', 'email', 'trim|required|valid_email|is_unique[tbl_user.email_user]');
-		$this->form_validation->set_rules('no_telepon', 'no telepon', 'trim|required|numeric|max_length[13]|min_length[11]');
+		$this->form_validation->set_rules('no_telepon', 'no_telepon', 'trim|required|numeric|max_length[13]|min_length[11]');
 		$this->form_validation->set_rules('kewarganegaraan', 'kewarganegaraan', 'trim|required');
 		$this->form_validation->set_rules('alamat', 'alamat', 'trim|required');
 		$this->form_validation->set_rules('kota', 'kota', 'trim|required');
 		$this->form_validation->set_rules('negara', 'negara', 'trim|required');
-		$this->form_validation->set_rules('kode_pos', 'kode pos', 'trim|required|numeric|max_length[7]');
-		$this->form_validation->set_rules('fakultas_nama', 'fakultas', 'trim|required');
-		$this->form_validation->set_rules('prodi', 'program studi', 'trim|required');
+		$this->form_validation->set_rules('kode_pos', 'kode_pos', 'trim|required|numeric|max_length[7]');
+		$this->form_validation->set_rules('fakultas_nama', 'fakultas_nama', 'trim|required');
+		$this->form_validation->set_rules('prodi', 'prodi', 'trim|required');
 
 		$this->form_validation->set_message('required', 'Silakan isi %s terlebih dahulu!');
 		$this->form_validation->set_message('valid_email', 'Silakan isi %s menggunakan email valid!');
@@ -115,7 +115,6 @@ class Administrator extends CI_Controller
 				'negara' => $negara,
 				'kode_pos' => $kode_pos,
 				'role' => $role,
-				'fakultas' => $fakultas_nama,
 				'prodi' => $prodi,
 			];
 			$data = $this->m_administrator->insertData($data);
@@ -181,7 +180,6 @@ class Administrator extends CI_Controller
 				'kota' => $kota,
 				'negara' => $negara,
 				'kode_pos' => $kode_pos,
-				'fakultas' => $fakultas_nama,
 				'prodi' => $prodi,
 			];
 
