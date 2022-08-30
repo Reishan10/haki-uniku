@@ -2,391 +2,215 @@
 	<!-- Page Header -->
 	<div class="page-header row no-gutters py-4">
 		<div class="col-12 col-sm-4 text-center text-sm-left mb-4 mb-sm-0">
-			<span class="text-uppercase page-subtitle">Overview</span>
-			<h3 class="page-title">Analytics</h3>
-		</div>
-		<div class="col-12 col-sm-4 d-flex align-items-center">
-			<div class="btn-group btn-group-sm btn-group-toggle d-inline-flex mb-4 mb-sm-0 mx-auto" role="group" aria-label="Page actions">
-				<a href="index-2.html" class="btn btn-white active"> Traffic </a>
-				<a href="ecommerce.html" class="btn btn-white"> Sales </a>
-			</div>
-		</div>
-		<div class="col-12 col-sm-4 d-flex align-items-center">
-			<div id="analytics-overview-date-range" class="input-daterange input-group input-group-sm ml-auto">
-				<input type="text" class="input-sm form-control" name="start" placeholder="Start Date" id="analytics-overview-date-range-1">
-				<input type="text" class="input-sm form-control" name="end" placeholder="End Date" id="analytics-overview-date-range-2">
-				<span class="input-group-append">
-					<span class="input-group-text">
-						<i class="material-icons">&#xE916;</i>
-					</span>
-				</span>
-			</div>
+			<span class="text-uppercase page-subtitle">HAKI UNIKU</span>
+			<h3 class="page-title">Dashboard</h3>
 		</div>
 	</div>
 	<!-- End Page Header -->
 	<!-- Small Stats Blocks -->
 	<div class="row">
-		<div class="col-12 col-md-6 col-lg-3 mb-4">
+		<div class="col-12 col-md-6 col-lg-6 mb-4">
 			<div class="stats-small card card-small">
 				<div class="card-body px-0 pb-0">
 					<div class="d-flex px-3">
 						<div class="stats-small__data">
-							<span class="stats-small__label mb-1 text-uppercase">Users</span>
-							<h6 class="stats-small__value count m-0">2,390</h6>
-						</div>
-						<div class="stats-small__data text-right align-items-center">
-							<span class="stats-small__percentage stats-small__percentage--increase">12.4%</span>
+							<span class="stats-small__label mb-1 text-uppercase">Total Permohonan</span>
+							<h6 class="stats-small__value count m-0"><?= $total_permohonan; ?></h6>
 						</div>
 					</div>
-					<canvas height="60" class="analytics-overview-stats-small-1"></canvas>
 				</div>
 			</div>
 		</div>
-		<div class="col-12 col-md-6 col-lg-3 mb-4">
+		<div class="col-12 col-md-6 col-lg-6 mb-4">
 			<div class="stats-small card card-small">
 				<div class="card-body px-0 pb-0">
 					<div class="d-flex px-3">
 						<div class="stats-small__data">
-							<span class="stats-small__label mb-1 text-uppercase">Sessions</span>
-							<h6 class="stats-small__value count m-0">8,391</h6>
-						</div>
-						<div class="stats-small__data text-right align-items-center">
-							<span class="stats-small__percentage stats-small__percentage--decrease">7.21%</span>
+							<span class="stats-small__label mb-1 text-uppercase">Total HAKI diterima</span>
+							<h6 class="stats-small__value count m-0"><?= $total_diterima; ?></h6>
 						</div>
 					</div>
-					<canvas height="60" class="analytics-overview-stats-small-2"></canvas>
-				</div>
-			</div>
-		</div>
-		<div class="col-12 col-md-6 col-lg-3 mb-4">
-			<div class="stats-small card card-small">
-				<div class="card-body px-0 pb-0">
-					<div class="d-flex px-3">
-						<div class="stats-small__data">
-							<span class="stats-small__label mb-1 text-uppercase">Pageviews</span>
-							<h6 class="stats-small__value count m-0">21,293</h6>
-						</div>
-						<div class="stats-small__data text-right align-items-center">
-							<span class="stats-small__percentage stats-small__percentage--increase">3.71%</span>
-						</div>
-					</div>
-					<canvas height="60" class="analytics-overview-stats-small-3"></canvas>
-				</div>
-			</div>
-		</div>
-		<div class="col-12 col-md-6 col-lg-3 mb-4">
-			<div class="stats-small card card-small">
-				<div class="card-body px-0 pb-0">
-					<div class="d-flex px-3">
-						<div class="stats-small__data">
-							<span class="stats-small__label mb-1 text-uppercase">Pages / Session</span>
-							<h6 class="stats-small__value count m-0">6.43</h6>
-						</div>
-						<div class="stats-small__data text-right align-items-center">
-							<span class="stats-small__percentage stats-small__percentage--decrease">2,71%</span>
-						</div>
-					</div>
-					<canvas height="60" class="analytics-overview-stats-small-4"></canvas>
 				</div>
 			</div>
 		</div>
 	</div>
-	<!-- End Small Stats Blocks -->
+
 	<div class="row">
-		<div class="col col-lg-8 col-md-12 col-sm-12 mb-4">
-			<div class="card card-small h-100">
+		<div class="col">
+			<div class="card card-small mb-4">
 				<div class="card-header border-bottom">
-					<h6 class="m-0">Sessions</h6>
-					<div class="block-handle"></div>
+					<h6 class="m-0">Permohonan</h6>
+					<a href="<?= base_url('dashboard/export_pdf_permohonan') ?>" style="float: right;" class="btn btn-danger">
+						Export PDF
+					</a>
+					<a href="<?= base_url('dashboard/export_excel_permohonan') ?>" style="float: right;" class="btn btn-success mr-2">
+						Export Excel
+					</a>
 				</div>
-				<div class="card-body pt-0">
-					<div class="row border-bottom py-2 bg-light">
-						<div class="col-12 col-sm-6 d-flex mb-2 mb-sm-0">
-							<div class="btn-group btn-group-sm btn-group-toggle d-flex my-auto mx-auto mx-sm-0" data-toggle="buttons">
-								<label class="btn btn-white active">
-									<input type="radio" name="options" id="option1" autocomplete="off" checked=""> Hour </label>
-								<label class="btn btn-white">
-									<input type="radio" name="options" id="option2" autocomplete="off"> Day </label>
-								<label class="btn btn-white">
-									<input type="radio" name="options" id="option3" autocomplete="off"> Week </label>
-								<label class="btn btn-white">
-									<input type="radio" name="options" id="option4" autocomplete="off"> Month </label>
-							</div>
-						</div>
-						<div class="col-12 col-sm-6">
-							<div id="sessions-overview-date-range" class="input-daterange input-group input-group-sm my-auto ml-auto mr-auto ml-sm-auto mr-sm-0" style="max-width: 350px;">
-								<input type="text" class="input-sm form-control" name="start" placeholder="Start Date" id="analytics-overview-sessions-date-range-1">
-								<input type="text" class="input-sm form-control" name="end" placeholder="End Date" id="analytics-overview-sessions-date-range-2">
-								<span class="input-group-append">
-									<span class="input-group-text">
-										<i class="material-icons"></i>
-									</span>
-								</span>
-							</div>
-						</div>
-					</div>
-					<div id="analytics-overview-sessions-legend"></div>
-					<canvas height="120" style="max-width: 100% !important;" class="analytics-overview-sessions"></canvas>
-				</div>
-			</div>
-		</div>
-		<div class="col-lg-4 col-md-6 col-sm-6 mb-4">
-			<!-- Users by device -->
-			<div class="card ubd-stats card-small h-100">
-				<div class="card-header border-bottom">
-					<h6 class="m-0">Users by device</h6>
-					<div class="block-handle"></div>
-				</div>
-				<div class="card-body d-flex flex-column">
-					<canvas width="100" class="analytics-users-by-device mt-3 mb-4"></canvas>
-					<div class="ubd-stats__legend w-75 m-auto pb-4">
-						<div class="ubd-stats__item">
-							<i class="material-icons" style="color: rgba(1, 123 ,255, 0.9);">&#xE30B;</i>
-							<span class="ubd-stats__category">Desktop</span>
-							<span class="ubd-stats__value">68.3%</span>
-						</div>
-						<div class="ubd-stats__item">
-							<i class="material-icons" style="color: rgba(1, 123 ,255, 0.5);">&#xE32F;</i>
-							<span class="ubd-stats__category">Tablet</span>
-							<span class="ubd-stats__value">24.2%</span>
-						</div>
-						<div class="ubd-stats__item">
-							<i class="material-icons" style="color: rgba(1, 123, 255, 0.3);">&#xE325;</i>
-							<span class="ubd-stats__category">Mobile</span>
-							<span class="ubd-stats__value">7.5%</span>
-						</div>
-					</div>
-				</div>
-				<div class="card-footer border-top">
-					<div class="row">
-						<div class="col">
-							<select class="custom-select custom-select-sm" style="max-width: 130px;">
-								<option selected>Last Week</option>
-								<option value="1">Today</option>
-								<option value="2">Last Month</option>
-								<option value="3">Last Year</option>
-							</select>
-						</div>
-						<div class="col text-right view-report">
-							<a href="#">View full report &rarr;</a>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- End Users by device -->
-		</div>
-		<div class="col-lg-3 col-sm-6 mb-4">
-			<div class="card card-small">
-				<div class="card-header border-bottom">
-					<h6 class="m-0">Top Referrals</h6>
-					<div class="block-handle"></div>
-				</div>
-				<div class="card-body p-0">
-					<ul class="list-group list-group-small list-group-flush">
-						<li class="list-group-item d-flex px-3">
-							<span class="text-semibold text-fiord-blue">GitHub</span>
-							<span class="ml-auto text-right text-semibold text-reagent-gray">19,291</span>
-						</li>
-						<li class="list-group-item d-flex px-3">
-							<span class="text-semibold text-fiord-blue">Stack Overflow</span>
-							<span class="ml-auto text-right text-semibold text-reagent-gray">11,201</span>
-						</li>
-						<li class="list-group-item d-flex px-3">
-							<span class="text-semibold text-fiord-blue">Hacker News</span>
-							<span class="ml-auto text-right text-semibold text-reagent-gray">9,291</span>
-						</li>
-						<li class="list-group-item d-flex px-3">
-							<span class="text-semibold text-fiord-blue">Reddit</span>
-							<span class="ml-auto text-right text-semibold text-reagent-gray">8,281</span>
-						</li>
-						<li class="list-group-item d-flex px-3">
-							<span class="text-semibold text-fiord-blue">The Next Web</span>
-							<span class="ml-auto text-right text-semibold text-reagent-gray">7,128</span>
-						</li>
-						<li class="list-group-item d-flex px-3">
-							<span class="text-semibold text-fiord-blue">Tech Crunch</span>
-							<span class="ml-auto text-right text-semibold text-reagent-gray">6,218</span>
-						</li>
-						<li class="list-group-item d-flex px-3">
-							<span class="text-semibold text-fiord-blue">YouTube</span>
-							<span class="ml-auto text-right text-semibold text-reagent-gray">1,218</span>
-						</li>
-						<li class="list-group-item d-flex px-3">
-							<span class="text-semibold text-fiord-blue">Adobe</span>
-							<span class="ml-auto text-right text-semibold text-reagent-gray">1,171</span>
-						</li>
-					</ul>
-				</div>
-				<div class="card-footer border-top">
-					<div class="row">
-						<div class="col">
-							<select class="custom-select custom-select-sm">
-								<option selected>Last Week</option>
-								<option value="1">Today</option>
-								<option value="2">Last Month</option>
-								<option value="3">Last Year</option>
-							</select>
-						</div>
-						<div class="col text-right view-report">
-							<a href="#">Full report &rarr;</a>
-						</div>
+				<div class="table-responsive">
+					<div class="card-body">
+						<table class="table mb-0" id="table">
+							<thead class="bg-light">
+								<tr>
+									<th scope="col" class="border-0" style="width: 1%;">#</th>
+									<th scope="col" class="border-0">Judul</th>
+									<th scope="col" class="border-0">Jenis</th>
+									<th scope="col" class="border-0">Subjenis</th>
+									<th scope="col" class="border-0">Tanggal Permohonan</th>
+									<th scope="col" class="border-0">Status</th>
+									<th scope="col" class="border-0">User</th>
+								</tr>
+							</thead>
+							<tbody>
+								<?php
+								$no = 1;
+								foreach ($data_permohonan as $row) : ?>
+									<tr>
+										<td><?= $no++; ?></td>
+										<td><?= $row->permohonan_judul; ?></td>
+										<td><?= $row->nama_jenis_permohonan; ?></td>
+										<td><?= $row->nama_subjenis; ?></td>
+										<td><?= $row->permohonan_tanggal; ?></td>
+										<td><?= $row->permohonan_status == '0' ? 'Ditolak' : 'Diterima' ?></td>
+										<td><?= $row->nama_user; ?></td>
+									</tr>
+								<?php endforeach; ?>
+							</tbody>
+						</table>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="col-lg-5 mb-4">
-			<div class="card card-small go-stats">
+	</div>
+	<div class="row">
+		<div class="col">
+			<div class="card card-small mb-4">
 				<div class="card-header border-bottom">
-					<h6 class="m-0">Goals Overview</h6>
-					<div class="block-handle"></div>
+					<h6 class="m-0">Permohonan Di Terima</h6>
+					<a href="<?= base_url('dashboard/export_pdf_diterima') ?>" style="float: right;" class="btn btn-danger">
+						Export PDF
+					</a>
+					<a href="<?= base_url('dashboard/export_excel_diterima') ?>" style="float: right;" class="btn btn-success mr-2">
+						Export Excel
+					</a>
 				</div>
-				<div class="card-body py-0">
-					<ul class="list-group list-group-small list-group-flush">
-						<li class="list-group-item d-flex row px-0">
-							<div class="col-lg-6 col-md-8 col-sm-8 col-6">
-								<h6 class="go-stats__label mb-1">Newsletter Signups</h6>
-								<div class="go-stats__meta">
-									<span class="mr-2">
-										<strong>291</strong> Completions</span>
-									<span class="d-block d-sm-inline">
-										<strong class="text-success">$192.00</strong> Value</span>
-								</div>
-							</div>
-							<div class="col-lg-6 col-md-4 col-sm-4 col-6 d-flex">
-								<div class="go-stats__value text-right ml-auto">
-									<h6 class="go-stats__label mb-1">57.2%</h6>
-									<span class="go-stats__meta">Conversion Rate</span>
-								</div>
-								<div class="go-stats__chart d-flex ml-auto">
-									<canvas style="width: 45px; height: 45px;" class="my-auto" id="analytics-overview-goal-completion-1"></canvas>
-								</div>
-							</div>
-						</li>
-						<li class="list-group-item d-flex row px-0">
-							<div class="col-lg-6 col-md-8 col-sm-8 col-6">
-								<h6 class="go-stats__label mb-1">Social Shares</h6>
-								<div class="go-stats__meta">
-									<span class="mr-2">
-										<strong>451</strong> Completions</span>
-									<span class="d-block d-sm-inline">
-										<strong class="text-success">$0.00</strong> Value</span>
-								</div>
-							</div>
-							<div class="col-lg-6 col-md-4 col-sm-4 col-6 d-flex">
-								<div class="go-stats__value text-right ml-auto">
-									<h6 class="go-stats__label mb-1">45.5%</h6>
-									<span class="go-stats__meta">Conversion Rate</span>
-								</div>
-								<div class="go-stats__chart d-flex ml-auto">
-									<canvas style="width: 45px; height: 45px;" class="my-auto" id="analytics-overview-goal-completion-2"></canvas>
-								</div>
-							</div>
-						</li>
-						<li class="list-group-item d-flex row px-0">
-							<div class="col-lg-6 col-md-8 col-sm-8 col-6">
-								<h6 class="go-stats__label mb-1">eBook Downloads</h6>
-								<div class="go-stats__meta">
-									<span class="mr-2">
-										<strong>12</strong> Completions</span>
-									<span class="d-block d-sm-inline">
-										<strong class="text-success">$129.11</strong> Value</span>
-								</div>
-							</div>
-							<div class="col-lg-6 col-md-4 col-sm-4 col-6 d-flex">
-								<div class="go-stats__value text-right ml-auto">
-									<h6 class="go-stats__label mb-1">5.2%</h6>
-									<span class="go-stats__meta">Conversion Rate</span>
-								</div>
-								<div class="go-stats__chart d-flex ml-auto">
-									<canvas style="width: 45px; height: 45px;" class="my-auto" id="analytics-overview-goal-completion-3"></canvas>
-								</div>
-							</div>
-						</li>
-						<li class="list-group-item d-flex row px-0">
-							<div class="col-lg-6 col-md-8 col-sm-8 col-6">
-								<h6 class="go-stats__label mb-1">Account Creations</h6>
-								<div class="go-stats__meta">
-									<span class="mr-2">
-										<strong>281</strong> Completions</span>
-									<span class="d-block d-sm-inline">
-										<strong class="text-success">$218.12</strong> Value</span>
-								</div>
-							</div>
-							<div class="col-lg-6 col-md-4 col-sm-4 col-6 d-flex">
-								<div class="go-stats__value text-right ml-auto">
-									<h6 class="go-stats__label mb-1">30.2%</h6>
-									<span class="go-stats__meta">Conversion Rate</span>
-								</div>
-								<div class="go-stats__chart d-flex ml-auto">
-									<canvas style="width: 45px; height: 45px;" class="my-auto" id="analytics-overview-goal-completion-4"></canvas>
-								</div>
-							</div>
-						</li>
-					</ul>
-				</div>
-				<div class="card-footer border-top">
-					<div class="row">
-						<div class="col">
-							<select class="custom-select custom-select-sm" style="max-width: 130px;">
-								<option selected>Last Week</option>
-								<option value="1">Today</option>
-								<option value="2">Last Month</option>
-								<option value="3">Last Year</option>
-							</select>
-						</div>
-						<div class="col text-right view-report">
-							<a href="#">View full report &rarr;</a>
-						</div>
+				<div class="table-responsive">
+					<div class="card-body">
+						<table class="table mb-0" id="table">
+							<thead class="bg-light">
+								<tr>
+									<th scope="col" class="border-0" style="width: 1%;">#</th>
+									<th scope="col" class="border-0">Judul</th>
+									<th scope="col" class="border-0">Jenis</th>
+									<th scope="col" class="border-0">Subjenis</th>
+									<th scope="col" class="border-0">Tanggal Permohonan</th>
+									<th scope="col" class="border-0">Status</th>
+									<th scope="col" class="border-0">User</th>
+								</tr>
+							</thead>
+							<tbody id="tbl_data">
+								<?php
+								$no = 1;
+								foreach ($data_permohonan_diterima as $row) : ?>
+									<tr>
+										<td><?= $no++; ?></td>
+										<td><?= $row->permohonan_judul; ?></td>
+										<td><?= $row->nama_jenis_permohonan; ?></td>
+										<td><?= $row->nama_subjenis; ?></td>
+										<td><?= $row->permohonan_tanggal; ?></td>
+										<td><?= $row->permohonan_status == '0' ? 'Ditolak' : 'Diterima' ?></td>
+										<td><?= $row->nama_user; ?></td>
+									</tr>
+								<?php endforeach; ?>
+							</tbody>
+						</table>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="col-lg-4 mb-4">
-			<div class="card card-small country-stats">
+	</div>
+	<div class="row">
+		<div class="col">
+			<div class="card card-small mb-4">
 				<div class="card-header border-bottom">
-					<h6 class="m-0">Users by country</h6>
-					<div class="block-handle"></div>
-				</div>
-				<div class="card-body p-0">
-					<div id="users-by-country-map" width="100%" height="100%" style="width: 100%; height: 180px;"></div>
-					<table class="table m-0">
-						<tbody>
-							<tr>
-								<td><img class="country-flag mr-1" src="<?= base_url() ?>assets/images/flags/flag-us.png" alt="United States"> United States</td>
-								<td class="text-right">12,219</td>
-								<td class="text-right">32.4%</td>
-							</tr>
-							<tr>
-								<td><img class="country-flag mr-1" src="<?= base_url() ?>assets/images/flags/flag-uk.png" alt="United Kingdom"> United Kingdom</td>
-								<td class="text-right">11,192</td>
-								<td class="text-right">18.8%</td>
-							</tr>
-							<tr>
-								<td><img class="country-flag mr-1" src="<?= base_url() ?>assets/images/flags/flag-au.png" alt="Australia"> Australia</td>
-								<td class="text-right">9,291</td>
-								<td class="text-right">12.3%</td>
-							</tr>
-							<tr>
-								<td><img class="country-flag mr-1" src="<?= base_url() ?>assets/images/flags/flag-jp.png" alt="Japan"> Japan</td>
-								<td class="text-right">2,291</td>
-								<td class="text-right">8.14%</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-				<div class="card-footer border-top">
-					<div class="row">
-						<div class="col">
-							<select class="custom-select custom-select-sm" style="max-width: 130px;">
-								<option selected>Last Week</option>
-								<option value="1">Today</option>
-								<option value="2">Last Month</option>
-								<option value="3">Last Year</option>
+					<h6 class="m-0">HAKI Setiap Prodi</h6>
+					<div class="row mt-2">
+						<div class="col-md-3">
+							<select name="" id="prodi_haki" class="form-control">
+								<option value="">Pilih Prodi</option>
+								<?php foreach ($prodi as $row) : ?>
+									<option value="<?php echo $row->prodi_nama ?>" class="text-uppercase" required><?php echo $row->prodi_nama ?></option>
+								<?php endforeach ?>
 							</select>
 						</div>
-						<div class="col text-right view-report">
-							<a href="#">View full report &rarr;</a>
+					</div>
+					<a href="#" onclick="pdf_haki_prodi()" style="float: right;" class="btn btn-danger">
+						Export PDF
+					</a>
+					<a href="<?= base_url('dashboard/export_excel_per_prodi') ?>" style="float: right;" class="btn btn-success mr-2">
+						Export Excel
+					</a>
+				</div>
+				<div class="table-responsive">
+					<div class="card-body">
+						<table class="table mb-0 haki" id="table">
+							<thead class="bg-light">
+								<tr>
+									<th scope="col" class="border-0" style="width: 1%;">#</th>
+									<th scope="col" class="border-0">Judul</th>
+									<th scope="col" class="border-0">Jenis</th>
+									<th scope="col" class="border-0">Subjenis</th>
+									<th scope="col" class="border-0">Prodi</th>
+									<th scope="col" class="border-0">Status</th>
+									<th scope="col" class="border-0">User</th>
+								</tr>
+							</thead>
+							<tbody id="tbl_data"></tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col">
+			<div class="card card-small mb-4">
+				<div class="card-header border-bottom">
+					<h6 class="m-0">Permohonan Setiap Prodi</h6>
+					<div class="row mt-2">
+						<div class="col-md-3">
+							<select name="" id="prodi_permohonan" class="form-control">
+								<option value="0">Pilih Prodi</option>
+								<?php foreach ($prodi as $row) : ?>
+									<option value="<?php echo $row->prodi_nama ?>" class="text-uppercase" required><?php echo $row->prodi_nama ?></option>
+								<?php endforeach ?>
+							</select>
+
 						</div>
+					</div>
+					<button onclick="pdf_per_prodi()" style="float: right;" class="btn btn-danger">
+						Export PDF
+					</button>
+					<a href="#" onclick="excel_per_prodi()" style="float: right;" class="btn btn-success mr-2">
+						Export Excel
+					</a>
+				</div>
+				<div class="table-responsive">
+					<div class="card-body">
+						<table class="table mb-0 permohonan" id="table">
+							<thead class="bg-light">
+								<tr>
+									<th scope="col" class="border-0" style="width: 1%;">#</th>
+									<th scope="col" class="border-0">Judul</th>
+									<th scope="col" class="border-0">Jenis</th>
+									<th scope="col" class="border-0">Subjenis</th>
+									<th scope="col" class="border-0">Prodi</th>
+									<th scope="col" class="border-0">Status</th>
+									<th scope="col" class="border-0">User</th>
+								</tr>
+							</thead>
+							<tbody id="tbl_data permohonan_prodi"></tbody>
+						</table>
 					</div>
 				</div>
 			</div>
@@ -400,3 +224,81 @@
 <script src="<?= base_url() ?>assets/js/scripts/extras.1.3.1.min.js"></script>
 <script src="<?= base_url() ?>assets/js/scripts/shards-dashboards.1.3.1.min.js"></script>
 <script src="<?= base_url() ?>assets/js/scripts/app/app-analytics-overview.1.3.1.min.js"></script>
+
+<script>
+	$(document).ready(function() {
+		// prodi();
+		$('#prodi_haki').change(function() {
+			prodi_haki();
+		});
+		$('#prodi_permohonan').change(function() {
+			prodi_permohonan();
+		});
+	});
+
+	function prodi_haki() {
+		var prodi = $('#prodi_haki').val();
+		$.ajax({
+			url: "<?= site_url('dashboard/get_prodi') ?>",
+			data: {
+				prodi: prodi
+			},
+			success: function(response) {
+				$('.haki tbody').html(response);
+			}
+		});
+	}
+
+	function prodi_permohonan() {
+		var prodi = $('#prodi_permohonan').val();
+		$.ajax({
+			url: "<?= site_url('dashboard/get_prodi') ?>",
+			data: {
+				prodi: prodi
+			},
+			success: function(response) {
+				$('.permohonan tbody').html(response);
+			}
+		});
+	}
+
+	function pdf_haki_prodi() {
+		var prodi = $('#prodi_haki').val();
+		$.ajax({
+			url: "<?= site_url('dashboard/export_pdf_haki_prodi') ?>",
+			data: {
+				prodi: prodi
+			},
+			success: function(response) {
+				console.log(response);
+			}
+		});
+	}
+
+	function pdf_per_prodi() {
+		var prodi = $('#prodi_permohonan').val();
+		$.ajax({
+			url: "<?= site_url('dashboard/export_pdf_per_prodi') ?>",
+			data: {
+				prodi: prodi
+			},
+			success: function(response) {
+				console.log(response);
+			}
+		});
+	}
+
+	function excel_per_prodi() {
+		var prodi = $('#prodi_permohonan').val();
+		$.ajax({
+			type: 'post',
+			url: "<?= site_url('dashboard/export_excel_per_prodi') ?>",
+			data: {
+				prodi: prodi
+			},
+			success: function(response) {
+				console.log(response);
+			}
+		});
+	}
+</script>
