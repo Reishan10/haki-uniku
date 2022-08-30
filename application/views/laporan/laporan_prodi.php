@@ -62,7 +62,7 @@
 					<td><?= $row->nama_jenis_permohonan; ?></td>
 					<td><?= $row->nama_subjenis; ?></td>
 					<td><?= $row->prodi; ?></td>
-					<td><?= $row->permohonan_status == '0' ? 'Ditolak' : 'Diterima' ?></td>
+					<td><?= $row->permohonan_status == '0' ? 'Pending' : 'Diterima' ?></td>
 					<td><?= $row->nama_user; ?></td>
 				</tr>
 			<?php endforeach; ?>
