@@ -133,23 +133,25 @@
 		<div class="col">
 			<div class="card card-small mb-4">
 				<div class="card-header border-bottom">
-					<h6 class="m-0">HAKI Setiap Prodi</h6>
-					<div class="row mt-2">
-						<div class="col-md-3">
-							<select name="" id="prodi_haki" class="form-control">
-								<option value="">Pilih Prodi</option>
-								<?php foreach ($prodi as $row) : ?>
-									<option value="<?php echo $row->prodi_nama ?>" class="text-uppercase" required><?php echo $row->prodi_nama ?></option>
-								<?php endforeach ?>
-							</select>
+					<form action="<?= base_url('dashboard/export_excel_haki_prodi') ?>" method="post">
+						<h6 class="m-0">HAKI Setiap Prodi</h6>
+						<div class="row mt-2">
+							<div class="col-md-3">
+								<select name="prodi_haki" id="prodi_haki" class="form-control">
+									<option value="">Pilih Prodi</option>
+									<?php foreach ($prodi as $row) : ?>
+										<option value="<?php echo $row->prodi_nama ?>" class="text-uppercase" required><?php echo $row->prodi_nama ?></option>
+									<?php endforeach ?>
+								</select>
+							</div>
 						</div>
-					</div>
-					<a href="#" onclick="pdf_haki_prodi()" style="float: right;" class="btn btn-danger">
-						Export PDF
-					</a>
-					<a href="<?= base_url('dashboard/export_excel_per_prodi') ?>" style="float: right;" class="btn btn-success mr-2">
-						Export Excel
-					</a>
+						<button type="button" onclick="pdf_haki_prodi()" style="float: right;" class="btn btn-danger">
+							Export PDF
+						</button>
+						<button type="submit" style="float: right;" class="btn btn-success mr-2">
+							Export Excel
+						</button>
+					</form>
 				</div>
 				<div class="table-responsive">
 					<div class="card-body">
@@ -176,24 +178,25 @@
 		<div class="col">
 			<div class="card card-small mb-4">
 				<div class="card-header border-bottom">
-					<h6 class="m-0">Permohonan Setiap Prodi</h6>
-					<div class="row mt-2">
-						<div class="col-md-3">
-							<select name="" id="prodi_permohonan" class="form-control">
-								<option value="0">Pilih Prodi</option>
-								<?php foreach ($prodi as $row) : ?>
-									<option value="<?php echo $row->prodi_nama ?>" class="text-uppercase" required><?php echo $row->prodi_nama ?></option>
-								<?php endforeach ?>
-							</select>
-
+					<form action="<?= base_url('dashboard/export_excel_per_prodi') ?>" method="post">
+						<h6 class="m-0">Permohonan Setiap Prodi</h6>
+						<div class="row mt-2">
+							<div class="col-md-3">
+								<select name="prodi_permohonan" id="prodi_permohonan" class="form-control">
+									<option value="0">Pilih Prodi</option>
+									<?php foreach ($prodi as $row) : ?>
+										<option value="<?php echo $row->prodi_nama ?>" class="text-uppercase" required><?php echo $row->prodi_nama ?></option>
+									<?php endforeach ?>
+								</select>
+							</div>
 						</div>
-					</div>
-					<button onclick="pdf_per_prodi()" style="float: right;" class="btn btn-danger">
-						Export PDF
-					</button>
-					<a href="#" onclick="excel_per_prodi()" style="float: right;" class="btn btn-success mr-2">
-						Export Excel
-					</a>
+						<button type="button" onclick="pdf_per_prodi()" style="float: right;" class="btn btn-danger">
+							Export PDF
+						</button>
+						<button type="submit" style="float: right;" class="btn btn-success mr-2">
+							Export Excel
+						</button>
+					</form>
 				</div>
 				<div class="table-responsive">
 					<div class="card-body">
@@ -239,7 +242,8 @@
 	function prodi_haki() {
 		var prodi = $('#prodi_haki').val();
 		$.ajax({
-			url: "<?= site_url('dashboard/get_prodi') ?>",
+			url: "<?= site_url('dashboard/get_prodi_haki') ?>",
+			async: false,
 			data: {
 				prodi: prodi
 			},
@@ -252,7 +256,7 @@
 	function prodi_permohonan() {
 		var prodi = $('#prodi_permohonan').val();
 		$.ajax({
-			url: "<?= site_url('dashboard/get_prodi') ?>",
+			url: "<?= site_url('dashboard/get_prodi_permohonan') ?>",
 			data: {
 				prodi: prodi
 			},

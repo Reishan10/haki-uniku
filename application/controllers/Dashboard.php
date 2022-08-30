@@ -34,11 +34,11 @@ class Dashboard extends CI_Controller
 		$this->load->view('templates/v_footer');
 	}
 
-	public function get_prodi()
+	public function get_prodi_haki()
 	{
 		$prodi = $_GET['prodi'];
 
-		$data = $this->db->query("SELECT tbl_permohonan.*, tbl_jenis_permohonan.nama_jenis_permohonan, tbl_subjenis.nama_subjenis, tbl_user.nama_user, tbl_user.prodi FROM `tbl_permohonan` JOIN tbl_jenis_permohonan ON tbl_jenis_permohonan.id_jenis_permohonan = tbl_permohonan.permohonan_jenis JOIN tbl_subjenis ON tbl_subjenis.id_subjenis = tbl_permohonan.permohonan_subjenis JOIN tbl_user ON tbl_user.id_user = tbl_permohonan.user_id WHERE tbl_user.prodi = '$prodi'")->result();
+		$data = $this->db->query("SELECT tbl_permohonan.*, tbl_jenis_permohonan.nama_jenis_permohonan, tbl_subjenis.nama_subjenis, tbl_user.nama_user, tbl_user.prodi FROM `tbl_permohonan` JOIN tbl_jenis_permohonan ON tbl_jenis_permohonan.id_jenis_permohonan = tbl_permohonan.permohonan_jenis JOIN tbl_subjenis ON tbl_subjenis.id_subjenis = tbl_permohonan.permohonan_subjenis JOIN tbl_user ON tbl_user.id_user = tbl_permohonan.user_id WHERE tbl_user.prodi = '$prodi' AND tbl_permohonan.permohonan_status = 1")->result();
 
 		if (!empty($data)) {
 			$no = 1;
@@ -49,7 +49,36 @@ class Dashboard extends CI_Controller
 					<td><?= $row->nama_jenis_permohonan; ?></td>
 					<td><?= $row->nama_subjenis; ?></td>
 					<td><?= $row->prodi; ?></td>
-					<td><?= $row->permohonan_status == '0' ? 'Ditolak' : 'Diterima' ?></td>
+					<td><?= $row->permohonan_status == '0' ? 'Pending' : 'Diterima' ?></td>
+					<td><?= $row->nama_user; ?></td>
+				</tr>
+			<?php endforeach; ?>
+		<?php
+		} else {
+		?>
+			<tr>
+				<td align="center" colspan="7">Tidak ada data</td>
+			</tr>
+			<?php
+		}
+	}
+
+	public function get_prodi_permohonan()
+	{
+		$prodi = $_GET['prodi'];
+
+		$data = $this->db->query("SELECT tbl_permohonan.*, tbl_jenis_permohonan.nama_jenis_permohonan, tbl_subjenis.nama_subjenis, tbl_user.nama_user, tbl_user.prodi FROM `tbl_permohonan` JOIN tbl_jenis_permohonan ON tbl_jenis_permohonan.id_jenis_permohonan = tbl_permohonan.permohonan_jenis JOIN tbl_subjenis ON tbl_subjenis.id_subjenis = tbl_permohonan.permohonan_subjenis JOIN tbl_user ON tbl_user.id_user = tbl_permohonan.user_id WHERE tbl_user.prodi = '$prodi' AND tbl_permohonan.permohonan_status = 0")->result();
+
+		if (!empty($data)) {
+			$no = 1;
+			foreach ($data as $row) : ?>
+				<tr>
+					<td><?= $no++; ?></td>
+					<td><?= $row->permohonan_judul; ?></td>
+					<td><?= $row->nama_jenis_permohonan; ?></td>
+					<td><?= $row->nama_subjenis; ?></td>
+					<td><?= $row->prodi; ?></td>
+					<td><?= $row->permohonan_status == '0' ? 'Pending' : 'Diterima' ?></td>
 					<td><?= $row->nama_user; ?></td>
 				</tr>
 			<?php endforeach; ?>
@@ -108,7 +137,7 @@ class Dashboard extends CI_Controller
 			$sheet->setCellValue('C' . $x, $row->nama_jenis_permohonan);
 			$sheet->setCellValue('D' . $x, $row->nama_subjenis);
 			$sheet->setCellValue('E' . $x, $row->permohonan_tanggal);
-			$sheet->setCellValue('F' . $x, $row->permohonan_status == '0' ? 'Ditolak' : 'Diterima');
+			$sheet->setCellValue('F' . $x, $row->permohonan_status == '0' ? 'Pending' : 'Diterima');
 			$sheet->setCellValue('G' . $x, $row->nama_user);
 			$x++;
 		}
@@ -168,7 +197,7 @@ class Dashboard extends CI_Controller
 			$sheet->setCellValue('C' . $x, $row->nama_jenis_permohonan);
 			$sheet->setCellValue('D' . $x, $row->nama_subjenis);
 			$sheet->setCellValue('E' . $x, $row->permohonan_tanggal);
-			$sheet->setCellValue('F' . $x, $row->permohonan_status == '0' ? 'Ditolak' : 'Diterima');
+			$sheet->setCellValue('F' . $x, $row->permohonan_status == '0' ? 'Pending' : 'Diterima');
 			$sheet->setCellValue('G' . $x, $row->nama_user);
 			$x++;
 		}
@@ -191,10 +220,10 @@ class Dashboard extends CI_Controller
 		$this->data['title_pdf'] = 'Laporan Permohonan HAKI PRODI';
 
 		$prodi = $_GET['prodi'];
-		$this->data['data_permohonan'] = $this->db->query("SELECT tbl_permohonan.*, tbl_jenis_permohonan.nama_jenis_permohonan, tbl_subjenis.nama_subjenis, tbl_user.nama_user FROM `tbl_permohonan` JOIN tbl_jenis_permohonan ON tbl_jenis_permohonan.id_jenis_permohonan = tbl_permohonan.permohonan_jenis JOIN tbl_subjenis ON tbl_subjenis.id_subjenis = tbl_permohonan.permohonan_subjenis JOIN tbl_user ON tbl_user.id_user = tbl_permohonan.user_id WHERE tbl_user.prodi = '$prodi'")->result();
+		$this->data['data_permohonan'] = $this->db->query("SELECT tbl_permohonan.*, tbl_jenis_permohonan.nama_jenis_permohonan, tbl_subjenis.nama_subjenis, tbl_user.nama_user FROM `tbl_permohonan` JOIN tbl_jenis_permohonan ON tbl_jenis_permohonan.id_jenis_permohonan = tbl_permohonan.permohonan_jenis JOIN tbl_subjenis ON tbl_subjenis.id_subjenis = tbl_permohonan.permohonan_subjenis JOIN tbl_user ON tbl_user.id_user = tbl_permohonan.user_id WHERE tbl_user.prodi = '$prodi' AND tbl_permohonan.permohonan_status = 1")->result();
 
 		// filename dari pdf ketika didownload
-		$file_pdf = 'laporan_haki_prodi';
+		$file_pdf = 'laporan-haki-prodi';
 		// setting paper
 		$paper = 'A4';
 		//orientasi paper potrait / landscape
@@ -218,8 +247,8 @@ class Dashboard extends CI_Controller
 		$sheet->setCellValue('F1', 'Status');
 		$sheet->setCellValue('G1', 'User');
 
-		$prodi = $_GET['prodi'];
-		$data_permohonan =  $this->db->query("SELECT tbl_permohonan.*, tbl_jenis_permohonan.nama_jenis_permohonan, tbl_subjenis.nama_subjenis, tbl_user.nama_user FROM `tbl_permohonan` JOIN tbl_jenis_permohonan ON tbl_jenis_permohonan.id_jenis_permohonan = tbl_permohonan.permohonan_jenis JOIN tbl_subjenis ON tbl_subjenis.id_subjenis = tbl_permohonan.permohonan_subjenis JOIN tbl_user ON tbl_user.id_user = tbl_permohonan.user_id WHERE tbl_user.prodi = '$prodi'")->result();
+		$prodi = $this->input->post('prodi_haki');
+		$data_permohonan =  $this->db->query("SELECT tbl_permohonan.*, tbl_jenis_permohonan.nama_jenis_permohonan, tbl_subjenis.nama_subjenis, tbl_user.nama_user, tbl_user.prodi FROM `tbl_permohonan` JOIN tbl_jenis_permohonan ON tbl_jenis_permohonan.id_jenis_permohonan = tbl_permohonan.permohonan_jenis JOIN tbl_subjenis ON tbl_subjenis.id_subjenis = tbl_permohonan.permohonan_subjenis JOIN tbl_user ON tbl_user.id_user = tbl_permohonan.user_id WHERE tbl_user.prodi = '$prodi' AND tbl_permohonan.permohonan_status = 1")->result();
 		$no = 1;
 		$x = 2;
 		foreach ($data_permohonan as $row) {
@@ -227,8 +256,8 @@ class Dashboard extends CI_Controller
 			$sheet->setCellValue('B' . $x, $row->permohonan_judul);
 			$sheet->setCellValue('C' . $x, $row->nama_jenis_permohonan);
 			$sheet->setCellValue('D' . $x, $row->nama_subjenis);
-			$sheet->setCellValue('E' . $x, $row->permohonan_tanggal);
-			$sheet->setCellValue('F' . $x, $row->permohonan_status == '0' ? 'Ditolak' : 'Diterima');
+			$sheet->setCellValue('E' . $x, $row->prodi);
+			$sheet->setCellValue('F' . $x, $row->permohonan_status == '0' ? 'Pending' : 'Diterima');
 			$sheet->setCellValue('G' . $x, $row->nama_user);
 			$x++;
 		}
@@ -252,10 +281,10 @@ class Dashboard extends CI_Controller
 
 		//data pdf
 		$prodi = $_GET['prodi'];
-		$this->data['data_permohonan'] = $this->db->query("SELECT tbl_permohonan.*, tbl_jenis_permohonan.nama_jenis_permohonan, tbl_subjenis.nama_subjenis, tbl_user.nama_user, tbl_user.prodi FROM `tbl_permohonan` JOIN tbl_jenis_permohonan ON tbl_jenis_permohonan.id_jenis_permohonan = tbl_permohonan.permohonan_jenis JOIN tbl_subjenis ON tbl_subjenis.id_subjenis = tbl_permohonan.permohonan_subjenis JOIN tbl_user ON tbl_user.id_user = tbl_permohonan.user_id WHERE tbl_user.prodi = '$prodi'")->result();
+		$this->data['data_permohonan'] = $this->db->query("SELECT tbl_permohonan.*, tbl_jenis_permohonan.nama_jenis_permohonan, tbl_subjenis.nama_subjenis, tbl_user.nama_user, tbl_user.prodi FROM `tbl_permohonan` JOIN tbl_jenis_permohonan ON tbl_jenis_permohonan.id_jenis_permohonan = tbl_permohonan.permohonan_jenis JOIN tbl_subjenis ON tbl_subjenis.id_subjenis = tbl_permohonan.permohonan_subjenis JOIN tbl_user ON tbl_user.id_user = tbl_permohonan.user_id WHERE tbl_user.prodi = '$prodi' AND tbl_permohonan.permohonan_status = 0")->result();
 
 		// filename dari pdf ketika didownload
-		$file_pdf = 'laporan_permohonan_prodi';
+		$file_pdf = 'laporan-permohonan-prodi';
 		// setting paper
 		$paper = 'A4';
 		//orientasi paper potrait / landscape
@@ -279,8 +308,8 @@ class Dashboard extends CI_Controller
 		$sheet->setCellValue('F1', 'Status');
 		$sheet->setCellValue('G1', 'User');
 
-		$prodi = $this->input->post('prodi');
-		$data_permohonan =  $this->db->query("SELECT tbl_permohonan.*, tbl_jenis_permohonan.nama_jenis_permohonan, tbl_subjenis.nama_subjenis, tbl_user.nama_user, tbl_user.prodi FROM `tbl_permohonan` JOIN tbl_jenis_permohonan ON tbl_jenis_permohonan.id_jenis_permohonan = tbl_permohonan.permohonan_jenis JOIN tbl_subjenis ON tbl_subjenis.id_subjenis = tbl_permohonan.permohonan_subjenis JOIN tbl_user ON tbl_user.id_user = tbl_permohonan.user_id WHERE tbl_user.prodi = '$prodi'")->result();
+		$prodi = $this->input->post('prodi_permohonan');
+		$data_permohonan =  $this->db->query("SELECT tbl_permohonan.*, tbl_jenis_permohonan.nama_jenis_permohonan, tbl_subjenis.nama_subjenis, tbl_user.nama_user, tbl_user.prodi FROM `tbl_permohonan` JOIN tbl_jenis_permohonan ON tbl_jenis_permohonan.id_jenis_permohonan = tbl_permohonan.permohonan_jenis JOIN tbl_subjenis ON tbl_subjenis.id_subjenis = tbl_permohonan.permohonan_subjenis JOIN tbl_user ON tbl_user.id_user = tbl_permohonan.user_id WHERE tbl_user.prodi = '$prodi' AND tbl_permohonan.permohonan_status = 0")->result();
 		$no = 1;
 		$x = 2;
 		foreach ($data_permohonan as $row) {
@@ -289,7 +318,7 @@ class Dashboard extends CI_Controller
 			$sheet->setCellValue('C' . $x, $row->nama_jenis_permohonan);
 			$sheet->setCellValue('D' . $x, $row->nama_subjenis);
 			$sheet->setCellValue('E' . $x, $row->prodi);
-			$sheet->setCellValue('F' . $x, $row->permohonan_status == '0' ? 'Ditolak' : 'Diterima');
+			$sheet->setCellValue('F' . $x, $row->permohonan_status == '0' ? 'Pending' : 'Diterima');
 			$sheet->setCellValue('G' . $x, $row->nama_user);
 			$x++;
 		}
