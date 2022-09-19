@@ -12,7 +12,7 @@ class Kota extends CI_Controller
             redirect('403-forbidden');
         }
 
-        $this->load->model('m_kota');
+        $this->load->model('M_kota');
     }
 
     public function index()

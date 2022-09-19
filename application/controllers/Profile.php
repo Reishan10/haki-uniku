@@ -9,7 +9,7 @@ class Profile extends CI_Controller
         if ($this->session->userdata('logged') == FALSE) {
             redirect('login');
         }
-        $this->load->model('m_profile');
+        $this->load->model('M_profile');
     }
 
     public function index()

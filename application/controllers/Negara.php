@@ -12,7 +12,7 @@ class Negara extends CI_Controller
             redirect('403-forbidden');
         }
 
-        $this->load->model('m_negara');
+        $this->load->model('M_negara');
     }
 
     public function index()

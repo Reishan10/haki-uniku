@@ -12,7 +12,7 @@ class JenisPermohonan extends CI_Controller
             redirect('403-forbidden');
         }
 
-        $this->load->model('m_jenis_permohonan');
+        $this->load->model('M_jenis_permohonan');
     }
 
     public function index()

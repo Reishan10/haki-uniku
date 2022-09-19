@@ -9,7 +9,7 @@ class Author extends CI_Controller
         if ($this->session->userdata('logged') == FALSE) {
             redirect('login');
         }
-        $this->load->model('m_author');
+        $this->load->model('M_author');
     }
 
     public function index()

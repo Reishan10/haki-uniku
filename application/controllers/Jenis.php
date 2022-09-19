@@ -12,8 +12,8 @@ class Jenis extends CI_Controller
             redirect('403-forbidden');
         }
 
-        $this->load->model('m_jenis');
-        $this->load->model('m_subjenis');
+        $this->load->model('M_jenis');
+        $this->load->model('M_subjenis');
     }
 
     public function index()

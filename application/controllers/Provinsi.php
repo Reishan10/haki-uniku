@@ -12,7 +12,7 @@ class Provinsi extends CI_Controller
             redirect('403-forbidden');
         }
 
-        $this->load->model('m_provinsi');
+        $this->load->model('M_provinsi');
     }
 
     public function index()

@@ -11,7 +11,7 @@ class Administrator extends CI_Controller
 		} else if ($this->session->userdata('role') != 'admin') {
 			redirect('403-forbidden');
 		}
-		$this->load->model('m_administrator');
+		$this->load->model('M_administrator');
 	}
 
 	public function index()

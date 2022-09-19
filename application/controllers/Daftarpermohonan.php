@@ -15,8 +15,8 @@ class Daftarpermohonan extends CI_Controller
 				redirect('profile');
 			}
 		}
-		$this->load->model('m_permohonan');
-		$this->load->model('m_dosen');
+		$this->load->model('M_permohonan');
+		$this->load->model('M_dosen');
 		$this->load->library('upload');
 		$this->load->library('API');
 	}

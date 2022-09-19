@@ -12,7 +12,7 @@ class Fakultas extends CI_Controller
             redirect('403-forbidden');
         }
 
-        $this->load->model('m_fakultas');
+        $this->load->model('M_fakultas');
     }
 
     public function index()

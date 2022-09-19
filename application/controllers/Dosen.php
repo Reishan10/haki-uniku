@@ -9,7 +9,7 @@ class Dosen extends CI_Controller
 		if ($this->session->userdata('logged') == FALSE) {
 			redirect('login');
 		}
-		$this->load->model('m_dosen');
+		$this->load->model('M_dosen');
 		$this->load->library('upload');
 	}
 
