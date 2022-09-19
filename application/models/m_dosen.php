@@ -13,6 +13,15 @@ class m_dosen extends CI_Model
 		return $this->db->query("SELECT * FROM tbl_user LEFT JOIN tbl_kota ON tbl_user.kota = tbl_kota.id_kota LEFT JOIN tbl_negara ON tbl_user.negara = tbl_negara.id_negara WHERE id_user = '$id'")->result();
 	}
 
+	public function getDataByIdRow($id)
+	{
+		$this->db->from('tbl_user');
+		$this->db->join('tbl_kota', 'tbl_user.kota = tbl_kota.id_kota');
+		$this->db->join('tbl_provinsi', 'tbl_kota.id_provinsi = tbl_provinsi.id_provinsi');
+		$this->db->where('id_user', $id);
+		return $this->db->get();
+	}
+
 	public function save($data)
 	{
 		$this->db->insert('tbl_user', $data);

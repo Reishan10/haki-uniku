@@ -76,12 +76,21 @@ class Dosen extends CI_Controller
 		$data = array();
 		foreach ($list as $dosen) {
 			$row = [];
-			if ($dosen->foto_user)
-				$row[] = '<a href="' . base_url('assets/images/user-profile/' . $dosen->foto_user) . '" target="_blank"><img src="' . base_url('assets/images/user-profile/' . $dosen->foto_user) . '" class="img-responsive"/></a>';
-			else
-				$row[] = '(Foto tidak tersedia)';
-			$row[] = '<a href="' . base_url('dosen/detail/' . $dosen->id_user) . '" class="text-dark">' . $dosen->nama_user . '</a>';
-			$row[] = '<a href="' . base_url('dosen/detail/' . $dosen->id_user) . '" class="text-dark">' . $dosen->nidn . '</a>';
+			$row[] = '
+				<div class="row">
+					<div class="col-md-3">
+						<a href="' . base_url('assets/images/user-profile/' . $dosen->foto_user) . '" target="_blank">
+							<img src="' . base_url('assets/images/user-profile/' . $dosen->foto_user) . '" class="img-responsive"/>
+						</a>
+					</div>
+					
+					<div class="col-md-9" style="margin-top: 30px">
+						<a href="' . base_url('dosen/detail/' . $dosen->id_user) . '" class="text-dark">' . $dosen->nama_user . '</a>
+						<br/>
+						<a href="' . base_url('dosen/detail/' . $dosen->id_user) . '" class="text-dark" style="margin-top: -300px" style="display: absolute">NIDN.' . $dosen->nidn . '</a>
+					</div>
+			';
+			
 			$row[] = 0;
 			$row[] = 0;
 

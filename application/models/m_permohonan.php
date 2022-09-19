@@ -3,7 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class m_permohonan extends CI_Model
 {
-    public function select($permohonan_id = '', $permohonan_jenis = '', $permohonan_subjenis = '', $user_id = '')
+    public function select($permohonan_id = '', $permohonan_jenis = '', $permohonan_subjenis = '', $user_id = '', $prodi = '', $status = '', $year = '')
     {
         if ($permohonan_id != ''){
             $this->db->where('permohonan_id', $permohonan_id);
@@ -17,10 +17,21 @@ class m_permohonan extends CI_Model
         if ($user_id != ''){
             $this->db->where('user_id', $user_id);
         }
+        if ($prodi != ''){
+            $this->db->where('tbl_user.prodi', $prodi);
+        }
+        if ($status != ''){
+            $this->db->where('tbl_permohonan.permohonan_status', $status);
+        }
+        if ($year != ''){
+            $this->db->where('year(tbl_permohonan.permohonan_tanggal)', $year);
+        }
                     $this->db->select('*');
                     $this->db->from('tbl_permohonan');
                     $this->db->join('tbl_jenis_permohonan', 'tbl_jenis_permohonan.id_jenis_permohonan = tbl_permohonan.permohonan_jenis');
                     $this->db->join('tbl_subjenis', 'tbl_subjenis.id_subjenis = tbl_permohonan.permohonan_subjenis');
+                    $this->db->join('tbl_user', 'tbl_user.id_user = tbl_permohonan.user_id');
+                    $this->db->join('tbl_prodi', 'tbl_prodi.prodi_nama = tbl_user.prodi');
                     $this->db->order_by('permohonan_tanggal', 'DESC');
         $result =   $this->db->get();
         return $result;
@@ -97,7 +108,7 @@ class m_permohonan extends CI_Model
             'permohonan_subjenis'   => $data['subjenis_ciptaan'],
             'permohonan_judul'      => $data['judul'],
             'permohonan_uraian'     => $data['uraian'],
-            'permohonan_tanggal'    => $data['tgl_pertama']." ".date('H:i:s'),
+            'permohonan_tanggal'    => date('Y-m-d H:i:s'),
             'user_id'               => $this->session->userdata('id_user'),
         );
 

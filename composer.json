@@ -12,12 +12,9 @@
 	},
 	"require": {
 		"php": ">=5.3.7",
-<<<<<<< HEAD
 		"phpoffice/phpspreadsheet": "^1.24",
-		"mikey179/vfsstream": "^1.6"
-=======
+		"mikey179/vfsstream": "^1.6",
 		"mpdf/mpdf": "^8.1"
->>>>>>> 33a3235f5b8a84331dfc0441d7d959bd293f802e
 	},
 	"suggest": {
 		"paragonie/random_compat": "Provides better randomness in PHP 5.x"

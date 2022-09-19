@@ -38,7 +38,6 @@ class Profile extends CI_Controller
         $this->form_validation->set_rules('nama', 'nama', 'trim|required');
         $this->form_validation->set_rules('email', 'email', 'trim|required|valid_email');
         $this->form_validation->set_rules('no_telepon', 'no telepon', 'trim|required|numeric|max_length[13]|min_length[11]');
-        $this->form_validation->set_rules('kewarganegaraan', 'kewarganegaraan', 'trim|required');
         $this->form_validation->set_rules('alamat', 'alamat', 'trim|required');
         $this->form_validation->set_rules('kota', 'kota', 'trim|required');
         $this->form_validation->set_rules('negara', 'negara', 'trim|required');
@@ -56,7 +55,6 @@ class Profile extends CI_Controller
                 'nama' => form_error('nama'),
                 'email' => form_error('email'),
                 'no_telepon' => form_error('no_telepon'),
-                'kewarganegaraan' => form_error('kewarganegaraan'),
                 'alamat' => form_error('alamat'),
                 'kota' => form_error('kota'),
                 'negara' => form_error('negara'),
@@ -69,7 +67,6 @@ class Profile extends CI_Controller
             $nama = $this->input->post('nama');
             $email = $this->input->post('email');
             $no_telepon = $this->input->post('no_telepon');
-            $kewarganegaraan = $this->input->post('kewarganegaraan');
             $alamat = $this->input->post('alamat');
             $kota = $this->input->post('kota');
             $negara = $this->input->post('negara');
@@ -79,12 +76,11 @@ class Profile extends CI_Controller
                 'nama_user' => $nama,
                 'email_user' => $email,
                 'telepon_user' => $no_telepon,
-                'kewarganegaraan' => $kewarganegaraan,
+                'kewarganegaraan' => 'Indonesia',
                 'alamat_user' => $alamat,
                 'kota' => $kota,
                 'negara' => $negara,
                 'kode_pos' => $kode_pos,
-                'id_author' => '-',
             ];
 
             $where = ['id_user' => $id];

@@ -123,6 +123,7 @@ class Daftarpermohonan extends CI_Controller
 	public function ktppemohon($id = '')
 	{
 		$mpdf = new \Mpdf\Mpdf();
+		$dataPermohonan = @$this->m_permohonan->select($id)->row();
 		$dataPemohon = @$this->m_permohonan->selectPemohon('', $id)->result();
 		foreach($dataPemohon as $key){
 			$dataScanKTP = $this->db->get_where('tbl_user', ['nidn' => $key->unique_id])->row();
@@ -133,11 +134,11 @@ class Daftarpermohonan extends CI_Controller
 				$dataKTP[] = $dataScanKTP->scan_ktp;	
 			}
 		}
-
+		$data['pengusul']	= $this->m_dosen->getDataByIdRow($dataPermohonan->user_id)->row();
 		$data['dataKTP']	= $dataKTP;
 		$html = $this->load->view('admin/ktp_pemohon', $data, true);
 		$mpdf->WriteHTML($html);
-		$mpdf->Output(); // opens in browser
+		$mpdf->Output('Scan_KTP_'.$data['pengusul']->nama_user.'_'.time().'.pdf', 'I'); // opens in browser
 		//$mpdf->Output('arjun.pdf','D'); // it downloads the file into the user system, with give name
 	}
 
@@ -174,6 +175,45 @@ class Daftarpermohonan extends CI_Controller
 		$datas['scan_ktp'] = $imageName;
 
 		$this->db->update('tbl_user', ['scan_ktp' => $datas['scan_ktp']], ['id_user' => $id]);
+	}
+
+	public function unduhsuratpernyataan($id = '')
+	{
+		$mpdf = new \Mpdf\Mpdf();
+		$dataPermohonan = @$this->m_permohonan->select($id)->row();
+		$dataPemegang	= @$this->db->get_where('tbl_permohonan_pemegang', ['pemegang_id'	=> '1'])->row();
+
+		$data = array(
+			'permohonan'	=> $dataPermohonan,
+			'pemegang'		=> $dataPemegang,
+			'pengusul'		=> $this->m_dosen->getDataByIdRow($dataPermohonan->user_id)->row()
+		);
+		// $data['dataKTP']	= $dataKTP;
+		$html = $this->load->view('admin/surat_pernyataan', $data, true);
+		$mpdf->WriteHTML($html);
+		$mpdf->Output('Surat_Pernyataan_'.$data['pengusul']->nama_user.'_'.time().'.pdf', 'D'); // opens in browser
+		//$mpdf->Output('arjun.pdf','D'); // it downloads the file into the user system, with give name
+	}
+	
+	public function unduhsuratpengalihan($id = '')
+	{
+		$mpdf = new \Mpdf\Mpdf();
+		$dataPermohonan = @$this->m_permohonan->select($id)->row();
+		$dataPemegang	= @$this->db->get_where('tbl_permohonan_pemegang', ['pemegang_id'	=> '1'])->row();
+		$dataPemohon	= @$this->m_permohonan->selectPemohon('', $id);
+
+		$data = array(
+			'permohonan'	=> $dataPermohonan,
+			'pemohon'		=> $dataPemohon,
+			'pemegang'		=> $dataPemegang,
+			'pengusul'		=> $this->m_dosen->getDataByIdRow($dataPermohonan->user_id)->row()
+		);
+		// $data['dataKTP']	= $dataKTP;
+		$html = $this->load->view('admin/surat_pengalihan_hak_cipta', $data, true);
+		// echo $html;
+		$mpdf->WriteHTML($html);
+		$mpdf->Output('Surat_Pengalihan_'.$data['pengusul']->nama_user.'_'.time().'.pdf', 'D'); // opens in browser
+		// $mpdf->Output('arjun.pdf','D'); // it downloads the file into the user system, with give name
 	}
 
 }

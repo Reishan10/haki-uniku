@@ -6,6 +6,7 @@ $(document).ready(function() {
 
     $(".selector").flatpickr();
 
+    
     $('.select2').select2({
         dropdownCssClass: "myFont",
         selectionCssClass: "myFont"

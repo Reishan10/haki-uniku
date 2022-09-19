@@ -14,7 +14,8 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 	<link href="<?= base_url() ?>assets/fonts.googleapis.com/icone91f.css" rel="stylesheet">
 	<link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap.min.css">
-	<link rel="stylesheet" href="<?= base_url() ?>assets/css/styles/accents/warning.1.3.1.css">
+	<!-- <link rel="stylesheet" href="<?= base_url() ?>assets/css/styles/accents/warning.1.3.1.css"> -->
+	<link rel="stylesheet" href="<?= base_url() ?>assets/css/styles/shards-dashboards.1.3.2.min.css">
 	<link rel="stylesheet" href="<?= base_url() ?>assets/css/styles/extras.1.3.1.min.css">
 	<link rel="stylesheet" href="<?= base_url() ?>assets/css/styles/responsive.dataTables.min.css" />
 	<link rel="stylesheet" href="<?= base_url() ?>assets/css/loading.css">
@@ -29,4 +30,10 @@
 	<script src="<?= base_url() ?>assets/js/dataTables.responsive.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.css" />
+
+	<!-- <link href="https://kodhus.com/static/css/kodhus.min.css" rel="stylesheet" type="text/css" /> -->
+	<script src="https://kodhus.com/static/js/kodhus.min.js"></script>
+	<!-- <link rel="stylesheet" href="https://cdn.metroui.org.ua/v4.3.2/css/metro-all.min.css"> -->
+	<script src="https://cdn.metroui.org.ua/v4.3.2/js/metro.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 </head>

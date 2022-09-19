@@ -1,5 +1,5 @@
 <footer class="main-footer d-flex p-2 px-3 bg-white border-top">
-	<span class="copyright ml-auto my-auto mr-2">Copyright © 2022 - <?= date('Y') ?> PusHaki Universitas Kuningan</span>
+	<span class="copyright ml-auto my-auto mr-2">Copyright © 2022 - <?= date('Y') ?> PUSHAKI Universitas Kuningan</span>
 </footer>
 </main>
 </div>
@@ -369,8 +369,6 @@
                                                 <img src="<?= base_url('assets/images/user-profile/') ?>${response[i].foto_user}" alt="${response[i].nama_user}" style="width: 100%;">
                                             </a>
                                         </span>
-                                    </td>
-                                    <td class="text-left">
                                         <span>
                                             <a href="http://localhost/haki-uniku/author/detail/${response[i].id_user}" class="text-dark">
                                                 ${response[i].nama_user}

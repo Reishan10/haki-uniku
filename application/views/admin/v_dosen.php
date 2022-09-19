@@ -33,14 +33,12 @@
 				</div>
 				<div class="table-responsive">
 					<div class="card-body">
-						<table class="table mb-0" id="table">
+						<table class="table mb-0" id="tables">
 							<thead class="bg-light">
 								<tr>
-									<th scope="col" class="border-0" style="width: 3%;">#</th>
-									<th scope="col" class="border-0">Nama</th>
-									<th scope="col" class="border-0">NIDN</th>
-									<th scope="col" class="border-0">Jumlah</th>
-									<th scope="col" class="border-0">Total HAKI</th>
+									<th scope="col" class="border-0 text-center" style="width: 40%;">#</th>
+									<th scope="col" class="border-0" width="10%">Jumlah</th>
+									<th scope="col" class="border-0" width="10%">Total HAKI</th>
 									<th scope="col" class="border-0" style="width: 20%;">Aksi</th>
 								</tr>
 							</thead>
@@ -192,13 +190,19 @@
 	let base_url = '<?= base_url(); ?>';
 
 	$(document).ready(function() {
-		$('#table').DataTable({
+		$('#tables').DataTable({
 			ajax: {
 				url: '<?= site_url('dosen/ajax_list') ?>',
 				type: 'POST',
 				async: false,
 				dataType: 'json',
-			}
+			},
+			columnDefs: [
+				{
+					className: "text-left", 
+					targets: [0]
+				},
+			]
 		});
 
 		$('.select2').select2({

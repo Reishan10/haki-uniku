@@ -6,29 +6,6 @@
 <meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
 
 <head>
-    <!-- Google Tag Manager -->
-    <script>
-        dataLayer = [{
-            'ga-tracking-id': 'UA-115105611-1'
-        }];
-    </script>
-    <script>
-        (function(w, d, s, l, i) {
-            w[l] = w[l] || [];
-            w[l].push({
-                'gtm.start': new Date().getTime(),
-                event: 'gtm.js'
-            });
-            var f = d.getElementsByTagName(s)[0],
-                j = d.createElement(s),
-                dl = l != 'dataLayer' ? '&l=' + l : '';
-            j.async = true;
-            j.src =
-                '../../../www.googletagmanager.com/gtm5445.html?id=' + i + dl;
-            f.parentNode.insertBefore(j, f);
-        })(window, document, 'script', 'dataLayer', 'GTM-WGLBNC8');
-    </script>
-    <!-- End Google Tag Manager -->
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title><?= $title ?></title>
@@ -52,15 +29,18 @@
             <main class="main-content col">
                 <div class="main-content-container container-fluid px-4 my-auto h-100">
                     <div class="row no-gutters h-100">
-                        <div class="col-lg-3 col-md-5 auth-form mx-auto my-auto">
+                        <div class="col-lg-3 col-md-5 mx-auto my-auto">
                             <div class="card">
+                                <div class="card-header bg bg-info text-white">
+                                    <b>Selamat Datang di Aplikasi PUSHAKI</b>
+                                    <p style="font-size: 10px">Pusat Layanan Hak Kekayaan Intelektual Universitas Kuningan</p>
+                                </div>
                                 <div class="card-body">
-                                    <img class="auth-form__logo d-table mx-auto mb-3" src="<?= base_url() ?>assets/images/shards-dashboards-logo-warning.svg" alt="Shards Dashboards - Register Template">
-                                    <h5 class="auth-form__title text-center mb-4">LOGIN</h5>
+                                    <img class="auth-form__logo d-table mx-auto mb-3" src="<?= base_url() ?>assets/images/shards-dashboards-logo-warning.svg" alt="" style="float: left; margin-top: -50px; position: absolute;">
                                     <form action="<?= site_url('login/post_login') ?>" method="POST">
                                         <div class="form-group">
-                                            <label for="email">Email</label>
-                                            <input type="email" class="form-control" id="email" name="email" value="<?= set_value('email') ?>" placeholder=" Email">
+                                            <label for="email">NIDN</label>
+                                            <input type="email" class="form-control" id="email" name="email" value="<?= set_value('email') ?>" placeholder=" NIDN">
                                             <?= form_error('email', '<small class="text-danger">', '</small>'); ?>
                                         </div>
                                         <div class="form-group mb-4">
