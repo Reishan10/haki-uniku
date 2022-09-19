@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class m_permohonan extends CI_Model
+class M_permohonan extends CI_Model
 {
     public function select($permohonan_id = '', $permohonan_jenis = '', $permohonan_subjenis = '', $user_id = '', $prodi = '', $status = '', $year = '')
     {

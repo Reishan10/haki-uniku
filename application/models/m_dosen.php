@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class m_dosen extends CI_Model
+class M_dosen extends CI_Model
 {
 	public function getData()
 	{

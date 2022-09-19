@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class m_negara extends CI_Model
+class M_negara extends CI_Model
 {
     public function getData()
     {

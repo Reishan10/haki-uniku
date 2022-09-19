@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class m_fakultas extends CI_Model
+class M_fakultas extends CI_Model
 {
     public function getDataFakultas()
     {

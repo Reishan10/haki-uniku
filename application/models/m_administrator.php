@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class m_administrator extends CI_Model
+class M_administrator extends CI_Model
 {
     public function getData()
     {
